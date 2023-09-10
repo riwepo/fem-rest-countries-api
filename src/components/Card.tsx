@@ -1,7 +1,15 @@
 import { PropsWithChildren } from "react";
 
-function Card(props: PropsWithChildren) {
-  return props.children;
+type CardProps = {
+  className: string;
+};
+
+function Card(props: PropsWithChildren<CardProps>) {
+  return (
+    <div className={`rounded bg-white shadow shadow-black ${props.className}`}>
+      {props.children}
+    </div>
+  );
 }
 
 export default Card;
