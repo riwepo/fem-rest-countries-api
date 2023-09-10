@@ -9,7 +9,7 @@ function DesignSystem() {
         population={25000000}
         region="Oceania"
         capital="Canberra"
-        flagUrl="https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg"
+        flagUrl="https://flagcdn.com/au.svg"
       />
     </div>
   );
