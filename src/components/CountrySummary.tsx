@@ -8,20 +8,26 @@ function CountrySummary(props: {
   flagUrl: string;
 }) {
   return (
-    <Card>
-      <summary className="flex flex-col  justify-center">
-        <div className="flex flex-col justify-center">
-          <img src={props.flagUrl} />
-          <div className="flex flex-col justify-center ">
-            <p className="text-xl font-semibold text-yellow-500">
-              {props.name}
-            </p>
-            <p>Population: {props.population}</p>
-            <p>Region: {props.region}</p>
-            <p>Capital: {props.capital}</p>
-          </div>
+    <Card className="m-10 grid h-[24rem] w-[20rem] grid-rows-[1fr_1fr]">
+      <img
+        src={props.flagUrl}
+        alt="flag"
+        className="h-[12rem] w-full object-cover"
+      />
+      <div className="flex flex-col justify-center gap-3 p-2 ">
+        <p className="text-lg font-bold ">{props.name}</p>
+        <div>
+          <p className="text-sm font-normal">
+            <span className="font-bold">Population:</span> {props.population}
+          </p>
+          <p className="text-sm font-normal">
+            <span className="font-bold">Region:</span> {props.region}
+          </p>
+          <p className="text-sm font-normal">
+            <span className="font-bold">Capital:</span> {props.capital}
+          </p>
         </div>
-      </summary>
+      </div>
     </Card>
   );
 }
