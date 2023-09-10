@@ -1,5 +1,4 @@
+@import "./debug-borders.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* @import "./debug-borders.css"; */
