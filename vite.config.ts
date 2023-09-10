@@ -8,6 +8,7 @@ export default defineConfig({
   base: "/fem-rest-countries-api",
   plugins: [react(), eslint()],
   test: {
-    environment: "jsdom",
-  },
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './tests/setup.js',
 });
