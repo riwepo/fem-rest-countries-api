@@ -21,7 +21,7 @@ describe("country summary test suite", () => {
     expect(populationLabelElement).toBeInTheDocument();
     const regionLabelElement = screen.getByText("Region:");
     expect(regionLabelElement).toBeInTheDocument();
-    const captitalLabelElement = screen.getByText("Capital:");
+    const capitalLabelElement = screen.getByText("Capital:");
     expect(capitalLabelElement).toBeInTheDocument();
   });
 });
