@@ -1,7 +1,7 @@
 import DesignSystem from "./components/DesignSystem";
 
-function App() {
+const App: React.FC = () => {
   return <DesignSystem />;
-}
+};
 
 export default App;
