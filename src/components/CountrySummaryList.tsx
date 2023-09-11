@@ -7,9 +7,9 @@ interface CountrySummaryListProps {
 
 const CountrySummaryList: React.FC<CountrySummaryListProps> = (props) => {
   return (
-    <div className="flex">
+    <div className="grid grid-cols-4">
       {props.countries.map((country) => {
-        return <CountrySummary country={country} />;
+        return <CountrySummary key={country.name} country={country} />;
       })}
     </div>
   );

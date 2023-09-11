@@ -7,7 +7,7 @@ const DesignSystem: React.FC = () => {
   const australia: ICountrySummary = {
     name: "Australia",
     population: 666,
-    region: "Oceanina",
+    region: "Oceania",
     capital: "Canberra",
     flagUrl: "https://flagcdn.com/au.svg",
   };
