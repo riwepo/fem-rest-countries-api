@@ -1,19 +1,17 @@
 // import React from "react";
 import { describe, test, expect } from "vitest";
 
-import { getAllRegions } from "../country_api/get-countries.ts";
+import { IGetCountriesResult } from "../country_api/get-countries-helpers.ts";
+import {
+  getAllCountriesSummary,
+  // getAllRegions,
+} from "../country_api/get-countries.ts";
 
-describe("get countries test suite", () => {
-  test("get all regions", async () => {
-    const result = await getAllRegions();
+describe("get countries summary test suite", () => {
+  test("get all countries summary", async () => {
+    const result: IGetCountriesResult = await getAllCountriesSummary();
     expect(result.isOk).toBe(true);
-    expect(result.value).toEqual([
-      "Asia",
-      "Oceania",
-      "Europe",
-      "Africa",
-      "Americas",
-      "Antarctic",
-    ]);
+    expect(result.value).not.toBeNull();
+    expect(Array.isArray(result.value)).toBeTruthy();
   });
 });
