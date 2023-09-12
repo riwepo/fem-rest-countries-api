@@ -1,6 +1,6 @@
 export interface IGetCountriesResult {
   isOk: boolean;
-  value: object | null;
+  value: object | [] | null;
   error: string | null;
 }
 
