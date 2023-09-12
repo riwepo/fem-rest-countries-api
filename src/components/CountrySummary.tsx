@@ -1,6 +1,6 @@
 import Card from "./Card";
 
-import ICountrySummary from "./ICountrySummary";
+import { ICountrySummary } from "../country_api/get-countries-helpers";
 
 interface CountrySummaryProps {
   country: ICountrySummary;
@@ -10,7 +10,7 @@ const CountrySummary: React.FC<CountrySummaryProps> = (props) => {
   return (
     <Card className="m-10 grid h-[24rem] w-[20rem] grid-rows-[1fr_1fr]">
       <img
-        src={props.country.flagUrl}
+        src={props.country.flag.toString()}
         alt="flag"
         className="h-[12rem] w-full object-cover"
       />
