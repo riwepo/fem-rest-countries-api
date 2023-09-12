@@ -6,6 +6,7 @@ import {
   ICountrySummary,
   convertToCountrySummary,
   IGetCountriesResult,
+  sortCountrySummary,
 } from "./get-countries-helpers";
 
 // sample URL to get all regions
@@ -58,7 +59,8 @@ export async function getAllCountriesSummary(): Promise<IGetCountriesResult> {
       getAllCountriesSummaryResult.map((restData: unknown) =>
         convertToCountrySummary(restData),
       );
-    const result = wrapInResultObject(countrySummaries);
+    const sorted = sortCountrySummary(countrySummaries);
+    const result = wrapInResultObject(sorted);
     return result;
   } catch (error: unknown) {
     result = processError(error);

@@ -62,6 +62,10 @@ export function convertToCountrySummary(restData: unknown): ICountrySummary {
   return result;
 }
 
+export function sortCountrySummary(data: ICountrySummary[]): ICountrySummary[] {
+  return [...data].sort((a, b) => a.name.localeCompare(b.name));
+}
+
 // typical shape of country summary rest data for reference
 // Object {
 //   "flags": Object {
