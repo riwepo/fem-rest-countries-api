@@ -5,6 +5,7 @@ import {
   processError,
   ICountrySummary,
   convertToCountrySummary,
+  IGetCountriesResult,
 } from "./get-countries-helpers";
 
 // sample URL to get all regions
@@ -43,11 +44,7 @@ const GET_ALL_COUNTRIES_SUMMARY_URL = new URL(
   "https://restcountries.com/v3.1/all?fields=name,capital,region,population,flags",
 );
 
-export async function getAllCountriesSummary(): Promise<{
-  isOk: boolean;
-  error: string | null;
-  value: object | null;
-}> {
+export async function getAllCountriesSummary(): Promise<IGetCountriesResult> {
   let result;
   try {
     const response = await fetch(GET_ALL_COUNTRIES_SUMMARY_URL);
