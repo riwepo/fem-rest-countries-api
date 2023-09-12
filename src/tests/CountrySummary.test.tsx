@@ -4,7 +4,8 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import CountrySummary from "../components/CountrySummary";
-import ICountrySummary from "../components/ICountrySummary";
+
+import { ICountrySummary } from "../country_api/get-countries-helpers";
 
 describe("country summary test suite", () => {
   const australia: ICountrySummary = {
@@ -12,7 +13,7 @@ describe("country summary test suite", () => {
     population: 666,
     region: "Oceania",
     capital: "Canberra",
-    flagUrl: "https://flagcdn.com/au.svg",
+    flag: "https://flagcdn.com/au.svg",
   };
   test("renders img, name, 3 labels, 3 label values", () => {
     render(<CountrySummary country={australia} />);
