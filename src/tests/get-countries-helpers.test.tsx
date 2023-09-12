@@ -2,8 +2,10 @@
 import { describe, test, expect } from "vitest";
 
 import {
+  ICountrySummary,
   checkCountrySummaryRestData,
   convertToCountrySummary,
+  sortCountrySummary,
   // getUniqueRegions,
   //wrapInResultObject,
 } from "../country_api/get-countries-helpers.ts";
@@ -137,27 +139,6 @@ describe("check country summary rest data test suite", () => {
 });
 
 describe("convert to country summary rest data test suite", () => {
-  // typical shape of data for reference
-  // Object {
-  //   "flags": Object {
-  //     "alt": "",
-  //     "png": "https://flagcdn.com/w320/gf.png",
-  //     "svg": "https://flagcdn.com/gf.svg",
-  //   },
-  //   "name": Object {
-  //     "common": "French Guiana",
-  //     "nativeName": Object {
-  //       "fra": Object {
-  //         "common": "Guyane française",
-  //         "official": "Guyane",
-  //       },
-  //     },
-  //     "official": "Guiana",
-  //   },
-  //   "population": 254541,
-  //   "region": "Americas",
-  // },
-
   const validCountrySummaryRestData = {
     flags: { png: "https://flagcdn.com/w320/gf.png" },
     capital: "Cayene",
@@ -173,5 +154,38 @@ describe("convert to country summary rest data test suite", () => {
     expect(result.region).toBe("Americas");
     expect(result.population).toBe(254541);
     expect(result.flag).toBe("https://flagcdn.com/w320/gf.png");
+  });
+});
+
+describe("sortCountrySummary test suite", () => {
+  const countryA: ICountrySummary = {
+    name: "countryA",
+    capital: "capital",
+    region: "region",
+    population: 0,
+    flag: new URL("https://some_flag.png"),
+  };
+  const countryB: ICountrySummary = {
+    name: "countryB",
+    capital: "capital",
+    region: "region",
+    population: 0,
+    flag: new URL("https://some_flag.png"),
+  };
+  const countryC: ICountrySummary = {
+    name: "countryC",
+    capital: "capital",
+    region: "region",
+    population: 0,
+    flag: new URL("https://some_flag.png"),
+  };
+
+  const unorderedArray = [countryB, countryA, countryC];
+
+  test("sortCountrySummary puts in correct order", () => {
+    const result = sortCountrySummary(unorderedArray);
+    expect(result[0]).toBe(countryA);
+    expect(result[1]).toBe(countryB);
+    expect(result[2]).toBe(countryC);
   });
 });
