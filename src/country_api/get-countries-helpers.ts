@@ -12,8 +12,6 @@ export interface ICountrySummary {
   flag: URL;
 }
 
-
-
 export function wrapInResultObject(value: object | null): IGetCountriesResult {
   const result: IGetCountriesResult = { isOk: true, value: value, error: null };
   return result;
