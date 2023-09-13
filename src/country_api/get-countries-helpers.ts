@@ -4,10 +4,13 @@ export interface IGetCountriesResult {
   error: string | null;
 }
 
-export interface ICountrySummary {
+export interface IRegion {
+  region: string;
+}
+
+export interface ICountrySummary extends IRegion {
   name: string;
   capital: string;
-  region: string;
   population: number;
   flag: URL;
 }
@@ -63,5 +66,3 @@ export function sortCountrySummary(data: ICountrySummary[]): ICountrySummary[] {
 export function sortStrings(data: string[]): string[] {
   return [...data].sort((a, b) => a.localeCompare(b));
 }
-
-
