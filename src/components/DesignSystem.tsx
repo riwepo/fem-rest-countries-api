@@ -2,7 +2,8 @@
 // import CountrySummary from "./CountrySummary";
 // import CountrySummaryList from "./CountrySummaryList";
 // import ICountrySummary from "./ICountrySummary";
-import Header from "./Header";
+// import Header from "./Header";
+import SearchInput from "./SearchInput";
 
 const DesignSystem: React.FC = () => {
   // const australia: ICountrySummary = {
@@ -23,7 +24,8 @@ const DesignSystem: React.FC = () => {
     <div>
       {/* <CountrySummary country={australia} /> */}
       {/* <CountrySummaryList/> */}
-      <Header />
+      {/* <Header /> */}
+      <SearchInput />
     </div>
   );
 };
