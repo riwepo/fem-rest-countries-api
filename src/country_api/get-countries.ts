@@ -41,3 +41,13 @@ export function getUniqueRegions(regionObjects: { region: string }[]) {
   const sorted = sortStrings(uniqueRegions);
   return sorted;
 }
+
+export function filterByRegion(
+  countries: { region: string }[],
+  region: string,
+): { region: string }[] {
+  const matchingRegion = countries.filter(
+    (country) => country.region === region,
+  );
+  return matchingRegion;
+}

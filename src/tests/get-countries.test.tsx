@@ -3,6 +3,7 @@ import { describe, test, expect } from "vitest";
 
 import { IGetCountriesResult } from "../country_api/get-countries-helpers.ts";
 import {
+  filterByRegion,
   getAllCountriesSummary,
   getUniqueRegions,
 } from "../country_api/get-countries.ts";
@@ -57,5 +58,38 @@ describe("getUniqueRegions test suite", () => {
     ];
     const result = getUniqueRegions(testData);
     expect(result).toEqual(["regionA", "regionB", "regionC"]);
+  });
+});
+
+describe("filterByRegion test suite", () => {
+  test("returns only matching region", () => {
+    const testData = [
+      { region: "region1" },
+      { region: "region2" },
+      { region: "region3" },
+    ];
+    const region = "region1";
+    const result = filterByRegion(testData, region);
+    expect(result).toEqual([{ region: "region1" }]);
+  });
+  test("works with complex objects", () => {
+    const testData = [
+      { country: "country1", region: "region1" },
+      { country: "country2", region: "region2" },
+      { country: "country3", region: "region3" },
+    ];
+    const region = "region1";
+    const result = filterByRegion(testData, region);
+    expect(result).toEqual([{ country: "country1", region: "region1" }]);
+  });
+  test("preserves order", () => {
+    const testData = [
+      { country: "country1", region: "region1" },
+      { country: "country2", region: "region1" },
+      { country: "country3", region: "region1" },
+    ];
+    const region = "region1";
+    const result = filterByRegion(testData, region);
+    expect(result).toEqual(testData);
   });
 });
