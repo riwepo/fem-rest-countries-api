@@ -12,11 +12,7 @@ export interface ICountrySummary {
   flag: URL;
 }
 
-// export function getUniqueRegions(regionObjects: { region: string }[]) {
-//   const regionStrings: string[] = regionObjects.map((object) => object.region);
-//   const uniqueRegions = [...new Set(regionStrings)];
-//   return uniqueRegions;
-// }
+
 
 export function wrapInResultObject(value: object | null): IGetCountriesResult {
   const result: IGetCountriesResult = { isOk: true, value: value, error: null };
