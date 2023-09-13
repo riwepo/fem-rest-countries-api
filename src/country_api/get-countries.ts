@@ -6,6 +6,7 @@ import {
   IGetCountriesResult,
   sortCountrySummary,
   sortStrings,
+  IRegion,
 } from "./get-countries-helpers";
 
 const GET_ALL_COUNTRIES_SUMMARY_URL = new URL(
@@ -43,9 +44,9 @@ export function getUniqueRegions(regionObjects: { region: string }[]) {
 }
 
 export function filterByRegion(
-  countries: { region: string }[],
+  countries: IRegion[],
   region: string,
-): { region: string }[] {
+): IRegion[] {
   const matchingRegion = countries.filter(
     (country) => country.region === region,
   );
