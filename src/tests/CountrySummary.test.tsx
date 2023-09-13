@@ -13,7 +13,7 @@ describe("CountrySummary component test suite", () => {
     population: 666,
     region: "Oceania",
     capital: "Canberra",
-    flag: "https://flagcdn.com/au.svg",
+    flag: new URL("https://flagcdn.com/au.svg"),
   };
   test("renders img, name, 3 labels, 3 label values", () => {
     render(<CountrySummary country={australia} />);
