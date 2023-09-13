@@ -60,23 +60,8 @@ export function sortCountrySummary(data: ICountrySummary[]): ICountrySummary[] {
   return [...data].sort((a, b) => a.name.localeCompare(b.name));
 }
 
-// typical shape of country summary rest data for reference
-// Object {
-//   "flags": Object {
-//     "alt": "The flag of Suriname is composed of five horizontal bands of green, white, red, white and green in the ratio of 2:1:4:1:2. A large five-pointed yellow star is centered in the red band.",
-//     "png": "https://flagcdn.com/w320/sr.png",
-//     "svg": "https://flagcdn.com/sr.svg",
-//   },
-//   "name": Object {
-//     "common": "Suriname",
-//     "nativeName": Object {
-//       "nld": Object {
-//         "common": "Suriname",
-//         "official": "Republiek Suriname",
-//       },
-//     },
-//     "official": "Republic of Suriname",
-//   },
-//   "population": 586634,
-//   "region": "Americas",
-// },
+export function sortStrings(data: string[]): string[] {
+  return [...data].sort((a, b) => a.localeCompare(b));
+}
+
+
