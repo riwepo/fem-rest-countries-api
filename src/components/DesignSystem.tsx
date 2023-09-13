@@ -21,13 +21,20 @@ const DesignSystem: React.FC = () => {
   //   australia,
   //   australia,
   // ];
+  const filtercomboOptions = ["option1", "option2", "option3", "option4"];
+  const filterComboSelectionChangeHandler = (selection: string) => {
+    console.log(selection);
+  };
   return (
     <div>
       {/* <CountrySummary country={australia} /> */}
       {/* <CountrySummaryList/> */}
       {/* <Header /> */}
       {/* <SearchInput /> */}
-      <FilterCombo />
+      <FilterCombo
+        options={filtercomboOptions}
+        onSelectionChanged={filterComboSelectionChangeHandler}
+      />
     </div>
   );
 };
