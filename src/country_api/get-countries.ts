@@ -5,6 +5,7 @@ import {
   convertToCountrySummary,
   IGetCountriesResult,
   sortCountrySummary,
+  sortStrings,
 } from "./get-countries-helpers";
 
 const GET_ALL_COUNTRIES_SUMMARY_URL = new URL(
@@ -37,5 +38,6 @@ export async function getAllCountriesSummary(): Promise<IGetCountriesResult> {
 export function getUniqueRegions(regionObjects: { region: string }[]) {
   const regionStrings: string[] = regionObjects.map((object) => object.region);
   const uniqueRegions = [...new Set(regionStrings)];
-  return uniqueRegions;
+  const sorted = sortStrings(uniqueRegions);
+  return sorted;
 }
