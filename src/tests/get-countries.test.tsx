@@ -17,13 +17,13 @@ describe("getAllCountriesSummary test suite", () => {
 });
 
 describe("getUniqueRegions test suite", () => {
-  test("getUniqueRegions strips region field from object", () => {
+  test("strips region field from object", () => {
     const testData = [{ region: "region1" }];
     const result = getUniqueRegions(testData);
     expect(result).toEqual(["region1"]);
   });
 
-  test("getUniqueRegions returns all values if they are unique", () => {
+  test("returns all values if they are unique", () => {
     const testData = [
       { region: "region1" },
       { region: "region2" },
@@ -33,7 +33,7 @@ describe("getUniqueRegions test suite", () => {
     expect(result).toEqual(["region1", "region2", "region3"]);
   });
 
-  test("getUniqueRegions strips duplicate values", () => {
+  test("strips duplicate values", () => {
     const testData = [
       { region: "region1" },
       { region: "region1" },
@@ -47,5 +47,15 @@ describe("getUniqueRegions test suite", () => {
     ];
     const result = getUniqueRegions(testData);
     expect(result).toEqual(["region1", "region2", "region3"]);
+  });
+
+  test("sorts alphabetically", () => {
+    const testData = [
+      { region: "regionC" },
+      { region: "regionA" },
+      { region: "regionB" },
+    ];
+    const result = getUniqueRegions(testData);
+    expect(result).toEqual(["regionA", "regionB", "regionC"]);
   });
 });
