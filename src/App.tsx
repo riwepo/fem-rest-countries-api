@@ -7,20 +7,25 @@ import Header from "./components/Header";
 import SearchInput from "./components/SearchInput";
 
 import { ICountrySummary } from "./country_api/get-countries-helpers";
-import { getAllCountriesSummary } from "./country_api/get-countries";
-
-const filtercomboOptions = ["option1", "option2", "option3", "option4"];
+import {
+  getAllCountriesSummary,
+  getUniqueRegions,
+} from "./country_api/get-countries";
 
 const App: React.FC = () => {
   // return <DesignSystem />;
   const [allCountriesSummary, setAllCountriesSummary] = useState<
     ICountrySummary[]
   >([]);
+  const [regions, setRegions] = useState<string[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       const result = await getAllCountriesSummary();
       if (result.isOk) {
-        setAllCountriesSummary(result.value as ICountrySummary[]);
+        const _allCountriesSummary = result.value as ICountrySummary[];
+        setAllCountriesSummary(_allCountriesSummary);
+        const _regions = getUniqueRegions(_allCountriesSummary);
+        setRegions(_regions);
       }
     };
     fetchData();
@@ -34,7 +39,7 @@ const App: React.FC = () => {
       <div className="flex justify-between p-2">
         <SearchInput />
         <FilterCombo
-          options={filtercomboOptions}
+          options={regions}
           onSelectionChanged={filterSelectionChangedHandler}
         />
       </div>
