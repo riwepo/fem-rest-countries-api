@@ -8,6 +8,7 @@ import SearchInput from "./components/SearchInput";
 
 import { ICountrySummary } from "./country_api/get-countries-helpers";
 import {
+  filterByRegion,
   getAllCountriesSummary,
   getUniqueRegions,
 } from "./country_api/get-countries";
@@ -17,6 +18,9 @@ const App: React.FC = () => {
   const [allCountriesSummary, setAllCountriesSummary] = useState<
     ICountrySummary[]
   >([]);
+  const [filteredCountriesSummary, setFilteredCountriesSummary] = useState<
+    ICountrySummary[]
+  >([]);
   const [regions, setRegions] = useState<string[]>([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +28,7 @@ const App: React.FC = () => {
       if (result.isOk) {
         const _allCountriesSummary = result.value as ICountrySummary[];
         setAllCountriesSummary(_allCountriesSummary);
+        setFilteredCountriesSummary(_allCountriesSummary);
         const _regions = getUniqueRegions(_allCountriesSummary);
         setRegions(_regions);
       }
@@ -31,7 +36,16 @@ const App: React.FC = () => {
     fetchData();
   }, []);
   const filterSelectionChangedHandler = (selectedRegion: string) => {
-    console.log(selectedRegion);
+    let _filteredCountriesSummary: ICountrySummary[];
+    if (selectedRegion === "") {
+      _filteredCountriesSummary = allCountriesSummary;
+    } else {
+      _filteredCountriesSummary = filterByRegion(
+        allCountriesSummary,
+        selectedRegion,
+      ) as ICountrySummary[];
+    }
+    setFilteredCountriesSummary(_filteredCountriesSummary);
   };
   return (
     <div>
@@ -43,7 +57,7 @@ const App: React.FC = () => {
           onSelectionChanged={filterSelectionChangedHandler}
         />
       </div>
-      <CountrySummaryList countries={allCountriesSummary} />
+      <CountrySummaryList countries={filteredCountriesSummary} />
     </div>
   );
 };
