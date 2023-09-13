@@ -21,13 +21,15 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     const button = (event.target as HTMLElement).closest("button");
-    if (button === null) return;
-    const option = button.dataset["option"];
+    const option = (button as HTMLButtonElement).dataset["option"];
+    let currentOption: string;
     if (option === selectedOption) {
-      setSelectedOption("");
+      currentOption = "";
     } else {
-      setSelectedOption(option as string);
+      currentOption = option as string;
     }
+    setSelectedOption(currentOption);
+    props.onSelectionChanged(currentOption);
   };
   return (
     <Card className="relative inline-flex">
