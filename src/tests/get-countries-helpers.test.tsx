@@ -6,77 +6,12 @@ import {
   checkCountrySummaryRestData,
   convertToCountrySummary,
   sortCountrySummary,
+  sortStrings,
   // getUniqueRegions,
   //wrapInResultObject,
 } from "../country_api/get-countries-helpers.ts";
 
-// describe("to do test suite", () => {
-//   test("wrap in result object", () => {
-//     const testObject = { value: "some value" };
-//     const result = wrapInResultObject(testObject);
-//     expect(result).toBeInstanceOf(Object);
-//     expect(result).toHaveProperty("isOk");
-//     expect(result).toHaveProperty("value");
-//     expect(result).toHaveProperty("error");
-//     expect(result.isOk).toBe(true);
-//     expect(result.value).toBe(testObject);
-//   });
-
-//   test("getUniqueRegions strips region field from object", () => {
-//     const testData = [{ region: "region1" }];
-//     const result = getUniqueRegions(testData);
-//     expect(result).toEqual(["region1"]);
-//   });
-
-//   test("getUniqueRegions returns all values if they are unique", () => {
-//     const testData = [
-//       { region: "region1" },
-//       { region: "region2" },
-//       { region: "region3" },
-//     ];
-//     const result = getUniqueRegions(testData);
-//     expect(result).toEqual(["region1", "region2", "region3"]);
-//   });
-
-//   test("getUniqueRegions strips duplicate values", () => {
-//     const testData = [
-//       { region: "region1" },
-//       { region: "region1" },
-//       { region: "region2" },
-//       { region: "region2" },
-//       { region: "region2" },
-//       { region: "region3" },
-//       { region: "region3" },
-//       { region: "region3" },
-//       { region: "region3" },
-//     ];
-//     const result = getUniqueRegions(testData);
-//     expect(result).toEqual(["region1", "region2", "region3"]);
-//   });
-// });
-
 describe("check country summary rest data test suite", () => {
-  // typical shape of data for reference
-  // Object {
-  //   "flags": Object {
-  //     "alt": "",
-  //     "png": "https://flagcdn.com/w320/gf.png",
-  //     "svg": "https://flagcdn.com/gf.svg",
-  //   },
-  //   "name": Object {
-  //     "common": "French Guiana",
-  //     "nativeName": Object {
-  //       "fra": Object {
-  //         "common": "Guyane française",
-  //         "official": "Guyane",
-  //       },
-  //     },
-  //     "official": "Guiana",
-  //   },
-  //   "population": 254541,
-  //   "region": "Americas",
-  // },
-
   const validCountrySummaryRestData = {
     flags: { png: "https://flagcdn.com/w320/gf.png" },
     name: { common: "French Guiana" },
@@ -187,5 +122,14 @@ describe("sortCountrySummary test suite", () => {
     expect(result[0]).toBe(countryA);
     expect(result[1]).toBe(countryB);
     expect(result[2]).toBe(countryC);
+  });
+});
+
+describe("sortStrings test suite", () => {
+  const unorderedArray = ["regionC", "regionA", "regionB"];
+
+  test("puts in correct order", () => {
+    const result = sortStrings(unorderedArray);
+    expect(result).toEqual(["regionA", "regionB", "regionC"]);
   });
 });
