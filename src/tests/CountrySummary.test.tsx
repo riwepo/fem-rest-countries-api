@@ -7,7 +7,7 @@ import CountrySummary from "../components/CountrySummary";
 
 import { ICountrySummary } from "../country_api/get-countries-helpers";
 
-describe("country summary test suite", () => {
+describe("CountrySummary component test suite", () => {
   const australia: ICountrySummary = {
     name: "Australia",
     population: 666,

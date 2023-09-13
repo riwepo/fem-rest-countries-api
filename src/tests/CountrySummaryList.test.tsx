@@ -5,7 +5,7 @@ import "@testing-library/jest-dom";
 
 import CountrySummaryList from "../components/CountrySummaryList";
 
-describe.skip("country summary test suite", () => {
+describe.skip("CountrySummaryList component test suite", () => {
   // const australia: ICountrySummary = {
   //   name: "Australia",
   //   population: 666,
