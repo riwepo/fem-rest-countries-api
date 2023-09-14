@@ -57,11 +57,12 @@ const App: React.FC<IAppProps> = (props) => {
     }
     setFilteredCountriesSummary(_filteredCountriesSummary);
   };
+  const searchChangedHandler = (search: string) => {};
   return (
     <div>
       <Header progressMessage={progressMessage} />
       <div className="flex justify-between p-2">
-        <SearchInput />
+        <SearchInput onSearchChanged={searchChangedHandler} />
         <FilterCombo
           options={regions}
           onSelectionChanged={filterSelectionChangedHandler}
