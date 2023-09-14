@@ -22,8 +22,10 @@ const App: React.FC = () => {
     ICountrySummary[]
   >([]);
   const [regions, setRegions] = useState<string[]>([]);
+  const [progressMessage, setProgressMessage] = useState<string>("");
   useEffect(() => {
     const fetchData = async () => {
+      setProgressMessage("Fetching data...");
       const result = await getAllCountriesSummary();
       if (result.isOk) {
         const _allCountriesSummary = result.value as ICountrySummary[];
@@ -31,6 +33,9 @@ const App: React.FC = () => {
         setFilteredCountriesSummary(_allCountriesSummary);
         const _regions = getUniqueRegions(_allCountriesSummary);
         setRegions(_regions);
+        setProgressMessage("");
+      } else {
+        setProgressMessage(result.error as string);
       }
     };
     fetchData();
@@ -49,7 +54,7 @@ const App: React.FC = () => {
   };
   return (
     <div>
-      <Header />
+      <Header progressMessage={progressMessage} />
       <div className="flex justify-between p-2">
         <SearchInput />
         <FilterCombo
