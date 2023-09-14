@@ -1,11 +1,13 @@
 // import React from "react";
 import { describe, test, expect } from "vitest";
 
-import {ICountrySummary} from "../helpers/interfaces.tsx";
+import { ICountrySummary } from "../helpers/interfaces.tsx";
 
 import {
   checkCountrySummaryRestData,
+  checkCountryDetailRestData,
   convertToCountrySummary,
+  convertToCountryDetail,
   sortCountrySummary,
   sortStrings,
 } from "../helpers/get-countries-helpers.ts";
@@ -131,4 +133,66 @@ describe("sortStrings test suite", () => {
     const result = sortStrings(unorderedArray);
     expect(result).toEqual(["regionA", "regionB", "regionC"]);
   });
+});
+
+describe("check country detail rest data test suite", () => {
+  const validCountryDetailRestData = {
+    flags: { png: "https://flagcdn.com/w320/gf.png" },
+    name: { common: "French Guiana" },
+    population: 254541,
+    capital: "Cayenne",
+    region: "Americas",
+  };
+
+  test("checkCountryDetailRestData with valid data doesn't throw", () => {
+    expect(() =>
+      checkCountryDetailRestData(validCountryDetailRestData),
+    ).not.toThrow();
+  });
+
+  // const noFlagPng = JSON.parse(JSON.stringify(validCountrySummaryRestData));
+  // noFlagPng.flags.png = null;
+
+  // test("checkCountrySummaryRestData with no flag png throws error", () => {
+  //   expect(() => checkCountrySummaryRestData(noFlag)).toThrow();
+  // });
+
+  // const noFlag = JSON.parse(JSON.stringify(validCountrySummaryRestData));
+  // noFlag.flags = null;
+
+  // test("checkCountrySummaryRestData with no flag throws error", () => {
+  //   expect(() => checkCountrySummaryRestData(noFlag)).toThrow();
+  // });
+
+  // const noNameCommon = JSON.parse(JSON.stringify(validCountrySummaryRestData));
+  // noNameCommon.name.common = null;
+
+  // test("checkCountrySummaryRestData with no name common throws error", () => {
+  //   expect(() => checkCountrySummaryRestData(noNameCommon)).toThrow();
+  // });
+
+  // const noName = JSON.parse(JSON.stringify(validCountrySummaryRestData));
+  // noName.name = null;
+
+  // test("checkCountrySummaryRestData with no name throws error", () => {
+  //   expect(() => checkCountrySummaryRestData(noName)).toThrow();
+  // });
+
+  // const noPopulation = JSON.parse(JSON.stringify(validCountrySummaryRestData));
+  // noPopulation.population = null;
+
+  // test("checkCountrySummaryRestData with no population throws error", () => {
+  //   expect(() => checkCountrySummaryRestData(noPopulation)).toThrow();
+  // });
+
+  // const noRegion = JSON.parse(JSON.stringify(validCountrySummaryRestData));
+  // noRegion.region = null;
+
+  // test("checkCountrySummaryRestData with no region throws error", () => {
+  //   expect(() => checkCountrySummaryRestData(noRegion)).toThrow();
+  // });
+
+  // test("checkCountrySummaryRestData with null data throws error", () => {
+  //   expect(() => checkCountrySummaryRestData(null)).toThrow();
+  // });
 });
