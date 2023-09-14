@@ -87,3 +87,43 @@ export function convertToCountryDetail(restData: unknown): ICountryDetail {
   };
   return result;
 }
+
+export const REST_COUNTRIES_BASE_URL = new URL(
+  "https://restcountries.com/v3.1",
+);
+
+export function getAllCountriesBaseUrl() {
+  return new URL(REST_COUNTRIES_BASE_URL + "/all");
+}
+
+export function getNamedCountryBaseUrl(name: string) {
+  return new URL(REST_COUNTRIES_BASE_URL + `/${name}`);
+}
+
+export function addFieldsToUrl(baseUrl: URL, fields: string[]): URL {
+  const joinedFields = fields.join(",");
+  const urlWithFields = baseUrl + "?fields=" + joinedFields;
+  return new URL(urlWithFields);
+}
+
+export function getAllCountriesUrl() {
+  const baseUrl = getAllCountriesBaseUrl();
+  const fields = ["name", "capital", "region", "population", "flags"];
+  const url = addFieldsToUrl(baseUrl, fields);
+  return url;
+}
+export function getNamedCountryUrl(country: string) {
+  const baseUrl = getNamedCountryBaseUrl(country);
+  const fields = [
+    "name",
+    "capital",
+    "region",
+    "population",
+    "flags",
+    "subregion",
+    "languages",
+    "borders",
+  ];
+  const url = addFieldsToUrl(baseUrl, fields);
+  return url;
+}

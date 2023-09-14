@@ -1,4 +1,3 @@
-// import React from "react";
 import { describe, test, expect } from "vitest";
 
 import { ICountrySummary } from "../helpers/interfaces.tsx";
@@ -7,9 +6,14 @@ import {
   checkCountrySummaryRestData,
   checkCountryDetailRestData,
   convertToCountrySummary,
-  convertToCountryDetail,
+  // convertToCountryDetail,
   sortCountrySummary,
   sortStrings,
+  getAllCountriesBaseUrl,
+  getAllCountriesUrl,
+  getNamedCountryBaseUrl,
+  getNamedCountryUrl,
+  addFieldsToUrl,
 } from "../helpers/get-countries-helpers.ts";
 
 describe("check country summary rest data test suite", () => {
@@ -195,4 +199,39 @@ describe("check country detail rest data test suite", () => {
   // test("checkCountrySummaryRestData with null data throws error", () => {
   //   expect(() => checkCountrySummaryRestData(null)).toThrow();
   // });
+});
+
+describe("get urls test suite", () => {
+  test("getAllCountriesUrl returns expected", () => {
+    const url = getAllCountriesBaseUrl();
+    expect(url).toEqual(new URL("https://restcountries.com/v3.1/all"));
+  });
+  test("getNamedCountryBaseUrl returns expected", () => {
+    const url = getNamedCountryBaseUrl("australia");
+    expect(url).toEqual(new URL("https://restcountries.com/v3.1/australia"));
+  });
+  test("addFieldsToUrl returns expected", () => {
+    const baseUrl = getAllCountriesBaseUrl();
+    const fields = ["field1", "field2", "field3"];
+    const url = addFieldsToUrl(baseUrl, fields);
+    expect(url).toEqual(
+      new URL("https://restcountries.com/v3.1/all?fields=field1,field2,field3"),
+    );
+  });
+  test("getAllCountriesUrl returns expected", () => {
+    const url = getAllCountriesUrl();
+    expect(url).toEqual(
+      new URL(
+        "https://restcountries.com/v3.1/all?fields=name,capital,region,population,flags",
+      ),
+    );
+  });
+  test("getNamedCountryUrl returns expected", () => {
+    const url = getNamedCountryUrl("australia");
+    expect(url).toEqual(
+      new URL(
+        "https://restcountries.com/v3.1/australia?fields=name,capital,region,population,flags,subregion,languages,borders",
+      ),
+    );
+  });
 });
