@@ -5,11 +5,13 @@ import "@testing-library/jest-dom";
 
 import App from "../App";
 
+import {} from "../helpers/interfaces";
+import { filterByRegion, filterBySearchTerm } from "../helpers/filters";
+
 import {
   getAllCountriesSummary,
-  filterByRegion,
   getUniqueRegions,
-} from "../country_api/get-countries";
+} from "../helpers/get-countries";
 
 describe("App component test suite", () => {
   test("renders progress message", () => {
@@ -32,8 +34,9 @@ describe("App component test suite", () => {
     render(
       <App
         getAllCountriesSummary={mockGetAllCountriesSummary}
-        filterByRegion={filterByRegion}
         getUniqueRegions={getUniqueRegions}
+        filterByRegion={filterByRegion}
+        filterBySearchTerm={filterBySearchTerm}
       />,
     );
     await new Promise((r) => setTimeout(r, 1));

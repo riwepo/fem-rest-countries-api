@@ -5,7 +5,7 @@ import "@testing-library/jest-dom";
 
 import CountrySummaryList from "../components/CountrySummaryList";
 
-import { ICountrySummary } from "../country_api/get-countries-helpers";
+import { ICountrySummary } from "../helpers/interfaces";
 
 describe("CountrySummaryList component test suite", () => {
   const australia: ICountrySummary = {
@@ -13,7 +13,7 @@ describe("CountrySummaryList component test suite", () => {
     population: 666,
     region: "Oceanina",
     capital: "Canberra",
-    flag: "https://flagcdn.com/au.svg",
+    flag: new URL("https://flagcdn.com/au.svg"),
   };
   const countries = [australia, australia, australia, australia, australia];
   test("renders 5 countries", () => {

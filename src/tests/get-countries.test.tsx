@@ -1,12 +1,12 @@
 // import React from "react";
 import { describe, test, expect } from "vitest";
 
-import { IGetCountriesResult } from "../country_api/get-countries-helpers.ts";
+import { IGetCountriesResult } from "../helpers/interfaces.tsx";
+import { filterByRegion } from "../helpers/filters.tsx";
 import {
-  filterByRegion,
   getAllCountriesSummary,
   getUniqueRegions,
-} from "../country_api/get-countries.ts";
+} from "../helpers/get-countries.ts";
 
 describe("getAllCountriesSummary test suite", () => {
   test("get all countries summary", async () => {

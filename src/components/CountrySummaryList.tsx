@@ -1,6 +1,6 @@
 import CountrySummary from "./CountrySummary";
 
-import { ICountrySummary } from "../country_api/get-countries-helpers";
+import { ICountrySummary } from "../helpers/get-countries-helpers";
 
 export interface ICountrySummaryListProps {
   countries: ICountrySummary[];

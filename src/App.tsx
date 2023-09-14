@@ -10,12 +10,16 @@ import {
   ICountrySummary,
   IGetCountriesResult,
   IRegion,
-} from "./country_api/get-countries-helpers";
+} from "./helpers/get-countries-helpers";
 
 interface IAppProps {
   getAllCountriesSummary: () => Promise<IGetCountriesResult>;
-  filterByRegion: (countries: IRegion[], region: string) => IRegion[];
   getUniqueRegions: (regions: IRegion[]) => string[];
+  filterByRegion: (countries: IRegion[], region: string) => IRegion[];
+  filterBySearchTerm: (
+    countries: ICountrySummary[],
+    searchTerm: string,
+  ) => ICountrySummary[];
 }
 
 const App: React.FC<IAppProps> = (props) => {
@@ -28,6 +32,22 @@ const App: React.FC<IAppProps> = (props) => {
   >([]);
   const [regions, setRegions] = useState<string[]>([]);
   const [progressMessage, setProgressMessage] = useState<string>("");
+  const [selectedRegion, setSelectedRegion] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const updateFilteredCountries = (region: string, searchTerm: string) => {
+    let filtered = allCountriesSummary;
+    if (region !== "") {
+      filtered = props.filterByRegion(
+        allCountriesSummary,
+        region,
+      ) as ICountrySummary[];
+    }
+    if (searchTerm !== "") {
+      filtered = props.filterByRegion(filtered, searchTerm);
+    }
+    setFilteredCountriesSummary(filtered);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setProgressMessage("Fetching data...");
@@ -45,19 +65,15 @@ const App: React.FC<IAppProps> = (props) => {
     };
     fetchData();
   }, []);
-  const filterSelectionChangedHandler = (selectedRegion: string) => {
-    let _filteredCountriesSummary: ICountrySummary[];
-    if (selectedRegion === "") {
-      _filteredCountriesSummary = allCountriesSummary;
-    } else {
-      _filteredCountriesSummary = props.filterByRegion(
-        allCountriesSummary,
-        selectedRegion,
-      ) as ICountrySummary[];
-    }
-    setFilteredCountriesSummary(_filteredCountriesSummary);
+
+  const filterSelectionChangedHandler = (region: string) => {
+    setSelectedRegion(region);
+    updateFilteredCountries(region, searchTerm);
   };
-  const searchChangedHandler = (search: string) => {};
+  const searchChangedHandler = (search: string) => {
+    setSearchTerm(search);
+    updateFilteredCountries(selectedRegion, search);
+  };
   return (
     <div>
       <Header progressMessage={progressMessage} />

@@ -1,19 +1,4 @@
-export interface IGetCountriesResult {
-  isOk: boolean;
-  value: object | [] | null;
-  error: string | null;
-}
-
-export interface IRegion {
-  region: string;
-}
-
-export interface ICountrySummary extends IRegion {
-  name: string;
-  capital: string;
-  population: number;
-  flag: URL;
-}
+import { IGetCountriesResult, ICountrySummary } from "./interfaces";
 
 export function wrapInResultObject(value: object | null): IGetCountriesResult {
   const result: IGetCountriesResult = { isOk: true, value: value, error: null };

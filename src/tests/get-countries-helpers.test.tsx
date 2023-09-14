@@ -1,15 +1,14 @@
 // import React from "react";
 import { describe, test, expect } from "vitest";
 
+import {ICountrySummary} from "../helpers/interfaces.tsx";
+
 import {
-  ICountrySummary,
   checkCountrySummaryRestData,
   convertToCountrySummary,
   sortCountrySummary,
   sortStrings,
-  // getUniqueRegions,
-  //wrapInResultObject,
-} from "../country_api/get-countries-helpers.ts";
+} from "../helpers/get-countries-helpers.ts";
 
 describe("check country summary rest data test suite", () => {
   const validCountrySummaryRestData = {

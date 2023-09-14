@@ -1,12 +1,10 @@
+import { IGetCountriesResult, ICountrySummary } from "./interfaces";
 import {
   wrapInResultObject,
   processError,
-  ICountrySummary,
   convertToCountrySummary,
-  IGetCountriesResult,
   sortCountrySummary,
   sortStrings,
-  IRegion,
 } from "./get-countries-helpers";
 
 const GET_ALL_COUNTRIES_SUMMARY_URL = new URL(
@@ -51,14 +49,4 @@ export function getUniqueRegions(regionObjects: { region: string }[]) {
   const uniqueRegions = [...new Set(regionStrings)];
   const sorted = sortStrings(uniqueRegions);
   return sorted;
-}
-
-export function filterByRegion(
-  countries: IRegion[],
-  region: string,
-): IRegion[] {
-  const matchingRegion = countries.filter(
-    (country) => country.region === region,
-  );
-  return matchingRegion;
 }

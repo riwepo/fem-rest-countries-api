@@ -5,7 +5,7 @@ import "@testing-library/jest-dom";
 
 import CountrySummary from "../components/CountrySummary";
 
-import { ICountrySummary } from "../country_api/get-countries-helpers";
+import { ICountrySummary } from "../helpers/interfaces";
 
 describe("CountrySummary component test suite", () => {
   const australia: ICountrySummary = {
