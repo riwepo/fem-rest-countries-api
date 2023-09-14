@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 
-// import DesignSystem from "./components/DesignSystem";
-import CountrySummaryList from "./components/CountrySummaryList";
-import FilterCombo from "./components/FilterCombo";
 import Header from "./components/Header";
-import SearchInput from "./components/SearchInput";
 
 import {
   ICountrySummary,
@@ -12,6 +8,7 @@ import {
   IRegion,
   IName,
 } from "./helpers/interfaces";
+import HomePage from "./components/HomePage";
 
 interface IAppProps {
   getAllCountriesSummary: () => Promise<IGetCountriesResult>;
@@ -78,14 +75,16 @@ const App: React.FC<IAppProps> = (props) => {
   return (
     <div>
       <Header progressMessage={progressMessage} />
-      <div className="flex justify-between p-2">
-        <SearchInput onSearchChanged={searchChangedHandler} />
-        <FilterCombo
-          options={regions}
-          onSelectionChanged={filterSelectionChangedHandler}
-        />
-      </div>
-      <CountrySummaryList countries={filteredCountriesSummary} />
+      <HomePage
+        countries={filteredCountriesSummary}
+        regions={regions}
+        getAllCountriesSummary={props.getAllCountriesSummary}
+        getUniqueRegions={props.getUniqueRegions}
+        filterByRegion={props.filterByRegion}
+        filterBySearchTerm={props.filterBySearchTerm}
+        searchChangedHandler={searchChangedHandler}
+        filterSelectionChangedHandler={filterSelectionChangedHandler}
+      />
     </div>
   );
 };
