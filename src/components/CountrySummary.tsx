@@ -1,6 +1,6 @@
 import Card from "./Card";
 
-import { ICountrySummary } from "../helpers/get-countries-helpers";
+import { ICountrySummary } from "../helpers/interfaces";
 
 interface CountrySummaryProps {
   country: ICountrySummary;
