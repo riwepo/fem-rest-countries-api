@@ -13,7 +13,7 @@ const DesignSystem: React.FC = () => {
     population: 666,
     region: "Oceania",
     capital: "Canberra",
-    flag: new URL("https://flagcdn.com/au.svg)",
+    flag: new URL("https://flagcdn.com/au.svg"),
   };
   const countries: ICountrySummary[] = [
     australia,
