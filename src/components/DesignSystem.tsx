@@ -5,22 +5,23 @@ import Header from "./Header";
 import SearchInput from "./SearchInput";
 import FilterCombo from "./FilterCombo";
 
-import { ICountrySummary } from "../helpers/interfaces";
+import { ICountrySummary, ICountryDetail } from "../helpers/interfaces";
+import DetailPage from "./DetailPage";
 
 const DesignSystem: React.FC = () => {
-  const australia: ICountrySummary = {
+  const australiaSummary: ICountrySummary = {
     name: "Australia",
     population: 666,
     region: "Oceania",
     capital: "Canberra",
     flag: new URL("https://flagcdn.com/au.svg"),
   };
-  const countries: ICountrySummary[] = [
-    australia,
-    australia,
-    australia,
-    australia,
-    australia,
+  const countrySummaries: ICountrySummary[] = [
+    australiaSummary,
+    australiaSummary,
+    australiaSummary,
+    australiaSummary,
+    australiaSummary,
   ];
   const filtercomboOptions = ["option1", "option2", "option3", "option4"];
   const filterComboSelectionChangeHandler = (selection: string) => {
@@ -29,16 +30,26 @@ const DesignSystem: React.FC = () => {
   const searchChangeHandler = (search: string) => {
     console.log(search);
   };
+  const australiaDetail: ICountryDetail = {
+    ...australiaSummary,
+    nativeName: "straya",
+    subRegion: "Australasia",
+    topLevelDomain: "AU",
+    currencies: ["AUD"],
+    languages: ["english"],
+    borderCountries: [],
+  };
   return (
     <div>
-      <CountrySummary country={australia} />
-      <CountrySummaryList countries={countries} />
+      <CountrySummary country={australiaSummary} />
+      <CountrySummaryList countries={countrySummaries} />
       <Header progressMessage="hello there" />
       <SearchInput onSearchChanged={searchChangeHandler} />
       <FilterCombo
         options={filtercomboOptions}
         onSelectionChanged={filterComboSelectionChangeHandler}
       />
+      <DetailPage country={australiaDetail} />
     </div>
   );
 };
