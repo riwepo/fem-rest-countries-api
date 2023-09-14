@@ -10,16 +10,14 @@ import {
   ICountrySummary,
   IGetCountriesResult,
   IRegion,
-} from "./helpers/get-countries-helpers";
+  IName,
+} from "./helpers/interfaces";
 
 interface IAppProps {
   getAllCountriesSummary: () => Promise<IGetCountriesResult>;
   getUniqueRegions: (regions: IRegion[]) => string[];
   filterByRegion: (countries: IRegion[], region: string) => IRegion[];
-  filterBySearchTerm: (
-    countries: ICountrySummary[],
-    searchTerm: string,
-  ) => ICountrySummary[];
+  filterBySearchTerm: (countries: IName[], searchTerm: string) => IName[];
 }
 
 const App: React.FC<IAppProps> = (props) => {
@@ -43,7 +41,10 @@ const App: React.FC<IAppProps> = (props) => {
       ) as ICountrySummary[];
     }
     if (searchTerm !== "") {
-      filtered = props.filterByRegion(filtered, searchTerm);
+      filtered = props.filterBySearchTerm(
+        filtered,
+        searchTerm,
+      ) as ICountrySummary[];
     }
     setFilteredCountriesSummary(filtered);
   };
