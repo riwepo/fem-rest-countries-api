@@ -36,6 +36,16 @@ export async function getAllCountriesSummary(): Promise<IGetCountriesResult> {
   }
 }
 
+export async function getAllCountriesSummarySlowWithError(): Promise<IGetCountriesResult> {
+  await new Promise((r) => setTimeout(r, 2000));
+  const errorResult = Promise.resolve({
+    isOk: false,
+    error: "some error",
+    value: null,
+  });
+  return errorResult;
+}
+
 export function getUniqueRegions(regionObjects: { region: string }[]) {
   const regionStrings: string[] = regionObjects.map((object) => object.region);
   const uniqueRegions = [...new Set(regionStrings)];
