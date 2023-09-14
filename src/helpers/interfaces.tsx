@@ -17,3 +17,12 @@ export interface ICountrySummary extends IRegion, IName {
   population: number;
   flag: URL;
 }
+
+export interface ICountryDetail extends ICountrySummary {
+  nativeName: string;
+  subRegion: string;
+  topLevelDomain: string;
+  currencies: string[];
+  languages: string[];
+  borderCountries: string[];
+}
