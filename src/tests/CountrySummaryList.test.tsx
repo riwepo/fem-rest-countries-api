@@ -5,18 +5,19 @@ import "@testing-library/jest-dom";
 
 import CountrySummaryList from "../components/CountrySummaryList";
 
-describe.skip("CountrySummaryList component test suite", () => {
-  // const australia: ICountrySummary = {
-  //   name: "Australia",
-  //   population: 666,
-  //   region: "Oceanina",
-  //   capital: "Canberra",
-  //   flagUrl: "https://flagcdn.com/au.svg",
-  // };
-  // const countries = [australia, australia, australia, australia, australia];
+import { ICountrySummary } from "../country_api/get-countries-helpers";
+
+describe("CountrySummaryList component test suite", () => {
+  const australia: ICountrySummary = {
+    name: "Australia",
+    population: 666,
+    region: "Oceanina",
+    capital: "Canberra",
+    flag: "https://flagcdn.com/au.svg",
+  };
+  const countries = [australia, australia, australia, australia, australia];
   test("renders 5 countries", () => {
-    // render(<CountrySummaryList countries={countries} />);
-    render(<CountrySummaryList />);
+    render(<CountrySummaryList countries={countries} />);
     const nameElements = screen.getAllByText("Australia");
     expect(nameElements.length).toBe(countries.length);
   });
