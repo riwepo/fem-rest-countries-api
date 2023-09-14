@@ -6,14 +6,19 @@ import FilterCombo from "./components/FilterCombo";
 import Header from "./components/Header";
 import SearchInput from "./components/SearchInput";
 
-import { ICountrySummary } from "./country_api/get-countries-helpers";
 import {
-  filterByRegion,
-  getAllCountriesSummary,
-  getUniqueRegions,
-} from "./country_api/get-countries";
+  ICountrySummary,
+  IGetCountriesResult,
+  IRegion,
+} from "./country_api/get-countries-helpers";
 
-const App: React.FC = () => {
+interface IAppProps {
+  getAllCountriesSummary: () => Promise<IGetCountriesResult>;
+  filterByRegion: (countries: IRegion[], region: string) => IRegion[];
+  getUniqueRegions: (regions: IRegion[]) => string[];
+}
+
+const App: React.FC<IAppProps> = (props) => {
   // return <DesignSystem />;
   const [allCountriesSummary, setAllCountriesSummary] = useState<
     ICountrySummary[]
@@ -26,12 +31,12 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       setProgressMessage("Fetching data...");
-      const result = await getAllCountriesSummary();
+      const result = await props.getAllCountriesSummary();
       if (result.isOk) {
         const _allCountriesSummary = result.value as ICountrySummary[];
         setAllCountriesSummary(_allCountriesSummary);
         setFilteredCountriesSummary(_allCountriesSummary);
-        const _regions = getUniqueRegions(_allCountriesSummary);
+        const _regions = props.getUniqueRegions(_allCountriesSummary);
         setRegions(_regions);
         setProgressMessage("");
       } else {
@@ -45,7 +50,7 @@ const App: React.FC = () => {
     if (selectedRegion === "") {
       _filteredCountriesSummary = allCountriesSummary;
     } else {
-      _filteredCountriesSummary = filterByRegion(
+      _filteredCountriesSummary = props.filterByRegion(
         allCountriesSummary,
         selectedRegion,
       ) as ICountrySummary[];
