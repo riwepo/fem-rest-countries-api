@@ -1,4 +1,8 @@
-import { IGetCountriesResult, ICountrySummary } from "./interfaces";
+import {
+  IGetCountriesResult,
+  ICountrySummary,
+  ICountryDetail,
+} from "./interfaces";
 
 export function wrapInResultObject(value: object | null): IGetCountriesResult {
   const result: IGetCountriesResult = { isOk: true, value: value, error: null };
@@ -32,6 +36,20 @@ export function checkCountrySummaryRestData(restData: unknown): void {
   }
 }
 
+export function checkCountryDetailRestData(restData: unknown): void {
+  if (
+    !restData ||
+    !restData?.name?.common ||
+    !restData?.capital ||
+    !restData?.region ||
+    restData.population === null ||
+    restData.population === undefined ||
+    !restData.flags.png
+  ) {
+    throw new Error(`unexpected country detail rest data ${restData}`);
+  }
+}
+
 export function convertToCountrySummary(restData: unknown): ICountrySummary {
   checkCountrySummaryRestData(restData);
   const result: ICountrySummary = {
@@ -50,4 +68,22 @@ export function sortCountrySummary(data: ICountrySummary[]): ICountrySummary[] {
 
 export function sortStrings(data: string[]): string[] {
   return [...data].sort((a, b) => a.localeCompare(b));
+}
+
+export function convertToCountryDetail(restData: unknown): ICountryDetail {
+  checkCountrySummaryRestData(restData);
+  const result: ICountryDetail = {
+    name: restData.name.common,
+    capital: restData.capital,
+    region: restData.region,
+    population: restData.population,
+    flag: restData.flags.png,
+    nativeName: "error",
+    subRegion: "error",
+    topLevelDomain: "error",
+    currencies: ["error"],
+    languages: ["error"],
+    borderCountries: ["error"],
+  };
+  return result;
 }
