@@ -72,6 +72,9 @@ const App: React.FC<IAppProps> = (props) => {
     setSearchTerm(search);
     updateFilteredCountries(selectedRegion, search);
   };
+  const countryClickHandler = (country: string) => {
+    console.log(country);
+  };
   return (
     <div>
       <Header progressMessage={progressMessage} />
@@ -84,6 +87,7 @@ const App: React.FC<IAppProps> = (props) => {
         filterBySearchTerm={props.filterBySearchTerm}
         searchChangedHandler={searchChangedHandler}
         filterSelectionChangedHandler={filterSelectionChangedHandler}
+        countryClickHandler={countryClickHandler}
       />
     </div>
   );

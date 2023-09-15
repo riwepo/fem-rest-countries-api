@@ -18,6 +18,7 @@ interface IHomePageProps {
   filterBySearchTerm: (countries: IName[], searchTerm: string) => IName[];
   searchChangedHandler: (search: string) => void;
   filterSelectionChangedHandler: (search: string) => void;
+  countryClickHandler: (search: string) => void;
 }
 
 const HomePage: React.FC<IHomePageProps> = (props) => {
@@ -30,7 +31,10 @@ const HomePage: React.FC<IHomePageProps> = (props) => {
           onSelectionChanged={props.filterSelectionChangedHandler}
         />
       </div>
-      <CountrySummaryList countries={props.countries} />
+      <CountrySummaryList
+        countries={props.countries}
+        onCountryClicked={props.countryClickHandler}
+      />
     </>
   );
 };
