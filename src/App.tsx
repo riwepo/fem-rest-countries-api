@@ -72,6 +72,7 @@ const App: React.FC<IAppProps> = (props) => {
 
   useEffect(() => {
     if (selectedCountryName === "") {
+      setSelectedCountryDetail(null);
       return;
     }
     const fetchData = async () => {
@@ -81,8 +82,6 @@ const App: React.FC<IAppProps> = (props) => {
         const _countryDetail = result.value as ICountryDetail;
         setSelectedCountryDetail(_countryDetail);
         setProgressMessage("");
-        console.log(_countryDetail);
-        console.log(selectedCountryDetail);
       } else {
         setProgressMessage(result.error as string);
       }
@@ -98,7 +97,7 @@ const App: React.FC<IAppProps> = (props) => {
     setSearchTerm(search);
     updateFilteredCountries(selectedRegion, search);
   };
-  const countryClickHandler = (countryName: string) => {
+  const countryChangeHandler = (countryName: string) => {
     setSelectedCountryName(countryName);
   };
   return (
@@ -114,11 +113,14 @@ const App: React.FC<IAppProps> = (props) => {
           filterBySearchTerm={props.filterBySearchTerm}
           searchChangedHandler={searchChangedHandler}
           filterSelectionChangedHandler={filterSelectionChangedHandler}
-          countryClickHandler={countryClickHandler}
+          countryClickHandler={countryChangeHandler}
         />
       )}
       {selectedCountryDetail !== null && (
-        <DetailPage country={selectedCountryDetail} />
+        <DetailPage
+          country={selectedCountryDetail}
+          onCountryChange={countryChangeHandler}
+        />
       )}
     </div>
   );
