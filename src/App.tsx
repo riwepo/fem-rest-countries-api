@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
 import Header from "./components/Header";
+import HomePage from "./components/HomePage";
+import DetailPage from "./components/DetailPage";
 
 import {
   ICountrySummary,
@@ -9,7 +11,6 @@ import {
   IRegion,
   IName,
 } from "./helpers/interfaces";
-import HomePage from "./components/HomePage";
 
 interface IAppProps {
   getAllCountriesSummary: () => Promise<IGetCountriesResult>;
@@ -103,17 +104,22 @@ const App: React.FC<IAppProps> = (props) => {
   return (
     <div>
       <Header progressMessage={progressMessage} />
-      <HomePage
-        countries={filteredCountriesSummary}
-        regions={regions}
-        getAllCountriesSummary={props.getAllCountriesSummary}
-        getUniqueRegions={props.getUniqueRegions}
-        filterByRegion={props.filterByRegion}
-        filterBySearchTerm={props.filterBySearchTerm}
-        searchChangedHandler={searchChangedHandler}
-        filterSelectionChangedHandler={filterSelectionChangedHandler}
-        countryClickHandler={countryClickHandler}
-      />
+      {selectedCountryDetail === null && (
+        <HomePage
+          countries={filteredCountriesSummary}
+          regions={regions}
+          getAllCountriesSummary={props.getAllCountriesSummary}
+          getUniqueRegions={props.getUniqueRegions}
+          filterByRegion={props.filterByRegion}
+          filterBySearchTerm={props.filterBySearchTerm}
+          searchChangedHandler={searchChangedHandler}
+          filterSelectionChangedHandler={filterSelectionChangedHandler}
+          countryClickHandler={countryClickHandler}
+        />
+      )}
+      {selectedCountryDetail !== null && (
+        <DetailPage country={selectedCountryDetail} />
+      )}
     </div>
   );
 };
