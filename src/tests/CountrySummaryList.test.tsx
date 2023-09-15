@@ -1,6 +1,6 @@
 // import React from "react";
-import { describe, test, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, test, expect, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import CountrySummaryList from "../components/CountrySummaryList";
@@ -17,8 +17,26 @@ describe("CountrySummaryList component test suite", () => {
   };
   const countries = [australia, australia, australia, australia, australia];
   test("renders 5 countries", () => {
-    render(<CountrySummaryList countries={countries} />);
+    const clickHandler = vi.fn();
+    render(
+      <CountrySummaryList
+        countries={countries}
+        onCountryClicked={clickHandler}
+      />,
+    );
     const nameElements = screen.getAllByText("Australia");
     expect(nameElements.length).toBe(countries.length);
+  });
+  test("click calls callback", () => {
+    const clickHandler = vi.fn();
+    render(
+      <CountrySummaryList
+        countries={countries}
+        onCountryClicked={clickHandler}
+      />,
+    );
+    const buttonElements = screen.getAllByRole("button");
+    fireEvent.click(buttonElements[0]);
+    expect(clickHandler).toBeCalledWith(australia.name);
   });
 });
