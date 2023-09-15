@@ -6,10 +6,11 @@ import { filterByRegion } from "../helpers/filters.tsx";
 import {
   getAllCountriesSummary,
   getUniqueRegions,
+  getCountryDetail,
 } from "../helpers/get-countries.ts";
 
 describe("getAllCountriesSummary test suite", () => {
-  test("get all countries summary", async () => {
+  test("getAllCountriesSummary returns expected", async () => {
     const result: IGetCountriesResult = await getAllCountriesSummary();
     expect(result.isOk).toBe(true);
     expect(result.value).not.toBeNull();
@@ -91,5 +92,13 @@ describe("filterByRegion test suite", () => {
     const region = "region1";
     const result = filterByRegion(testData, region);
     expect(result).toEqual(testData);
+  });
+});
+
+describe("getCountryDetail test suite", () => {
+  test("getCountryDetail returns expected", async () => {
+    const result: IGetCountriesResult = await getCountryDetail("australia");
+    expect(result.isOk).toBe(true);
+    expect(result.value).not.toBeNull();
   });
 });

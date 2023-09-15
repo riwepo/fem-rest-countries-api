@@ -10,21 +10,15 @@ import {
   convertToCountryDetail,
   sortCountrySummary,
   sortStrings,
+  getAllCountriesUrl,
+  getNamedCountryUrl,
 } from "./get-countries-helpers";
-
-const GET_ALL_COUNTRIES_SUMMARY_URL = new URL(
-  "https://restcountries.com/v3.1/all?fields=name,capital,region,population,flags",
-);
-
-function getCountryDetailUrl(name: string) {
-  const result = `https://restcountries.com/v3.1/name/${name}`;
-  return result;
-}
 
 export async function getAllCountriesSummary(): Promise<IGetCountriesResult> {
   let result;
   try {
-    const response = await fetch(GET_ALL_COUNTRIES_SUMMARY_URL);
+    const url = getAllCountriesUrl();
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
         `restcountries request failed with error: ${response.status}`,
@@ -66,7 +60,7 @@ export async function getCountryDetail(
 ): Promise<IGetCountriesResult> {
   let result;
   try {
-    const url = getCountryDetailUrl(name);
+    const url = getNamedCountryUrl(name);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
