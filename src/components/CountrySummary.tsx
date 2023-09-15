@@ -4,7 +4,7 @@ import { ICountrySummary } from "../helpers/interfaces";
 
 interface CountrySummaryProps {
   country: ICountrySummary;
-  onClick: (a: string) => void;
+  onClick: (countryName: string) => void;
 }
 
 const CountrySummary: React.FC<CountrySummaryProps> = (props) => {
