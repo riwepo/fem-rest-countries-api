@@ -54,21 +54,24 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
               <span className="font-semibold">Top Level Domain:</span>{" "}
               {props.country.topLevelDomain}
             </p>
-            <p>
+            {/* <p>
               <span className="font-semibold">Currencies:</span>{" "}
               {props.country.currencies}
-            </p>
-            <p>
+            </p> */}
+            {/* <p>
               <span className="font-semibold">Languages:</span>{" "}
               {props.country.languages}
-            </p>
+            </p> */}
           </div>
           <div className="col-span-3 col-start-1 row-start-3 flex flex-row items-center">
             <p className="align-middle">Border Countries:</p>
             <div className="row-start-3 flex flex-row">
               {props.country.borderCountries.map((country) => {
                 return (
-                  <button className="m-2 rounded bg-white px-4 py-2">
+                  <button
+                    key={country}
+                    className="m-2 rounded bg-white px-4 py-2"
+                  >
                     {country}
                   </button>
                 );
