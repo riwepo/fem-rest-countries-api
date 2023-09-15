@@ -1,6 +1,6 @@
 // import React from "react";
-import { describe, test, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, test, expect, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import CountrySummary from "../components/CountrySummary";
@@ -16,7 +16,8 @@ describe("CountrySummary component test suite", () => {
     flag: new URL("https://flagcdn.com/au.svg"),
   };
   test("renders img, name, 3 labels, 3 label values", () => {
-    render(<CountrySummary country={australia} />);
+    const clickHandler = vi.fn();
+    render(<CountrySummary country={australia} onClick={clickHandler} />);
     const imgElement = screen.getByRole("img");
     expect(imgElement).toBeInTheDocument();
     const nameElement = screen.getByText("Australia");
@@ -29,5 +30,13 @@ describe("CountrySummary component test suite", () => {
     expect(regionValueElement).toBeInTheDocument();
     const capitalValueElement = screen.getByText("Canberra");
     expect(capitalValueElement).toBeInTheDocument();
+  });
+
+  test("click calls callback", () => {
+    const clickHandler = vi.fn();
+    render(<CountrySummary country={australia} onClick={clickHandler} />);
+    const buttonElement = screen.getByRole("button");
+    fireEvent.click(buttonElement);
+    expect(clickHandler).toBeCalledWith(australia.name);
   });
 });
