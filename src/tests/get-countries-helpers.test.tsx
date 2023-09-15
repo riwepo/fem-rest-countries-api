@@ -16,15 +16,15 @@ import {
   addFieldsToUrl,
 } from "../helpers/get-countries-helpers.ts";
 
-describe("check country summary rest data test suite", () => {
-  const validCountrySummaryRestData = {
-    flags: { png: "https://flagcdn.com/w320/gf.png" },
-    name: { common: "French Guiana" },
-    population: 254541,
-    capital: "Cayenne",
-    region: "Americas",
-  };
+const validCountrySummaryRestData = {
+  flags: { png: "https://flagcdn.com/w320/gf.png" },
+  capital: ["Cayene"],
+  name: { common: "French Guiana" },
+  population: 254541,
+  region: "Americas",
+};
 
+describe("check country summary rest data test suite", () => {
   test("checkCountrySummaryRestData with valid data doesn't throw", () => {
     expect(() =>
       checkCountrySummaryRestData(validCountrySummaryRestData),
@@ -78,13 +78,6 @@ describe("check country summary rest data test suite", () => {
   });
 });
 
-const validCountrySummaryRestData = {
-  flags: { png: "https://flagcdn.com/w320/gf.png" },
-  capital: ["Cayene"],
-  name: { common: "French Guiana" },
-  population: 254541,
-  region: "Americas",
-};
 describe("convert to country summary rest data test suite", () => {
   test("convertToCountrySummary with valid data", () => {
     const result = convertToCountrySummary(validCountrySummaryRestData);
@@ -155,7 +148,7 @@ const validCountryDetailRestData = {
 describe("check country detail rest data test suite", () => {
   test("checkCountryDetailRestData with valid data doesn't throw", () => {
     expect(() =>
-      checkCountryDetailRestData(validCountryDetailRestData),
+      checkCountryDetailRestData([validCountryDetailRestData]),
     ).not.toThrow();
   });
 
@@ -176,7 +169,7 @@ describe("check country detail rest data test suite", () => {
   noNativeName.name.nativeName = null;
 
   test("checkCountryDetailRestData with no native name throws error", () => {
-    expect(() => checkCountryDetailRestData(noNativeName)).toThrow();
+    expect(() => checkCountryDetailRestData([noNativeName])).toThrow();
   });
 
   const noNativeNameFirstProperty = JSON.parse(
@@ -186,7 +179,7 @@ describe("check country detail rest data test suite", () => {
 
   test("checkCountryDetailRestData with no native name first property  throws error", () => {
     expect(() =>
-      checkCountryDetailRestData(noNativeNameFirstProperty),
+      checkCountryDetailRestData([noNativeNameFirstProperty]),
     ).toThrow();
   });
 
@@ -197,7 +190,7 @@ describe("check country detail rest data test suite", () => {
 
   test("checkCountryDetailRestData with no native name first property common throws error", () => {
     expect(() =>
-      checkCountryDetailRestData(noNativeNameFirstPropertyCommon),
+      checkCountryDetailRestData([noNativeNameFirstPropertyCommon]),
     ).toThrow();
   });
 
@@ -205,14 +198,14 @@ describe("check country detail rest data test suite", () => {
   noSubregion.subregion = null;
 
   test("checkCountryDetailRestData with no subregion throws error", () => {
-    expect(() => checkCountryDetailRestData(noSubregion)).toThrow();
+    expect(() => checkCountryDetailRestData([noSubregion])).toThrow();
   });
 
   const noLanguages = JSON.parse(JSON.stringify(validCountryDetailRestData));
   noLanguages.languages = null;
 
   test("checkCountryDetailRestData with no languages throws error", () => {
-    expect(() => checkCountryDetailRestData(noLanguages)).toThrow();
+    expect(() => checkCountryDetailRestData([noLanguages])).toThrow();
   });
 
   const noLanguagesFirstProperty = JSON.parse(
@@ -222,7 +215,7 @@ describe("check country detail rest data test suite", () => {
 
   test("checkCountryDetailRestData with no languages first property throws error", () => {
     expect(() =>
-      checkCountryDetailRestData(noLanguagesFirstProperty),
+      checkCountryDetailRestData([noLanguagesFirstProperty]),
     ).toThrow();
   });
 
@@ -230,21 +223,21 @@ describe("check country detail rest data test suite", () => {
   noBorders.borders = null;
 
   test("checkCountryDetailRestData with no borders throws error", () => {
-    expect(() => checkCountryDetailRestData(noBorders)).toThrow();
+    expect(() => checkCountryDetailRestData([noBorders])).toThrow();
   });
 
   const noTld = JSON.parse(JSON.stringify(validCountryDetailRestData));
   noTld.tld = null;
 
   test("checkCountryDetailRestData with no tld throws error", () => {
-    expect(() => checkCountryDetailRestData(noTld)).toThrow();
+    expect(() => checkCountryDetailRestData([noTld])).toThrow();
   });
 
   const noCurrencies = JSON.parse(JSON.stringify(validCountryDetailRestData));
   noCurrencies.currencies = null;
 
   test("checkCountryDetailRestData with no currencies throws error", () => {
-    expect(() => checkCountryDetailRestData(noCurrencies)).toThrow();
+    expect(() => checkCountryDetailRestData([noCurrencies])).toThrow();
   });
 
   const noCurrenciesFirstProperty = JSON.parse(
@@ -254,7 +247,7 @@ describe("check country detail rest data test suite", () => {
 
   test("checkCountryDetailRestData with no currencies first property throws error", () => {
     expect(() =>
-      checkCountryDetailRestData(noCurrenciesFirstProperty),
+      checkCountryDetailRestData([noCurrenciesFirstProperty]),
     ).toThrow();
   });
 
@@ -265,7 +258,7 @@ describe("check country detail rest data test suite", () => {
 
   test("checkCountryDetailRestData with no currencies first property name throws error", () => {
     expect(() =>
-      checkCountryDetailRestData(noCurrenciesFirstPropertyName),
+      checkCountryDetailRestData([noCurrenciesFirstPropertyName]),
     ).toThrow();
   });
 });
