@@ -14,6 +14,7 @@ import {
   getNamedCountryBaseUrl,
   getNamedCountryUrl,
   addFieldsToUrl,
+  convertCurrencies,
 } from "../helpers/get-countries-helpers.ts";
 
 const validCountrySummaryRestData = {
@@ -284,5 +285,17 @@ describe("get urls test suite", () => {
         "https://restcountries.com/v3.1/name/australia?fields=name,capital,region,population,flags,subregion,languages,borders,tld,currencies",
       ),
     );
+  });
+});
+
+describe("convert currencies test suite", () => {
+  test("convertCurrencies returns expected", () => {
+    const testData = {
+      EUR: { name: "Euro", symbol: "e" },
+      DOLLAR: { name: "Dollar", symbol: "$" },
+      POUND: { name: "Pound", symbol: "%" },
+    };
+    const currencies = convertCurrencies(testData);
+    expect(currencies).toEqual(["Euro", "Dollar", "Pound"]);
   });
 });

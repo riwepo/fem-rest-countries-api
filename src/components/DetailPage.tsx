@@ -9,6 +9,10 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
   const backClickHandler = () => {
     props.onCountryChange("");
   };
+  console.log(props.country.currencies);
+  const currencies = props.country.currencies.join(",");
+  console.log(currencies);
+
   return (
     <div className="flex flex-col justify-between p-10 align-middle">
       <button
@@ -54,10 +58,10 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
               <span className="font-semibold">Top Level Domain:</span>{" "}
               {props.country.topLevelDomain}
             </p>
-            {/* <p>
-              <span className="font-semibold">Currencies:</span>{" "}
-              {props.country.currencies}
-            </p> */}
+            <p>
+              <span className="font-semibold">Currencies:</span> {currencies}
+            </p>
+
             {/* <p>
               <span className="font-semibold">Languages:</span>{" "}
               {props.country.languages}
