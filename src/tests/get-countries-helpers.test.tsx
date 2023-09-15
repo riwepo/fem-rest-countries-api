@@ -148,21 +148,8 @@ const validCountryDetailRestData = {
 describe("check country detail rest data test suite", () => {
   test("checkCountryDetailRestData with valid data doesn't throw", () => {
     expect(() =>
-      checkCountryDetailRestData([validCountryDetailRestData]),
+      checkCountryDetailRestData(validCountryDetailRestData),
     ).not.toThrow();
-  });
-
-  test("checkCountryDetailRestData throws if doesn't receive array", () => {
-    expect(() => checkCountryDetailRestData("dodgy data")).toThrow();
-  });
-
-  test("checkCountryDetailRestData throws if doesn't receive array with one entry", () => {
-    expect(() =>
-      checkCountryDetailRestData([
-        validCountryDetailRestData,
-        validCountryDetailRestData,
-      ]),
-    ).toThrow();
   });
 
   const noNativeName = JSON.parse(JSON.stringify(validCountryDetailRestData));

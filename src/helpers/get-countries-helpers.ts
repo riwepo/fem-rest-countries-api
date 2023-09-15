@@ -45,36 +45,27 @@ export function checkCountrySummaryRestData(restData: unknown): void {
 }
 
 export function checkCountryDetailRestData(restData: unknown): void {
-  // we expect an array with 1 entry
-  if (!Array.isArray(restData))
-    throw new Error(`expected array but received ${typeof restData}`);
-  if (restData.length !== 1)
-    throw new Error(
-      `expected array with 1 entry but received ${restData.length}`,
-    );
-  const restDataItem = restData[0];
-
-  checkCountrySummaryRestData(restDataItem);
+    checkCountrySummaryRestData(restData);
   let errorCode = 0;
-  if (!restDataItem.subregion) errorCode = 1;
-  if (!restDataItem.languages) errorCode = 2;
-  if (!restDataItem.languages[Object.keys(restDataItem.languages)[0]])
+  if (!restData.subregion) errorCode = 1;
+  if (!restData.languages) errorCode = 2;
+  if (!restData.languages[Object.keys(restData.languages)[0]])
     errorCode = 3;
-  if (!restDataItem.borders) errorCode = 4;
-  if (!restDataItem.name.nativeName) errorCode = 5;
+  if (!restData.borders) errorCode = 4;
+  if (!restData.name.nativeName) errorCode = 5;
   if (
-    !restDataItem.name.nativeName[Object.keys(restDataItem.name.nativeName)[0]]
+    !restData.name.nativeName[Object.keys(restData.name.nativeName)[0]]
       .common
   )
     errorCode = 6;
-  if (!restDataItem.tld) errorCode = 7;
-  if (!restDataItem.currencies) errorCode = 8;
-  if (!restDataItem.currencies[Object.keys(restDataItem.currencies)[0]].name)
+  if (!restData.tld) errorCode = 7;
+  if (!restData.currencies) errorCode = 8;
+  if (!restData.currencies[Object.keys(restData.currencies)[0]].name)
     errorCode = 9;
   if (errorCode !== 0) {
     throw new Error(
       `unexpected country detail rest data with error code ${errorCode} ${JSON.stringify(
-        restDataItem,
+        restData,
       )}`,
     );
   }
@@ -101,8 +92,15 @@ export function sortStrings(data: string[]): string[] {
 }
 
 export function convertToCountryDetail(restData: unknown): ICountryDetail {
-  checkCountryDetailRestData(restData);
+  // we expect an array with 1 entry
+  if (!Array.isArray(restData))
+    throw new Error(`expected array but received ${typeof restData}`);
+  if (restData.length !== 1)
+    throw new Error(
+      `expected array with 1 entry but received ${restData.length}`,
+    );
   const restDataItem = restData[0];
+  checkCountryDetailRestData(restDataItem);
   const summary = convertToCountrySummary(restDataItem);
   const detail = {
     ...summary,
