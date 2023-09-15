@@ -45,17 +45,15 @@ export function checkCountrySummaryRestData(restData: unknown): void {
 }
 
 export function checkCountryDetailRestData(restData: unknown): void {
-    checkCountrySummaryRestData(restData);
+  checkCountrySummaryRestData(restData);
   let errorCode = 0;
   if (!restData.subregion) errorCode = 1;
   if (!restData.languages) errorCode = 2;
-  if (!restData.languages[Object.keys(restData.languages)[0]])
-    errorCode = 3;
+  if (!restData.languages[Object.keys(restData.languages)[0]]) errorCode = 3;
   if (!restData.borders) errorCode = 4;
   if (!restData.name.nativeName) errorCode = 5;
   if (
-    !restData.name.nativeName[Object.keys(restData.name.nativeName)[0]]
-      .common
+    !restData.name.nativeName[Object.keys(restData.name.nativeName)[0]].common
   )
     errorCode = 6;
   if (!restData.tld) errorCode = 7;
@@ -102,6 +100,7 @@ export function convertToCountryDetail(restData: unknown): ICountryDetail {
   const restDataItem = restData[0];
   checkCountryDetailRestData(restDataItem);
   const summary = convertToCountrySummary(restDataItem);
+  const currencies = convertCurrencies(restDataItem.currencies);
   const detail = {
     ...summary,
     nativeName:
@@ -110,11 +109,15 @@ export function convertToCountryDetail(restData: unknown): ICountryDetail {
       ],
     subRegion: restDataItem.subregion,
     topLevelDomain: restDataItem.tld[0],
-    currencies: restDataItem.currencies,
+    currencies: currencies,
     languages: restDataItem.languages,
     borderCountries: restDataItem.borders,
   };
   return detail;
+}
+
+export function convertCurrencies(restData): string[] {
+  return Object.keys(restData).map((key) => restData[key].name);
 }
 
 export const REST_COUNTRIES_BASE_URL = new URL(
