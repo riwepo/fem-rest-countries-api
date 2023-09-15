@@ -39,17 +39,29 @@ const DesignSystem: React.FC = () => {
     languages: ["english"],
     borderCountries: [],
   };
+  const countryChangeHandler = (countryName: string) => {
+    console.log(countryName);
+  };
   return (
     <div>
-      <CountrySummary country={australiaSummary} />
-      <CountrySummaryList countries={countrySummaries} />
+      <CountrySummary
+        country={australiaSummary}
+        onClick={countryChangeHandler}
+      />
+      <CountrySummaryList
+        countries={countrySummaries}
+        onCountryClicked={countryChangeHandler}
+      />
       <Header progressMessage="hello there" />
       <SearchInput onSearchChanged={searchChangeHandler} />
       <FilterCombo
         options={filtercomboOptions}
         onSelectionChanged={filterComboSelectionChangeHandler}
       />
-      <DetailPage country={australiaDetail} />
+      <DetailPage
+        country={australiaDetail}
+        onCountryChange={countryChangeHandler}
+      />
     </div>
   );
 };
