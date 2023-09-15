@@ -93,10 +93,15 @@ export function convertToCountryDetail(restData: unknown): ICountryDetail {
   // we expect an array with 1 entry
   if (!Array.isArray(restData))
     throw new Error(`expected array but received ${typeof restData}`);
-  if (restData.length !== 1)
-    throw new Error(
-      `expected array with 1 entry but received ${restData.length}`,
-    );
+  // its possible here to get multiple array entries
+  // for example, china returns 4 - hong kong, macau, china and taiwan
+  // we will just take the first entry
+  if (restData.length > 1) {
+    console.log(restData);
+  }
+  if (restData.length === 0) {
+    throw new Error("expected array with non-zero entries");
+  }
   const restDataItem = restData[0];
   checkCountryDetailRestData(restDataItem);
   const summary = convertToCountrySummary(restDataItem);
