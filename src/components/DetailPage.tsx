@@ -9,9 +9,8 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
   const backClickHandler = () => {
     props.onCountryChange("");
   };
-  console.log(props.country.currencies);
+  console.log(props.country.languages);
   const currencies = props.country.currencies.join(",");
-  console.log(currencies);
 
   return (
     <div className="flex flex-col justify-between p-10 align-middle">
