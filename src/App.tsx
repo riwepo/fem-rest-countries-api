@@ -4,6 +4,7 @@ import Header from "./components/Header";
 
 import {
   ICountrySummary,
+  ICountryDetail,
   IGetCountriesResult,
   IRegion,
   IName,
@@ -12,6 +13,7 @@ import HomePage from "./components/HomePage";
 
 interface IAppProps {
   getAllCountriesSummary: () => Promise<IGetCountriesResult>;
+  getCountryDetail: (country: string) => Promise<IGetCountriesResult>;
   getUniqueRegions: (regions: IRegion[]) => string[];
   filterByRegion: (countries: IRegion[], region: string) => IRegion[];
   filterBySearchTerm: (countries: IName[], searchTerm: string) => IName[];
@@ -29,6 +31,9 @@ const App: React.FC<IAppProps> = (props) => {
   const [progressMessage, setProgressMessage] = useState<string>("");
   const [selectedRegion, setSelectedRegion] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedCountryName, setSelectedCountryName] = useState<string>("");
+  const [selectedCountryDetail, setSelectedCountryDetail] =
+    useState<ICountryDetail | null>(null);
   const updateFilteredCountries = (region: string, searchTerm: string) => {
     let filtered = allCountriesSummary;
     if (region !== "") {
@@ -64,6 +69,26 @@ const App: React.FC<IAppProps> = (props) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (selectedCountryName === "") {
+      return;
+    }
+    const fetchData = async () => {
+      setProgressMessage("Fetching data...");
+      const result = await props.getCountryDetail(selectedCountryName);
+      if (result.isOk) {
+        const _countryDetail = result.value as ICountryDetail;
+        setSelectedCountryDetail(_countryDetail);
+        setProgressMessage("");
+        console.log(_countryDetail);
+        console.log(selectedCountryDetail);
+      } else {
+        setProgressMessage(result.error as string);
+      }
+    };
+    fetchData();
+  }, [selectedCountryName]);
+
   const filterSelectionChangedHandler = (region: string) => {
     setSelectedRegion(region);
     updateFilteredCountries(region, searchTerm);
@@ -72,8 +97,8 @@ const App: React.FC<IAppProps> = (props) => {
     setSearchTerm(search);
     updateFilteredCountries(selectedRegion, search);
   };
-  const countryClickHandler = (country: string) => {
-    console.log(country);
+  const countryClickHandler = (countryName: string) => {
+    setSelectedCountryName(countryName);
   };
   return (
     <div>
