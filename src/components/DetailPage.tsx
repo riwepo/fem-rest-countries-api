@@ -10,9 +10,14 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
     props.onCountryChange("");
   };
   return (
-    <div className="flex flex-col">
-      <button onClick={backClickHandler}>Back</button>
-      <div className="flex flex-row">
+    <div className="flex flex-col justify-between p-10 align-middle">
+      <button
+        className="m-2 self-start rounded bg-white p-2"
+        onClick={backClickHandler}
+      >
+        Back
+      </button>
+      <div className="flex flex-row ">
         <img
           src={props.country.flag.toString()}
           alt="flag"
