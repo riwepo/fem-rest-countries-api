@@ -11,7 +11,7 @@ import {
   sortCountrySummary,
   sortStrings,
   getAllCountriesUrl,
-  getNamedCountryUrl,
+  getCountryByCodeUrl,
 } from "./get-countries-helpers";
 
 export async function getAllCountriesSummary(): Promise<IGetCountriesResult> {
@@ -56,11 +56,11 @@ export function getUniqueRegions(regionObjects: { region: string }[]) {
 }
 
 export async function getCountryDetail(
-  name: string,
+  cca3Code: string,
 ): Promise<IGetCountriesResult> {
   let result;
   try {
-    const url = getNamedCountryUrl(name);
+    const url = getCountryByCodeUrl(cca3Code);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(

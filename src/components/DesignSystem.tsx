@@ -10,6 +10,7 @@ import DetailPage from "./DetailPage";
 
 const DesignSystem: React.FC = () => {
   const australiaSummary: ICountrySummary = {
+    cca3Code: "AUS",
     name: "Australia",
     population: 666,
     region: "Oceania",
@@ -24,11 +25,11 @@ const DesignSystem: React.FC = () => {
     australiaSummary,
   ];
   const filtercomboOptions = ["option1", "option2", "option3", "option4"];
-  const filterComboSelectionChangeHandler = (selection: string) => {
-    console.log(selection);
-  };
+  const filterComboSelectionChangeHandler = (selection: string) => {};
   const searchChangeHandler = (search: string) => {
-    console.log(search);
+    () => {
+      search;
+    }; // noop
   };
   const australiaDetail: ICountryDetail = {
     ...australiaSummary,
@@ -40,7 +41,9 @@ const DesignSystem: React.FC = () => {
     borderCountries: [],
   };
   const countryChangeHandler = (countryName: string) => {
-    console.log(countryName);
+    () => {
+      countryName;
+    }; // noop
   };
   return (
     <div>

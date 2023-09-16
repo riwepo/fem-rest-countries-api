@@ -4,12 +4,12 @@ import { ICountrySummary } from "../helpers/interfaces";
 
 interface CountrySummaryProps {
   country: ICountrySummary;
-  onClick: (countryName: string) => void;
+  onClick: (cca3Code: string) => void;
 }
 
 const CountrySummary: React.FC<CountrySummaryProps> = (props) => {
   const clickHandler = () => {
-    props.onClick(props.country.name);
+    props.onClick(props.country.cca3Code);
   };
   return (
     <Card className="m-10 grid h-[24rem] w-[20rem] grid-rows-[1fr_1fr]">

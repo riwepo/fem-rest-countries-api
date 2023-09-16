@@ -27,14 +27,15 @@ export function checkCountrySummaryRestData(restData: unknown): void {
     throw new Error(`expected object but received ${typeof restData}`);
   let errorCode = 0;
   if (!restData) errorCode = 1;
-  if (!restData.name) errorCode = 2;
-  if (!restData.name.common) errorCode = 3;
-  if (!restData.capital) errorCode = 4;
-  if (!restData.region) errorCode = 5;
+  if (!restData.cca3) errorCode = 2;
+  if (!restData.name) errorCode = 3;
+  if (!restData.name.common) errorCode = 4;
+  if (!restData.capital) errorCode = 5;
+  if (!restData.region) errorCode = 6;
   if (restData.population === null || restData.population === undefined)
-    errorCode = 6;
-  if (!restData.flags) errorCode = 7;
-  if (!restData.flags.png) errorCode = 8;
+    errorCode = 7;
+  if (!restData.flags) errorCode = 8;
+  if (!restData.flags.png) errorCode = 9;
   if (errorCode !== 0) {
     throw new Error(
       `unexpected country summary rest data with error code ${errorCode} ${JSON.stringify(
@@ -72,6 +73,7 @@ export function checkCountryDetailRestData(restData: unknown): void {
 export function convertToCountrySummary(restData: unknown): ICountrySummary {
   checkCountrySummaryRestData(restData);
   const result: ICountrySummary = {
+    cca3Code: restData.cca3,
     name: restData.name.common,
     capital: restData.capital[0],
     region: restData.region,
@@ -90,33 +92,18 @@ export function sortStrings(data: string[]): string[] {
 }
 
 export function convertToCountryDetail(restData: unknown): ICountryDetail {
-  // we expect an array with 1 entry
-  if (!Array.isArray(restData))
-    throw new Error(`expected array but received ${typeof restData}`);
-  // its possible here to get multiple array entries
-  // for example, china returns 4 - hong kong, macau, china and taiwan
-  // we will just take the first entry
-  if (restData.length > 1) {
-    console.log(restData);
-  }
-  if (restData.length === 0) {
-    throw new Error("expected array with non-zero entries");
-  }
-  const restDataItem = restData[0];
-  checkCountryDetailRestData(restDataItem);
-  const summary = convertToCountrySummary(restDataItem);
-  const currencies = convertCurrencies(restDataItem.currencies);
+  checkCountryDetailRestData(restData);
+  const summary = convertToCountrySummary(restData);
+  const currencies = convertCurrencies(restData.currencies);
   const detail = {
     ...summary,
     nativeName:
-      restDataItem.name.nativeName[
-        Object.keys(restDataItem.name.nativeName)[0].common
-      ],
-    subRegion: restDataItem.subregion,
-    topLevelDomain: restDataItem.tld[0],
+      restData.name.nativeName[Object.keys(restData.name.nativeName)[0].common],
+    subRegion: restData.subregion,
+    topLevelDomain: restData.tld[0],
     currencies: currencies,
-    languages: restDataItem.languages,
-    borderCountries: restDataItem.borders,
+    languages: restData.languages,
+    borderCountries: restData.borders,
   };
   return detail;
 }
@@ -133,8 +120,8 @@ export function getAllCountriesBaseUrl() {
   return new URL(REST_COUNTRIES_BASE_URL + "/all");
 }
 
-export function getNamedCountryBaseUrl(name: string) {
-  return new URL(REST_COUNTRIES_BASE_URL + `/name/${name}`);
+export function getCountryByCodeBaseUrl(cca3Code: string) {
+  return new URL(REST_COUNTRIES_BASE_URL + `/alpha/${cca3Code}`);
 }
 
 export function addFieldsToUrl(baseUrl: URL, fields: string[]): URL {
@@ -144,6 +131,7 @@ export function addFieldsToUrl(baseUrl: URL, fields: string[]): URL {
 }
 
 export const summaryFields = [
+  "cca3",
   "name",
   "capital",
   "region",
@@ -164,8 +152,8 @@ export function getAllCountriesUrl() {
   const url = addFieldsToUrl(baseUrl, summaryFields);
   return url;
 }
-export function getNamedCountryUrl(country: string) {
-  const baseUrl = getNamedCountryBaseUrl(country);
+export function getCountryByCodeUrl(cca3Code: string) {
+  const baseUrl = getCountryByCodeBaseUrl(cca3Code);
   const url = addFieldsToUrl(baseUrl, detailFields);
   return url;
 }

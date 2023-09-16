@@ -11,10 +11,10 @@ export function filterByRegion(
 }
 
 export function filterBySearchTerm(
-  names: IName[],
+  countries: IName[],
   searchTerm: string,
 ): IName[] {
-  const matchingNames = names.filter((name) =>
+  const matchingNames = countries.filter((name) =>
     name.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
   return matchingNames;

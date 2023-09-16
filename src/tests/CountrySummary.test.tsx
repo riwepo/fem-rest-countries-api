@@ -9,6 +9,7 @@ import { ICountrySummary } from "../helpers/interfaces";
 
 describe("CountrySummary component test suite", () => {
   const australia: ICountrySummary = {
+    cca3Code: "AUS",
     name: "Australia",
     population: 666,
     region: "Oceania",
@@ -37,6 +38,6 @@ describe("CountrySummary component test suite", () => {
     render(<CountrySummary country={australia} onClick={clickHandler} />);
     const buttonElement = screen.getByRole("button");
     fireEvent.click(buttonElement);
-    expect(clickHandler).toBeCalledWith(australia.name);
+    expect(clickHandler).toBeCalledWith(australia.cca3Code);
   });
 });

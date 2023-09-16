@@ -8,8 +8,8 @@ interface ICountrySummaryListProps {
 }
 
 const CountrySummaryList: React.FC<ICountrySummaryListProps> = (props) => {
-  const clickHandler = (name: string) => {
-    props.onCountryClicked(name);
+  const clickHandler = (cca3Code: string) => {
+    props.onCountryClicked(cca3Code);
   };
   return (
     <div className="grid grid-cols-4">

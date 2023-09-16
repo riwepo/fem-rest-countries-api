@@ -9,7 +9,6 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
   const backClickHandler = () => {
     props.onCountryChange("");
   };
-  console.log(props.country.languages);
   const currencies = props.country.currencies.join(",");
 
   return (

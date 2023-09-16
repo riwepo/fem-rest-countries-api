@@ -10,6 +10,7 @@ import { filterByRegion, filterBySearchTerm } from "../helpers/filters";
 
 import {
   getAllCountriesSummary,
+  getCountryDetail,
   getUniqueRegions,
 } from "../helpers/get-countries";
 
@@ -18,8 +19,10 @@ describe("App component test suite", () => {
     render(
       <App
         getAllCountriesSummary={getAllCountriesSummary}
-        filterByRegion={filterByRegion}
         getUniqueRegions={getUniqueRegions}
+        getCountryDetail={getCountryDetail}
+        filterByRegion={filterByRegion}
+        filterBySearchTerm={filterBySearchTerm}
       />,
     );
     const progressElement = screen.getByText("Fetching data...");
@@ -35,6 +38,7 @@ describe("App component test suite", () => {
       <App
         getAllCountriesSummary={mockGetAllCountriesSummary}
         getUniqueRegions={getUniqueRegions}
+        getCountryDetail={getCountryDetail}
         filterByRegion={filterByRegion}
         filterBySearchTerm={filterBySearchTerm}
       />,

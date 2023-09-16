@@ -11,16 +11,17 @@ import {
   sortStrings,
   getAllCountriesBaseUrl,
   getAllCountriesUrl,
-  getNamedCountryBaseUrl,
-  getNamedCountryUrl,
+  getCountryByCodeBaseUrl,
+  getCountryByCodeUrl,
   addFieldsToUrl,
   convertCurrencies,
 } from "../helpers/get-countries-helpers.ts";
 
 const validCountrySummaryRestData = {
+  cca3: "NOR",
+  name: { common: "French Guiana" },
   flags: { png: "https://flagcdn.com/w320/gf.png" },
   capital: ["Cayene"],
-  name: { common: "French Guiana" },
   population: 254541,
   region: "Americas",
 };
@@ -252,15 +253,13 @@ describe("check country detail rest data test suite", () => {
 });
 
 describe("get urls test suite", () => {
-  test("getAllCountriesUrl returns expected", () => {
+  test("getAllCountriesBaseUrl returns expected", () => {
     const url = getAllCountriesBaseUrl();
     expect(url).toEqual(new URL("https://restcountries.com/v3.1/all"));
   });
-  test("getNamedCountryBaseUrl returns expected", () => {
-    const url = getNamedCountryBaseUrl("australia");
-    expect(url).toEqual(
-      new URL("https://restcountries.com/v3.1/name/australia"),
-    );
+  test("getCountryByCodeBaseUrl returns expected", () => {
+    const url = getCountryByCodeBaseUrl("AUS");
+    expect(url).toEqual(new URL("https://restcountries.com/v3.1/alpha/AUS"));
   });
   test("addFieldsToUrl returns expected", () => {
     const baseUrl = getAllCountriesBaseUrl();
@@ -270,19 +269,20 @@ describe("get urls test suite", () => {
       new URL("https://restcountries.com/v3.1/all?fields=field1,field2,field3"),
     );
   });
+
   test("getAllCountriesUrl returns expected", () => {
     const url = getAllCountriesUrl();
     expect(url).toEqual(
       new URL(
-        "https://restcountries.com/v3.1/all?fields=name,capital,region,population,flags",
+        "https://restcountries.com/v3.1/all?fields=cca3,name,capital,region,population,flags",
       ),
     );
   });
   test("getNamedCountryUrl returns expected", () => {
-    const url = getNamedCountryUrl("australia");
+    const url = getCountryByCodeUrl("AUS");
     expect(url).toEqual(
       new URL(
-        "https://restcountries.com/v3.1/name/australia?fields=name,capital,region,population,flags,subregion,languages,borders,tld,currencies",
+        "https://restcountries.com/v3.1/alpha/AUS?fields=cca3,name,capital,region,population,flags,subregion,languages,borders,tld,currencies",
       ),
     );
   });

@@ -12,7 +12,11 @@ export interface IName {
   name: string;
 }
 
-export interface ICountrySummary extends IRegion, IName {
+export interface ICca3Code {
+  cca3Code: string;
+}
+
+export interface ICountrySummary extends IRegion, IName, ICca3Code {
   capital: string;
   population: number;
   flag: URL;

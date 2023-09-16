@@ -7,7 +7,9 @@ import SearchInput from "../components/SearchInput";
 
 describe("SearchInput component test suite", () => {
   const onSearchChanged = (search: string) => {
-    console.log(search);
+    (search) => {
+      search;
+    }; // noop
   };
   test("renders img and placeholder text", () => {
     render(<SearchInput onSearchChanged={onSearchChanged} />);

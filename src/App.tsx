@@ -14,9 +14,9 @@ import {
 
 interface IAppProps {
   getAllCountriesSummary: () => Promise<IGetCountriesResult>;
-  getCountryDetail: (country: string) => Promise<IGetCountriesResult>;
+  getCountryDetail: (cca3Code: string) => Promise<IGetCountriesResult>;
   getUniqueRegions: (regions: IRegion[]) => string[];
-  filterByRegion: (countries: IRegion[], region: string) => IRegion[];
+  filterByRegion: (regions: IRegion[], region: string) => IRegion[];
   filterBySearchTerm: (countries: IName[], searchTerm: string) => IName[];
 }
 
@@ -32,7 +32,8 @@ const App: React.FC<IAppProps> = (props) => {
   const [progressMessage, setProgressMessage] = useState<string>("");
   const [selectedRegion, setSelectedRegion] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedCountryName, setSelectedCountryName] = useState<string>("");
+  const [selectedCountryCca3Code, setSelectedCountryCca3Code] =
+    useState<string>("");
   const [selectedCountryDetail, setSelectedCountryDetail] =
     useState<ICountryDetail | null>(null);
   const updateFilteredCountries = (region: string, searchTerm: string) => {
@@ -71,13 +72,13 @@ const App: React.FC<IAppProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (selectedCountryName === "") {
+    if (selectedCountryCca3Code === "") {
       setSelectedCountryDetail(null);
       return;
     }
     const fetchData = async () => {
       setProgressMessage("Fetching data...");
-      const result = await props.getCountryDetail(selectedCountryName);
+      const result = await props.getCountryDetail(selectedCountryCca3Code);
       if (result.isOk) {
         const _countryDetail = result.value as ICountryDetail;
         setSelectedCountryDetail(_countryDetail);
@@ -87,7 +88,7 @@ const App: React.FC<IAppProps> = (props) => {
       }
     };
     fetchData();
-  }, [selectedCountryName]);
+  }, [selectedCountryCca3Code]);
 
   const filterSelectionChangedHandler = (region: string) => {
     setSelectedRegion(region);
@@ -97,8 +98,8 @@ const App: React.FC<IAppProps> = (props) => {
     setSearchTerm(search);
     updateFilteredCountries(selectedRegion, search);
   };
-  const countryChangeHandler = (countryName: string) => {
-    setSelectedCountryName(countryName);
+  const countryChangeHandler = (cca3Code: string) => {
+    setSelectedCountryCca3Code(cca3Code);
   };
   return (
     <div>

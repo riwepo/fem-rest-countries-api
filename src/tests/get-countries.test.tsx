@@ -1,7 +1,11 @@
 // import React from "react";
 import { describe, test, expect } from "vitest";
 
-import { IGetCountriesResult } from "../helpers/interfaces.tsx";
+import {
+  ICountrySummary,
+  ICountryDetail,
+  IGetCountriesResult,
+} from "../helpers/interfaces.tsx";
 import { filterByRegion } from "../helpers/filters.tsx";
 import {
   getAllCountriesSummary,
@@ -9,12 +13,47 @@ import {
   getCountryDetail,
 } from "../helpers/get-countries.ts";
 
+const isInstanceOfCountrySummary = (data: ICountrySummary) => {
+  // note capital is undefined for some countries e.g. Antarctica
+  const result =
+    typeof data.cca3Code === "string" &&
+    typeof data.name === "string" &&
+    (data.capital === undefined || typeof data.capital === "string") &&
+    typeof data.flag === "string" &&
+    typeof data.region === "string" &&
+    typeof data.population === "number";
+  if (!result) {
+    () => {}; // noop
+  }
+  return result;
+};
+
+const isInstanceOfCountryDetail = (data: ICountryDetail) => {
+  // note nativeName is undefined for some countries
+  const result =
+    isInstanceOfCountrySummary(data) &&
+    typeof data.borderCountries === "object" &&
+    typeof data.currencies === "object" &&
+    typeof data.languages === "object" &&
+    (data.nativeName === undefined || typeof data.nativeName === "string") &&
+    typeof data.subRegion === "string" &&
+    typeof data.topLevelDomain === "string";
+  if (!result) {
+    () => {}; // noop
+  }
+  return result;
+};
+
 describe("getAllCountriesSummary test suite", () => {
   test("getAllCountriesSummary returns expected", async () => {
     const result: IGetCountriesResult = await getAllCountriesSummary();
     expect(result.isOk).toBe(true);
     expect(result.value).not.toBeNull();
     expect(Array.isArray(result.value)).toBeTruthy();
+    const results = result.value as ICountrySummary[];
+    expect(
+      results.every((country) => isInstanceOfCountrySummary(country)),
+    ).toBe(true);
   });
 });
 
@@ -97,8 +136,10 @@ describe("filterByRegion test suite", () => {
 
 describe("getCountryDetail test suite", () => {
   test("getCountryDetail returns expected", async () => {
-    const result: IGetCountriesResult = await getCountryDetail("australia");
+    const result: IGetCountriesResult = await getCountryDetail("AUS");
     expect(result.isOk).toBe(true);
     expect(result.value).not.toBeNull();
+    const results = result.value as ICountryDetail;
+    expect(isInstanceOfCountryDetail(results)).toBe(true);
   });
 });

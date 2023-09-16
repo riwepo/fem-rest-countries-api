@@ -18,7 +18,7 @@ interface IHomePageProps {
   filterBySearchTerm: (countries: IName[], searchTerm: string) => IName[];
   searchChangedHandler: (search: string) => void;
   filterSelectionChangedHandler: (search: string) => void;
-  countryClickHandler: (search: string) => void;
+  countryClickHandler: (cca3Code: string) => void;
 }
 
 const HomePage: React.FC<IHomePageProps> = (props) => {
