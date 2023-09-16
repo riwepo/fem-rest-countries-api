@@ -7,7 +7,7 @@ import SearchInput from "../components/SearchInput";
 
 describe("SearchInput component test suite", () => {
   const onSearchChanged = (search: string) => {
-    (search) => {
+    () => {
       search;
     }; // noop
   };
