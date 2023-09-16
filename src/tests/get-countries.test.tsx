@@ -135,8 +135,15 @@ describe("filterByRegion test suite", () => {
 });
 
 describe("getCountryDetail test suite", () => {
-  test("getCountryDetail returns expected", async () => {
-    const result: IGetCountriesResult = await getCountryDetail("AUS");
+  test("getCountryDetail for Antarctica returns expected", async () => {
+    const result: IGetCountriesResult = await getCountryDetail("ATA");
+    expect(result.isOk).toBe(true);
+    expect(result.value).not.toBeNull();
+    const results = result.value as ICountryDetail;
+    expect(isInstanceOfCountryDetail(results)).toBe(true);
+  });
+  test("getCountryDetail  for Germany returns expected", async () => {
+    const result: IGetCountriesResult = await getCountryDetail("");
     expect(result.isOk).toBe(true);
     expect(result.value).not.toBeNull();
     const results = result.value as ICountryDetail;

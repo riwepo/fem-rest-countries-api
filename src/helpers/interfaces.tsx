@@ -4,6 +4,14 @@ export interface IGetCountriesResult {
   error: string | null;
 }
 
+export interface IParseResult {
+  hasError: () => boolean;
+  hasWarnings: () => boolean;
+  value: string | number | object | [] | null;
+  error: string | null;
+  warnings: string[];
+}
+
 export interface IRegion {
   region: string;
 }

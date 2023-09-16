@@ -22,7 +22,7 @@ export function processError(error: unknown): IGetCountriesResult {
   return result;
 }
 
-export function checkCountrySummaryRestData(restData: unknown): void {
+export function checkCountrySummaryRestData(restData): void {
   if (typeof restData !== "object")
     throw new Error(`expected object but received ${typeof restData}`);
   let errorCode = 0;
@@ -45,22 +45,48 @@ export function checkCountrySummaryRestData(restData: unknown): void {
   }
 }
 
-export function checkCountryDetailRestData(restData: unknown): void {
+export function checkCountryDetailRestData(restData): void {
   checkCountrySummaryRestData(restData);
   let errorCode = 0;
-  if (!restData.subregion) errorCode = 1;
-  if (!restData.languages) errorCode = 2;
-  if (!restData.languages[Object.keys(restData.languages)[0]]) errorCode = 3;
-  if (!restData.borders) errorCode = 4;
-  if (!restData.name.nativeName) errorCode = 5;
-  if (
-    !restData.name.nativeName[Object.keys(restData.name.nativeName)[0]].common
-  )
-    errorCode = 6;
-  if (!restData.tld) errorCode = 7;
-  if (!restData.currencies) errorCode = 8;
+
+  // subregion can be undefined or string
+  if (typeof restData.subRegion !== "undefined") {
+    if (typeof restData !== "string") {
+      errorCode = 1;
+    }
+  }
+  // languages is an object, it is allowed to be empty
+  if (typeof restData.languages !== "object") errorCode = 2;
+
+  // borders is an array, it is allowed to be empty
+  if (!Array.isArray(restData.borders)) errorCode = 3;
+
+  // nativeName is an object, it is allowed to be empty
+  // if not empty it should have object properties that have a 'common property
+  if (typeof restData.name.nativeName !== "object") errorCode = 4;
+  if (Object.keys(restData.name.nativeName).length > 0) {
+    if (
+      !restData.name.nativeName[Object.keys(restData.name.nativeName)[0]].common
+    ) {
+      errorCode = 5;
+    }
+  }
+
+  // tld is an array
+  // it is allowed to have 0 entries
+  // if it has entries, they should be string
+  if (!Array.isArray(restData.tld)) errorCode = 6;
+  if (restData.tld.length > 0) {
+    if (typeof restData.tld[0] !== "string") {
+      errorCode = 7;
+    }
+  }
+
+  // currencies is an array, it is allowed to be empty
+  if (!Array.isArray(restData.currencies)) errorCode = 7;
+
   if (!restData.currencies[Object.keys(restData.currencies)[0]].name)
-    errorCode = 9;
+    errorCode = 8;
   if (errorCode !== 0) {
     throw new Error(
       `unexpected country detail rest data with error code ${errorCode} ${JSON.stringify(
@@ -95,10 +121,12 @@ export function convertToCountryDetail(restData: unknown): ICountryDetail {
   checkCountryDetailRestData(restData);
   const summary = convertToCountrySummary(restData);
   const currencies = convertCurrencies(restData.currencies);
+  const nativeName = restData.name.nativeName
+    ? restData.name.nativeName[Object.keys(restData.name.nativeName)[0].common]
+    : "";
   const detail = {
     ...summary,
-    nativeName:
-      restData.name.nativeName[Object.keys(restData.name.nativeName)[0].common],
+    nativeName: nativeName,
     subRegion: restData.subregion,
     topLevelDomain: restData.tld[0],
     currencies: currencies,
