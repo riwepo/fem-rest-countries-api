@@ -21,7 +21,7 @@ interface IAppProps {
 }
 
 const App: React.FC<IAppProps> = (props) => {
-  // return <DesignSystem />;
+  const [useDarkMode, setUseDarkMode] = useState(false);
   const [allCountriesSummary, setAllCountriesSummary] = useState<
     ICountrySummary[]
   >([]);
@@ -101,28 +101,38 @@ const App: React.FC<IAppProps> = (props) => {
   const countryChangeHandler = (cca3Code: string) => {
     setSelectedCountryCca3Code(cca3Code);
   };
+
+  const onDarkModeChangeHandler = () => {
+    setUseDarkMode((current) => !current)
+  };
   return (
-    <div>
-      <Header progressMessage={progressMessage} />
-      {selectedCountryDetail === null && (
-        <HomePage
-          countries={filteredCountriesSummary}
-          regions={regions}
-          getAllCountriesSummary={props.getAllCountriesSummary}
-          getUniqueRegions={props.getUniqueRegions}
-          filterByRegion={props.filterByRegion}
-          filterBySearchTerm={props.filterBySearchTerm}
-          searchChangedHandler={searchChangedHandler}
-          filterSelectionChangedHandler={filterSelectionChangedHandler}
-          countryClickHandler={countryChangeHandler}
+    <div className={useDarkMode ? "dark" : undefined}>
+      <div className="bg-red-500 font-nunito text-base font-normal dark:bg-black">
+        <Header
+          progressMessage={progressMessage}
+          useDarkMode={useDarkMode}
+          onDarkModeChange={onDarkModeChangeHandler}
         />
-      )}
-      {selectedCountryDetail !== null && (
-        <DetailPage
-          country={selectedCountryDetail}
-          onCountryChange={countryChangeHandler}
-        />
-      )}
+        {selectedCountryDetail === null && (
+          <HomePage
+            countries={filteredCountriesSummary}
+            regions={regions}
+            getAllCountriesSummary={props.getAllCountriesSummary}
+            getUniqueRegions={props.getUniqueRegions}
+            filterByRegion={props.filterByRegion}
+            filterBySearchTerm={props.filterBySearchTerm}
+            searchChangedHandler={searchChangedHandler}
+            filterSelectionChangedHandler={filterSelectionChangedHandler}
+            countryClickHandler={countryChangeHandler}
+          />
+        )}
+        {selectedCountryDetail !== null && (
+          <DetailPage
+            country={selectedCountryDetail}
+            onCountryChange={countryChangeHandler}
+          />
+        )}
+      </div>
     </div>
   );
 };
