@@ -71,7 +71,7 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
           </div>
           <div className="col-span-3 col-start-1 row-start-3 flex flex-row items-center">
             <p className="align-middle">Border Countries:</p>
-            <div className="row-start-3 flex flex-row">
+            <div className="row-start-3 flex flex-row flex-wrap">
               {props.country.borderCountries.map((country) => {
                 return (
                   <button
