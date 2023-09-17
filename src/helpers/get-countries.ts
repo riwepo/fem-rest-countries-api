@@ -2,17 +2,22 @@ import {
   IGetCountriesResult,
   ICountrySummary,
   ICountryDetail,
+  IParseResult,
 } from "./interfaces";
+
 import {
   wrapInResultObject,
   processError,
-  convertToCountrySummary,
-  convertToCountryDetail,
   sortCountrySummary,
   sortStrings,
   getAllCountriesUrl,
   getCountryByCodeUrl,
 } from "./get-countries-helpers";
+
+import {
+  parseCountrySummaryRestData,
+  parseCountryDetailRestData,
+} from "./parsing";
 
 export async function getAllCountriesSummary(): Promise<IGetCountriesResult> {
   let result;
@@ -25,10 +30,19 @@ export async function getAllCountriesSummary(): Promise<IGetCountriesResult> {
       );
     }
     const getAllCountriesSummaryResult = await response.json();
+
     const countrySummaries: ICountrySummary[] =
-      getAllCountriesSummaryResult.map((restData: unknown) =>
-        convertToCountrySummary(restData),
-      );
+      getAllCountriesSummaryResult.map((restData: unknown) => {
+        const parseResult = parseCountrySummaryRestData(restData);
+        if (parseResult.hasError()) {
+          throw new Error(
+            `parsing of restcountries data failed with error '${parseResult.error}'`,
+          );
+        }
+        const countrySummary = parseResult.value as ICountrySummary;
+        return countrySummary;
+      });
+
     const sorted = sortCountrySummary(countrySummaries);
     const result = wrapInResultObject(sorted);
     return result;
@@ -68,9 +82,15 @@ export async function getCountryDetail(
       );
     }
     const getCountryDetailResult = await response.json();
-    const countryDetail: ICountryDetail = convertToCountryDetail(
+    const parseResult: IParseResult = parseCountryDetailRestData(
       getCountryDetailResult,
     );
+    if (parseResult.hasError()) {
+      throw new Error(
+        `parsing of restcountries data failed with error '${parseResult.error}'`,
+      );
+    }
+    const countryDetail: ICountryDetail = parseResult.value as ICountryDetail;
     const result = wrapInResultObject(countryDetail);
     return result;
   } catch (error: unknown) {

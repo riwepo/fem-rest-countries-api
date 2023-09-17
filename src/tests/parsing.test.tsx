@@ -113,9 +113,7 @@ describe("parseCountrySummaryRestData test suite", () => {
     const result = parseCountrySummaryRestData(badName);
     expect(result.hasError()).toBe(true);
     expect(result.hasWarnings()).toBe(false);
-    expect(result.error).toEqual(
-      "expected non-empty string for property 'common'",
-    );
+    expect(result.error).toEqual("expected string for property 'common'");
   });
   test("parseCountrySummaryRestData with missing region gives error", () => {
     const noRegion = JSON.parse(JSON.stringify(germanySummary));
@@ -137,9 +135,7 @@ describe("parseCountrySummaryRestData test suite", () => {
     const result = parseCountrySummaryRestData(badFlags);
     expect(result.hasError()).toBe(true);
     expect(result.hasWarnings()).toBe(false);
-    expect(result.error).toEqual(
-      "expected non-empty string for property 'png'",
-    );
+    expect(result.error).toEqual("expected string for property 'png'");
   });
   test("parseCountrySummaryRestData with bad capital gives warning", () => {
     const badCapital = JSON.parse(JSON.stringify(germanySummary));
@@ -230,7 +226,9 @@ describe("parseCountryDetailRestData test suite", () => {
     expect(result.hasError()).toBe(false);
     expect(result.hasWarnings()).toBe(true);
     expect(result.warnings.length).toBe(1);
-    expect(result.warnings[0]).toBe("expected array for property 'nativeName'");
+    expect(result.warnings[0]).toBe(
+      "expected object for property 'nativeName'",
+    );
   });
   test("parseCountryDetailRestData with missing tld gives warning", () => {
     const badTopLevelDomain = JSON.parse(JSON.stringify(germanyDetail));

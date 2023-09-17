@@ -19,7 +19,7 @@ const isInstanceOfCountrySummary = (data: ICountrySummary) => {
     typeof data.cca3Code === "string" &&
     typeof data.name === "string" &&
     (data.capital === undefined || typeof data.capital === "string") &&
-    typeof data.flag === "string" &&
+    data.flag.toString().startsWith("http") &&
     typeof data.region === "string" &&
     typeof data.population === "number";
   if (!result) {
@@ -143,7 +143,7 @@ describe("getCountryDetail test suite", () => {
     expect(isInstanceOfCountryDetail(results)).toBe(true);
   });
   test("getCountryDetail  for Germany returns expected", async () => {
-    const result: IGetCountriesResult = await getCountryDetail("");
+    const result: IGetCountriesResult = await getCountryDetail("DEU");
     expect(result.isOk).toBe(true);
     expect(result.value).not.toBeNull();
     const results = result.value as ICountryDetail;
