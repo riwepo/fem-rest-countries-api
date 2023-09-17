@@ -10,6 +10,7 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
     props.onCountryChange("");
   };
   const currencies = props.country.currencies.join(",");
+  const languages = props.country.languages.join(",");
 
   return (
     <div className="flex flex-col justify-between p-10 align-middle">
@@ -59,11 +60,9 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
             <p>
               <span className="font-semibold">Currencies:</span> {currencies}
             </p>
-
-            {/* <p>
-              <span className="font-semibold">Languages:</span>{" "}
-              {props.country.languages}
-            </p> */}
+            <p>
+              <span className="font-semibold">Languages:</span> {languages}
+            </p>
           </div>
           <div className="col-span-3 col-start-1 row-start-3 flex flex-row items-center">
             <p className="align-middle">Border Countries:</p>
