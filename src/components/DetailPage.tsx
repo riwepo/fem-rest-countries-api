@@ -9,6 +9,11 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
   const backClickHandler = () => {
     props.onCountryChange("");
   };
+  const borderClickHandler = (event: React.MouseEvent) => {
+    const button = (event.target as HTMLElement).closest("button");
+    const cca3Code = (button as HTMLButtonElement).dataset["cca3Code"];
+    props.onCountryChange(cca3Code as string);
+  };
   const currencies = props.country.currencies.join(",");
   const languages = props.country.languages.join(",");
 
@@ -72,6 +77,8 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
                   <button
                     key={country}
                     className="m-2 rounded bg-white px-4 py-2"
+                    data-cca3-code={country}
+                    onClick={borderClickHandler}
                   >
                     {country}
                   </button>
