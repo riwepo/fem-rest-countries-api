@@ -3,11 +3,12 @@ export interface IGetCountriesResult {
   value: object | [] | null;
   error: string | null;
 }
+export type ParseResultType = string | number | object | [] | null;
 
 export interface IParseResult {
   hasError: () => boolean;
   hasWarnings: () => boolean;
-  value: string | number | object | [] | null;
+  value: ParseResultType;
   error: string | null;
   warnings: string[];
 }
