@@ -39,6 +39,9 @@ export async function getAllCountriesSummary(): Promise<IGetCountriesResult> {
             `parsing of restcountries data failed with error '${parseResult.error}'`,
           );
         }
+        if (parseResult.hasWarnings()) {
+          parseResult.warnings.map((warn) => console.log(warn));
+        }
         const countrySummary = parseResult.value as ICountrySummary;
         return countrySummary;
       });
@@ -89,6 +92,9 @@ export async function getCountryDetail(
       throw new Error(
         `parsing of restcountries data failed with error '${parseResult.error}'`,
       );
+    }
+    if (parseResult.hasWarnings()) {
+      parseResult.warnings.map((warn) => console.log(warn));
     }
     const countryDetail: ICountryDetail = parseResult.value as ICountryDetail;
     const result = wrapInResultObject(countryDetail);
