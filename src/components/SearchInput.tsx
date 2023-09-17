@@ -15,12 +15,7 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
   };
   return (
     <Card className="flex w-[50rem] items-center justify-around gap-2 bg-white p-2 text-black dark:bg-black dark:text-white">
-      {/* <img
-        src={icons8MagnifyingGlass}
-        alt="magnifying glass"
-        className="w-8 bg-inherit"
-      /> */}
-      <MagnifyingGlass />
+      <MagnifyingGlass className="fill-black stroke-black dark:fill-white dark:stroke-white" />
       <input
         type="text"
         placeholder="Search for a country..."
