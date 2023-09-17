@@ -31,7 +31,7 @@ export function parseCountrySummaryRestData(restData): IParseResult {
     );
 
   // cca3 is a string that must have a value
-  const parseCca3 = parseNonEmptyString(restData, "cca3");
+  const parseCca3 = parseString(restData, "cca3", false);
   if (parseCca3.hasError()) {
     return parseCca3;
   }
@@ -41,7 +41,8 @@ export function parseCountrySummaryRestData(restData): IParseResult {
   if (parseName.hasError()) {
     return parseName;
   }
-  const parseCommonName = parseNonEmptyString(restData.name, "common");
+  const restDataWithName = restData as { name: unknown };
+  const parseCommonName = parseString(restDataWithName.name, "common", false);
   if (parseCommonName.hasError()) {
     return parseCommonName;
   }
@@ -70,7 +71,7 @@ export function parseCountrySummaryRestData(restData): IParseResult {
   }
 
   // region is a string that must have a value
-  const parseRegion = parseNonEmptyString(restData, "region");
+  const parseRegion = parseString(restData, "region", false);
   if (parseRegion.hasError()) {
     return parseRegion;
   }
@@ -88,7 +89,8 @@ export function parseCountrySummaryRestData(restData): IParseResult {
   if (parseFlags.hasError()) {
     return parseFlags;
   }
-  const parseFlagPng = parseNonEmptyString(restData.flags, "png");
+  const restDataWithFlags = restData as { flags: unknown };
+  const parseFlagPng = parseString(restDataWithFlags.flags, "png", false);
   if (parseFlagPng.hasError()) {
     return parseFlagPng;
   }
@@ -105,7 +107,7 @@ export function parseCountrySummaryRestData(restData): IParseResult {
   return new ParseResult(value, "", warnings);
 }
 
-export function parseCountryDetailRestData(restData): IParseResult {
+export function parseCountryDetailRestData(restData: unknown): IParseResult {
   const summaryResult = parseCountrySummaryRestData(restData);
   if (summaryResult.hasError()) {
     return summaryResult;
@@ -117,7 +119,7 @@ export function parseCountryDetailRestData(restData): IParseResult {
   // it is allowed to be empty
   // if it is there all entries must be a string
   // if it fails we issue a warning
-  let parseBorders2 = new ParseResult([""]);
+  let parseBorders2 = new ParseResult([]);
   const parseBorders1 = parseArrayProperty(restData, "borders");
   if (parseBorders1.hasError()) {
     warnings = [...warnings, parseBorders1.error];
@@ -126,7 +128,7 @@ export function parseCountryDetailRestData(restData): IParseResult {
       parseBorders2 = parseStringArray(restData, "borders");
       if (parseBorders2.hasError()) {
         warnings = [...warnings, parseBorders2.error];
-        parseBorders2 = new ParseResult([""]);
+        parseBorders2 = new ParseResult([]);
       }
     }
   }
@@ -135,7 +137,7 @@ export function parseCountryDetailRestData(restData): IParseResult {
   // it is allowed to be empty
   // if it is not empty, each property in the object must have a 'name' field
   // if it fails we issue a warning
-  let parseCurrencies2 = new ParseResult([""]);
+  let parseCurrencies2 = new ParseResult([]);
   const parseCurrencies1 = parseObjectProperty(restData, "currencies");
   if (parseCurrencies1.hasError()) {
     warnings = [...warnings, parseCurrencies1.error];
@@ -148,32 +150,130 @@ export function parseCountryDetailRestData(restData): IParseResult {
       );
       if (parseCurrencies2.hasError()) {
         warnings = [...warnings, parseCurrencies2.error];
-        parseCurrencies2 = new ParseResult([""]);
+        parseCurrencies2 = new ParseResult([]);
+      }
+    }
+  }
+
+  // language is an object
+  // it is allowed to be empty
+  // if it is not empty, we take the value of the first property
+  // we expect this value to be a string
+  // if it fails we issue a warning
+  let parseLanguages2 = new ParseResult([]);
+  const parseLanguages1 = parseObjectProperty(restData, "languages");
+  if (parseLanguages1.hasError()) {
+    warnings = [...warnings, parseLanguages1.error];
+  } else {
+    if (Object.keys(parseLanguages1.value as object).length > 0) {
+      parseLanguages2 = parseEachPropertyOfObject(restData, "languages");
+      if (parseLanguages2.hasError()) {
+        warnings = [...warnings, parseLanguages2.error];
+        parseLanguages2 = new ParseResult([""]);
+      } else if (
+        !(parseLanguages2.value as []).every((item) => typeof item === "string")
+      ) {
+        warnings = [
+          ...warnings,
+          `expected all values of properties of object 'languages' to be strings`,
+        ];
+        parseLanguages2 = new ParseResult([]);
+      }
+    }
+  }
+
+  // native name is an object
+  // it is allowed to be empty
+  // if it is not empty, we take the value of the first property
+  // we expect this value to be an object with a property 'common'
+  // 'common' must be a string
+  // if it fails we issue a warning
+  let parseNativeName3 = new ParseResult("");
+  const restDataWithName = restData as { name: object };
+  const parseNativeName1 = parseObjectProperty(
+    restDataWithName.name,
+    "nativeName",
+  );
+  if (parseNativeName1.hasError()) {
+    warnings = [...warnings, parseNativeName1.error];
+  } else {
+    if (Object.keys(parseNativeName1.value as object).length > 0) {
+      const parseNativeName2 = parseFirstPropertyOfObject(
+        restDataWithName.name,
+        "nativeName",
+      );
+      if (parseNativeName2.hasError()) {
+        warnings = [...warnings, parseNativeName2.error];
+      } else {
+        parseNativeName3 = parseString(parseNativeName2.value, "common", false);
+        if (parseNativeName3.hasError()) {
+          warnings = [...warnings, parseNativeName3.error];
+          parseNativeName3 = new ParseResult("");
+        }
+      }
+    }
+  }
+
+  // subregion is a string
+  // it is allowed to be empty
+  // if it fails we issue a warning
+  const parseSubregion = parseString(restData, "subregion", true);
+  if (parseSubregion.hasError()) {
+    warnings = [...warnings, parseSubregion.error];
+  }
+
+  // top level domain is an array
+  // it is not allowed to be empty
+  // we take the first entry
+  // it must be a string
+  // if it fails we issue a warning
+  let parseTopLevelDomain2 = new ParseResult("");
+  const parseTopLevelDomain1 = parseArrayProperty(restData, "tld");
+  if (parseTopLevelDomain1.hasError()) {
+    warnings = [...warnings, parseTopLevelDomain1.error];
+  } else {
+    if ((parseTopLevelDomain1.value as []).length > 0) {
+      parseTopLevelDomain2 = parseFirstEntryOfArray(restData, "tld");
+      if (parseTopLevelDomain2.hasError()) {
+        warnings = [...warnings, parseTopLevelDomain2.error];
+        parseTopLevelDomain2 = new ParseResult("");
+      } else {
+        if (typeof parseTopLevelDomain2.value !== "string") {
+          warnings = [...warnings, "expected tld to be string"];
+          parseTopLevelDomain2 = new ParseResult("");
+        }
       }
     }
   }
 
   const value: ICountryDetail = {
     ...(summaryResult.value as ICountrySummary),
-    nativeName: "error",
-    subRegion: "error",
-    topLevelDomain: "error",
+    nativeName: parseNativeName3.value as string,
+    subRegion: parseSubregion.value as string,
+    topLevelDomain: parseTopLevelDomain2.value as string,
     currencies: parseCurrencies2.value as string[],
-    languages: ["error"],
+    languages: parseLanguages2.value as string[],
     borderCountries: parseBorders2.value as string[],
   };
 
   return new ParseResult(value, "", warnings);
 }
 
-function parseNonEmptyString(data, propertyName: string) {
-  if (typeof data[propertyName] !== "string" || data[propertyName] === "") {
+function parseString(data, propertyName: string, canBeEmpty: boolean) {
+  if (typeof data[propertyName] !== "string") {
+    return new ParseResult(
+      null,
+      `expected string for property '${propertyName}'`,
+    );
+  }
+  if (!canBeEmpty && data[propertyName] === "") {
     return new ParseResult(
       null,
       `expected non-empty string for property '${propertyName}'`,
     );
   }
-  return new ParseResult(data[propertyName]);
+
+  return new ParseResult(data[propertyName] as string);
 }
 
 function parseObjectProperty(data, propertyName: string) {
@@ -183,7 +283,7 @@ function parseObjectProperty(data, propertyName: string) {
       `expected object for property '${propertyName}'`,
     );
   }
-  return new ParseResult(data[propertyName]);
+  return new ParseResult(data[propertyName] as object);
 }
 
 function parseArrayProperty(data, propertyName: string) {
@@ -193,23 +293,31 @@ function parseArrayProperty(data, propertyName: string) {
       `expected array for property '${propertyName}'`,
     );
   }
-  return new ParseResult(data[propertyName]);
+  return new ParseResult(data[propertyName] as []);
 }
 
 function parseFirstEntryOfArray(data, propertyName: string) {
-  if (!Array.isArray(data[propertyName])) {
-    return new ParseResult(
-      null,
-      `expected array for property '${propertyName}'`,
-    );
-  }
-  if (data[propertyName].length === 0) {
+  const theArray: [] = data[propertyName];
+  if (theArray.length === 0) {
     return new ParseResult(
       null,
       `expected non-empty array for property '${propertyName}'`,
     );
   }
-  return new ParseResult(data[propertyName][0]);
+  const value = theArray[0] as unknown as ParseResult;
+  return new ParseResult(value);
+}
+
+function parseEachPropertyOfObject(data, propertyName: string) {
+  const keys = Object.keys(data[propertyName]);
+  const values = keys.map((key) => data[propertyName][key]);
+  return new ParseResult(values);
+}
+
+function parseFirstPropertyOfObject(data, propertyName: string) {
+  const keys = Object.keys(data[propertyName]);
+  const value = data[propertyName][keys[0]];
+  return new ParseResult(value);
 }
 
 function parseStringArray(data, propertyName: string) {

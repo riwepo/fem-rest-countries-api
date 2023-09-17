@@ -166,7 +166,7 @@ describe("parseCountrySummaryRestData test suite", () => {
 });
 
 describe("parseCountryDetailRestData test suite", () => {
-  test.skip("parseCountryDetailRestData works with Antarctica", () => {
+  test("parseCountryDetailRestData works with Antarctica", () => {
     const result = parseCountryDetailRestData(antarcticaDetail);
     expect(result.hasError()).toBe(false);
     expect(result.hasWarnings()).toBe(false);
@@ -175,7 +175,7 @@ describe("parseCountryDetailRestData test suite", () => {
       capital: "",
       cca3Code: "ATA",
       currencies: [],
-      flag: "https://flagcdn.com/w320/aq.png",
+      flag: new URL("https://flagcdn.com/w320/aq.png"),
       languages: [],
       name: "Antarctica",
       nativeName: "",
@@ -203,8 +203,8 @@ describe("parseCountryDetailRestData test suite", () => {
       ],
       capital: "Berlin",
       cca3Code: "DEU",
-      currencies: ["EUR"],
-      flag: "https://flagcdn.com/w320/de.png",
+      currencies: ["Euro"],
+      flag: new URL("https://flagcdn.com/w320/de.png"),
       languages: ["German"],
       name: "Germany",
       nativeName: "Deutschland",
