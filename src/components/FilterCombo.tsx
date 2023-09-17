@@ -1,6 +1,8 @@
+import { useState, useRef } from "react";
+
 import Card from "./Card";
 
-import { useState } from "react";
+import useOnClickOutside from "../hooks/useOnClickOutside";
 
 import icons8ChevronDown from "../assets/icons8-chevron-down-24.png";
 import icons8ChevronUp from "../assets/icons8-chevron-up-24.png";
@@ -12,7 +14,9 @@ interface FilterComboProps {
 }
 
 const FilterCombo: React.FC<FilterComboProps> = (props) => {
+  const modalRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  useOnClickOutside(modalRef, () => setIsOpen(false));
   const [selectedOption, setSelectedOption] = useState<string>("");
   const openCloseClickHandler = () => {
     setIsOpen((current: boolean) => !current);
@@ -46,27 +50,29 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
         )}
       </button>
       {isOpen && (
-        <Card className="absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 p-2">
-          {props.options.map((option) => {
-            return (
-              <button
-                className="flex gap-2"
-                key={option}
-                onClick={selectRegionClickHandler}
-                data-option={option}
-              >
-                <img
-                  src={icons8Checkmark}
-                  alt="checkmark"
-                  className={`aspect-square w-4 ${
-                    selectedOption !== option && "invisible"
-                  }`}
-                />
-                <p>{option}</p>
-              </button>
-            );
-          })}
-        </Card>
+        <div ref={modalRef}>
+          <Card className="absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 p-2">
+            {props.options.map((option) => {
+              return (
+                <button
+                  className="flex gap-2"
+                  key={option}
+                  onClick={selectRegionClickHandler}
+                  data-option={option}
+                >
+                  <img
+                    src={icons8Checkmark}
+                    alt="checkmark"
+                    className={`aspect-square w-4 ${
+                      selectedOption !== option && "invisible"
+                    }`}
+                  />
+                  <p>{option}</p>
+                </button>
+              );
+            })}
+          </Card>
+        </div>
       )}
     </Card>
   );
