@@ -12,7 +12,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
     props.onDarkModeChange();
   };
   return (
-    <header className="flex items-center justify-between bg-white p-2 shadow shadow-black">
+    <header className="flex items-center justify-between bg-white p-2 text-black shadow shadow-black dark:bg-black dark:text-white">
       <h1 className="text-lg font-bold">Where in the world?</h1>
       <p>{props.progressMessage}</p>
       <button
@@ -25,6 +25,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
         {props.useDarkMode && (
           <img src={icons8MoonLight} alt="moon" className="w-4" />
         )}
+
         <p className="text-normal font-semibold">
           {props.useDarkMode ? "Light mode" : "Dark mode"}
         </p>
