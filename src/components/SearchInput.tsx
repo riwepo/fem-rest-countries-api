@@ -13,12 +13,15 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
     }
   };
   return (
-    <Card className="bg-clrElements text-clrText dark:bg-clrDarkElements dark:text-clrDarkText flex w-[50rem] items-center justify-around gap-2 p-2">
-      <MagnifyingGlass className="fill-clrInput stroke-clrInput dark:fill-clrDarkInput dark:stroke-clrDarkInput" />
+    <Card className="flex w-[50rem] items-center justify-around gap-2 bg-clrElements p-2 text-clrText dark:bg-clrDarkElements dark:text-clrDarkText">
+      <MagnifyingGlass
+        className="fill-clrInput stroke-clrInput dark:fill-clrDarkInput dark:stroke-clrDarkInput"
+        title="magnifying glass"
+      />
       <input
         type="text"
         placeholder="Search for a country..."
-        className="bg-clrElements dark:bg-clrDarkElements text-clrInput dark:text-clrDarkInput flex-1 p-1"
+        className="flex-1 bg-clrElements p-1 text-clrInput dark:bg-clrDarkElements dark:text-clrDarkInput"
         onKeyDown={keyDownHandler}
       />
     </Card>
