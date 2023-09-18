@@ -51,17 +51,17 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
       </button>
       {isOpen && (
         <div ref={modalRef}>
-          <Card className="absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 p-2">
+          <Card className="absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 overflow-hidden bg-white p-2 text-black dark:bg-black dark:text-white">
             {props.options.map((option) => {
               return (
                 <button
-                  className="flex gap-2"
+                  className="flex items-center gap-2"
                   key={option}
                   onClick={selectRegionClickHandler}
                   data-option={option}
                 >
                   <Checkmark
-                    className={`aspect-square w-4 fill-black stroke-black ${
+                    className={`aspect-square h-4 w-4 stroke-black dark:stroke-white ${
                       selectedOption !== option && "invisible"
                     }`}
                   />
