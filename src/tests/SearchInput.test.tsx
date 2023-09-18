@@ -11,10 +11,10 @@ describe("SearchInput component test suite", () => {
       search;
     }; // noop
   };
-  test("renders img and placeholder text", () => {
+  test("renders svg and placeholder text", () => {
     render(<SearchInput onSearchChanged={onSearchChanged} />);
-    const imgElement = screen.getByRole("img");
-    expect(imgElement).toBeInTheDocument();
+    const svgElement = screen.getByTitle("magnifying glass");
+    expect(svgElement).toBeInTheDocument();
     const inputElement = screen.getByRole("textbox");
     expect(inputElement).toBeInTheDocument();
     expect((inputElement as HTMLInputElement).placeholder).toBe(
