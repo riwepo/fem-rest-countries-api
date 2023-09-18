@@ -22,6 +22,7 @@ export default {
       clrDarkText: "hsl(0, 0%, 100%)", // white
       clrDarkElements: "hsl(209, 23%, 22%)", // dark blue
       clrDarkInput: "hsl(0, 0%, 52%)", // dark gray
+      clrRed: "rgb(255,0,0)", // debugging
     },
     extend: {},
   },
