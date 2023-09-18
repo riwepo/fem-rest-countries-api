@@ -17,7 +17,7 @@ const CountrySummary: React.FC<CountrySummaryProps> = (props) => {
         <img
           src={props.country.flag.toString()}
           alt="flag"
-          className="h-[12rem] w-full object-cover"
+          className="h-[12rem] w-full rounded-t-lg object-cover"
         />
         <div className="flex flex-col justify-center gap-3 p-2 ">
           <p className="text-lg font-bold ">{props.country.name}</p>
