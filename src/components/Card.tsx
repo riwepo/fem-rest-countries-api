@@ -6,7 +6,9 @@ type CardProps = {
 
 function Card(props: PropsWithChildren<CardProps>) {
   return (
-    <div className={`rounded bg-white shadow shadow-black ${props.className}`}>
+    <div
+      className={`shadow-black rounded-lg bg-white shadow ${props.className}`}
+    >
       {props.children}
     </div>
   );
