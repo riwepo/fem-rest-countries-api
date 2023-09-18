@@ -38,20 +38,20 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
   return (
     <Card className="relative inline-flex">
       <button
-        className="flex items-center justify-around gap-2 bg-white p-2 text-black dark:bg-black dark:text-white"
+        className="text-clrText dark:bg-clrDarkElements dark:text-clrDarkText bg-clrElements flex items-center justify-around gap-2 p-2"
         onClick={openCloseClickHandler}
       >
         <p className="p-1">Filter by Region</p>
         {!isOpen && (
-          <ChevronDown className="h-8 w-8 stroke-black dark:stroke-white" />
+          <ChevronDown className="stroke-clrText dark:stroke-clrDarkText h-8 w-8" />
         )}
         {isOpen && (
-          <ChevronUp className="h-8 w-8 stroke-black dark:stroke-white" />
+          <ChevronUp className="stroke-clrText dark:stroke-clrDarkText h-8 w-8" />
         )}
       </button>
       {isOpen && (
         <div ref={modalRef}>
-          <Card className="absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 overflow-hidden bg-white p-2 text-black dark:bg-black dark:text-white">
+          <Card className="text-clrText dark:bg-clrDarkElements bg-clrElements dark:text-clrDarkText absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 overflow-hidden p-2">
             {props.options.map((option) => {
               return (
                 <button
@@ -61,7 +61,7 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
                   data-option={option}
                 >
                   <Checkmark
-                    className={`aspect-square h-4 w-4 stroke-black dark:stroke-white ${
+                    className={`stroke-clrText dark:stroke-clrDarkText aspect-square h-4 w-4 ${
                       selectedOption !== option && "invisible"
                     }`}
                   />
