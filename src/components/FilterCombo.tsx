@@ -36,23 +36,29 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
     props.onSelectionChanged(currentOption);
   };
   return (
-    <Card className="bg-clrDarkElements relative inline-flex">
+    <Card className="relative inline-flex bg-clrDarkElements">
       {/* note the comboRef contains both the popup and the combo part */}
       <div ref={comboRef}>
         <button
-          className="text-clrText dark:bg-clrDarkElements dark:text-clrDarkText bg-clrElements flex items-center justify-around gap-2 rounded-md p-2"
+          className="flex items-center justify-around gap-2 rounded-md bg-clrElements p-2 text-clrText dark:bg-clrDarkElements dark:text-clrDarkText"
           onClick={openCloseClickHandler}
         >
           <p className="p-1">Filter by Region</p>
           {!isOpen && (
-            <ChevronDown className="stroke-clrText dark:stroke-clrDarkText h-8 w-8" />
+            <ChevronDown
+              className="h-8 w-8 stroke-clrText dark:stroke-clrDarkText"
+              title="chevron down"
+            />
           )}
           {isOpen && (
-            <ChevronUp className="stroke-clrText dark:stroke-clrDarkText h-8 w-8" />
+            <ChevronUp
+              className="h-8 w-8 stroke-clrText dark:stroke-clrDarkText"
+              title="chevron up"
+            />
           )}
         </button>
         {isOpen && (
-          <Card className="text-clrText dark:bg-clrDarkElements bg-clrElements dark:text-clrDarkText absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 overflow-hidden p-2">
+          <Card className="absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 overflow-hidden bg-clrElements p-2 text-clrText dark:bg-clrDarkElements dark:text-clrDarkText">
             {props.options.map((option) => {
               return (
                 <button
@@ -62,9 +68,10 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
                   data-option={option}
                 >
                   <Checkmark
-                    className={`stroke-clrText dark:stroke-clrDarkText aspect-square h-4 w-4 ${
+                    className={`aspect-square h-4 w-4 stroke-clrText dark:stroke-clrDarkText ${
                       selectedOption !== option && "invisible"
                     }`}
+                    title="checkmark"
                   />
                   <p>{option}</p>
                 </button>
