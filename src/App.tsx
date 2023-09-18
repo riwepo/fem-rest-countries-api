@@ -103,11 +103,11 @@ const App: React.FC<IAppProps> = (props) => {
   };
 
   const onDarkModeChangeHandler = () => {
-    setUseDarkMode((current) => !current)
+    setUseDarkMode((current) => !current);
   };
   return (
     <div className={useDarkMode ? "dark" : undefined}>
-      <div className="bg-red-500 font-nunito text-base font-normal dark:bg-black">
+      <div className="bg-clrBg dark:bg-clrDarkBg font-nunito text-base font-normal">
         <Header
           progressMessage={progressMessage}
           useDarkMode={useDarkMode}
