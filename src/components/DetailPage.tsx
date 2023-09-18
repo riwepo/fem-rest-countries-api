@@ -1,4 +1,5 @@
 import { ICountryDetail } from "../helpers/interfaces";
+import { ReactComponent as ArrorLeft } from "../assets/arrow-left-svgrepo-com.svg";
 
 interface IDetailPageProps {
   country: ICountryDetail;
@@ -18,12 +19,15 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
   const languages = props.country.languages.join(",");
 
   return (
-    <div className="bg-clrElements dark:bg-clrElements text-clrText dark:text-clrText flex flex-col justify-between p-10 align-middle">
+    <div className="text-clrText dark:text-clrDarkText flex flex-col justify-between gap-20 p-10 align-middle">
       <button
-        className="m-2 self-start rounded bg-white p-2"
+        className="bg-clrElements dark:bg-clrDarkElements shadow-black m-2 self-start rounded px-4 py-2 shadow-md"
         onClick={backClickHandler}
       >
-        Back
+        <div className="flex flex-row items-center gap-2">
+          <ArrorLeft className="stroke-clrText dark:stroke-clrDarkText h-4 w-4" />
+          Back
+        </div>
       </button>
       <div className="grid grid-cols-2 gap-20">
         <img
@@ -69,14 +73,14 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
               <span className="font-semibold">Languages:</span> {languages}
             </p>
           </div>
-          <div className="col-span-3 col-start-1 row-start-3 flex flex-row items-center">
+          <div className="col-span-3 col-start-1 row-start-3 flex flex-row items-center gap-2">
             <p className="align-middle">Border Countries:</p>
             <div className="row-start-3 flex flex-row flex-wrap">
               {props.country.borderCountries.map((country) => {
                 return (
                   <button
                     key={country}
-                    className="m-2 rounded bg-white px-4 py-2"
+                    className="bg-clrElements shadow-black dark:bg-clrDarkElements m-2 rounded px-4 py-2 shadow-md"
                     data-cca3-code={country}
                     onClick={borderClickHandler}
                   >
