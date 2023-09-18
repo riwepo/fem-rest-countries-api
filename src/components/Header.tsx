@@ -1,5 +1,4 @@
-import icons8MoonLight from "../assets/icons8-moon-light-48.png";
-import icons8MoonDark from "../assets/icons8-moon-dark-48.png";
+import { ReactComponent as MoonSvg } from "../assets/moon-svgrepo-com.svg";
 
 export interface IHeaderProps {
   progressMessage: string;
@@ -19,13 +18,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
         className="flex items-center gap-1"
         onClick={darkModeClickHandler}
       >
-        {!props.useDarkMode && (
-          <img src={icons8MoonDark} alt="moon" className="w-4" />
-        )}
-        {props.useDarkMode && (
-          <img src={icons8MoonLight} alt="moon" className="w-4" />
-        )}
-
+        <MoonSvg className="h-4 w-4 fill-black dark:fill-white" />
         <p className="text-normal font-semibold">
           {props.useDarkMode ? "Light mode" : "Dark mode"}
         </p>

@@ -4,9 +4,9 @@ import Card from "./Card";
 
 import useOnClickOutside from "../hooks/useOnClickOutside";
 
-import icons8ChevronDown from "../assets/icons8-chevron-down-24.png";
-import icons8ChevronUp from "../assets/icons8-chevron-up-24.png";
-import icons8Checkmark from "../assets/icons8-checkmark-24.png";
+import { ReactComponent as ChevronDown } from "../assets/chevron-down-svgrepo-com.svg";
+import { ReactComponent as ChevronUp } from "../assets/chevron-up-svgrepo-com.svg";
+import { ReactComponent as Checkmark } from "../assets/checkmark-svgrepo-com.svg";
 
 interface FilterComboProps {
   options: string[];
@@ -38,15 +38,15 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
   return (
     <Card className="relative inline-flex">
       <button
-        className="flex items-center justify-around gap-2 p-2"
+        className="flex items-center justify-around gap-2 bg-white p-2 text-black dark:bg-black dark:text-white"
         onClick={openCloseClickHandler}
       >
         <p className="p-1">Filter by Region</p>
         {!isOpen && (
-          <img src={icons8ChevronDown} alt="chevron down" className="w-8" />
+          <ChevronDown className="h-8 w-8 stroke-black dark:stroke-white" />
         )}
         {isOpen && (
-          <img src={icons8ChevronUp} alt="chevron up" className="w-8" />
+          <ChevronUp className="h-8 w-8 stroke-black dark:stroke-white" />
         )}
       </button>
       {isOpen && (
@@ -60,10 +60,8 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
                   onClick={selectRegionClickHandler}
                   data-option={option}
                 >
-                  <img
-                    src={icons8Checkmark}
-                    alt="checkmark"
-                    className={`aspect-square w-4 ${
+                  <Checkmark
+                    className={`aspect-square w-4 fill-black stroke-black ${
                       selectedOption !== option && "invisible"
                     }`}
                   />
