@@ -40,7 +40,7 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
       {/* note the comboRef contains both the popup and the combo part */}
       <div ref={comboRef}>
         <button
-          className="text-clrText dark:bg-clrDarkElements dark:text-clrDarkText bg-clrElements flex items-center justify-around gap-2 p-2"
+          className="text-clrText dark:bg-clrDarkElements dark:text-clrDarkText bg-clrElements flex items-center justify-around gap-2 rounded-md p-2"
           onClick={openCloseClickHandler}
         >
           <p className="p-1">Filter by Region</p>
