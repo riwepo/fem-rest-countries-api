@@ -14,12 +14,12 @@ interface FilterComboProps {
 }
 
 const FilterCombo: React.FC<FilterComboProps> = (props) => {
-  const modalRef = useRef<HTMLDivElement>(null);
+  const comboRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  useOnClickOutside(modalRef, () => setIsOpen(false));
+  useOnClickOutside(comboRef, () => setIsOpen(false));
   const [selectedOption, setSelectedOption] = useState<string>("");
   const openCloseClickHandler = () => {
-    setIsOpen((current: boolean) => !current);
+    setIsOpen((current) => !current);
   };
   const selectRegionClickHandler = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -36,21 +36,22 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
     props.onSelectionChanged(currentOption);
   };
   return (
-    <Card className="relative inline-flex">
-      <button
-        className="text-clrText dark:bg-clrDarkElements dark:text-clrDarkText bg-clrElements flex items-center justify-around gap-2 p-2"
-        onClick={openCloseClickHandler}
-      >
-        <p className="p-1">Filter by Region</p>
-        {!isOpen && (
-          <ChevronDown className="stroke-clrText dark:stroke-clrDarkText h-8 w-8" />
-        )}
+    <Card className="bg-clrDarkElements relative inline-flex">
+      {/* note the comboRef contains both the popup and the combo part */}
+      <div ref={comboRef}>
+        <button
+          className="text-clrText dark:bg-clrDarkElements dark:text-clrDarkText bg-clrElements flex items-center justify-around gap-2 p-2"
+          onClick={openCloseClickHandler}
+        >
+          <p className="p-1">Filter by Region</p>
+          {!isOpen && (
+            <ChevronDown className="stroke-clrText dark:stroke-clrDarkText h-8 w-8" />
+          )}
+          {isOpen && (
+            <ChevronUp className="stroke-clrText dark:stroke-clrDarkText h-8 w-8" />
+          )}
+        </button>
         {isOpen && (
-          <ChevronUp className="stroke-clrText dark:stroke-clrDarkText h-8 w-8" />
-        )}
-      </button>
-      {isOpen && (
-        <div ref={modalRef}>
           <Card className="text-clrText dark:bg-clrDarkElements bg-clrElements dark:text-clrDarkText absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 overflow-hidden p-2">
             {props.options.map((option) => {
               return (
@@ -70,8 +71,8 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
               );
             })}
           </Card>
-        </div>
-      )}
+        )}
+      </div>
     </Card>
   );
 };
