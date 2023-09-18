@@ -1,6 +1,5 @@
 import Card from "./Card";
 
-// import icons8MagnifyingGlass from "../assets/icons8-magnifying-glass-50.png";
 import { ReactComponent as MagnifyingGlass } from "../assets/icons8-magnifying-glass.svg";
 interface SearchInputProps {
   onSearchChanged: (a: string) => void;
