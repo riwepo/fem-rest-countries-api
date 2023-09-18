@@ -1,4 +1,10 @@
-import { IGetCountriesResult, ICountrySummary } from "./interfaces";
+import {
+  IGetCountriesResult,
+  ICountrySummary,
+  ICca3CodeName,
+  ICountryDetail,
+  ICountryDetail2,
+} from "./interfaces";
 
 export function wrapInResultObject(value: object | null): IGetCountriesResult {
   const result: IGetCountriesResult = { isOk: true, value: value, error: null };
@@ -25,10 +31,6 @@ export function sortCountrySummary(data: ICountrySummary[]): ICountrySummary[] {
 export function sortStrings(data: string[]): string[] {
   return [...data].sort((a, b) => a.localeCompare(b));
 }
-
-// export function convertCurrencies(restData): string[] {
-//   return Object.keys(restData).map((key) => restData[key].name);
-// }
 
 export const REST_COUNTRIES_BASE_URL = new URL(
   "https://restcountries.com/v3.1",
@@ -74,4 +76,33 @@ export function getCountryByCodeUrl(cca3Code: string) {
   const baseUrl = getCountryByCodeBaseUrl(cca3Code);
   const url = addFieldsToUrl(baseUrl, detailFields);
   return url;
+}
+
+export function getCca3CodeName(
+  codeNames: ICca3CodeName[],
+  cca3Code: string,
+): ICca3CodeName {
+  const filteredCodeNames = codeNames.filter(
+    (codeName) => codeName.cca3Code === cca3Code,
+  );
+  if (filteredCodeNames.length !== 1) {
+    throw new Error(
+      `expected 1 matching entry for cca3Code '${cca3Code}' but found ${filteredCodeNames.length} `,
+    );
+  }
+  return filteredCodeNames[0];
+}
+
+export function getCountyDetail2(
+  codeNames: ICca3CodeName[],
+  countryDetail: ICountryDetail,
+): ICountryDetail2 {
+  const borderCodeNames = countryDetail.borderCountries.map((borderCountry) =>
+    getCca3CodeName(codeNames, borderCountry),
+  );
+  const result = {
+    ...countryDetail,
+    borderCountriesCodeNames: borderCodeNames,
+  };
+  return result;
 }

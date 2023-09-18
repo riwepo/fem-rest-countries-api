@@ -4,7 +4,9 @@ import { describe, test, expect } from "vitest";
 import {
   ICountrySummary,
   ICountryDetail,
+  ICountryDetail2,
   IGetCountriesResult,
+  ICca3CodeName,
 } from "../helpers/interfaces.tsx";
 import { filterByRegion } from "../helpers/filters.tsx";
 import {
@@ -38,6 +40,15 @@ const isInstanceOfCountryDetail = (data: ICountryDetail) => {
     (data.nativeName === undefined || typeof data.nativeName === "string") &&
     typeof data.subRegion === "string" &&
     typeof data.topLevelDomain === "string";
+  if (!result) {
+    () => {}; // noop
+  }
+  return result;
+};
+const isInstanceOfCountryDetail2 = (data: ICountryDetail2) => {
+  // note nativeName is undefined for some countries
+  const result =
+    isInstanceOfCountryDetail(data) && typeof data.borderCountries === "object";
   if (!result) {
     () => {}; // noop
   }
@@ -136,14 +147,24 @@ describe("filterByRegion test suite", () => {
 
 describe("getCountryDetail test suite", () => {
   test("getCountryDetail for Antarctica returns expected", async () => {
-    const result: IGetCountriesResult = await getCountryDetail("ATA");
+    const allCountrySummaries: ICca3CodeName[] = [];
+    const result: IGetCountriesResult = await getCountryDetail(
+      allCountrySummaries,
+      "ATA",
+    );
     expect(result.isOk).toBe(true);
     expect(result.value).not.toBeNull();
-    const results = result.value as ICountryDetail;
-    expect(isInstanceOfCountryDetail(results)).toBe(true);
+    const results = result.value as ICountryDetail2;
+    expect(isInstanceOfCountryDetail2(results)).toBe(true);
   });
-  test("getCountryDetail  for Germany returns expected", async () => {
-    const result: IGetCountriesResult = await getCountryDetail("DEU");
+  test("getCountryDetail for Germany returns expected", async () => {
+    const allCountrySummariesResult = await getAllCountriesSummary();
+    const allCountrySummaries =
+      allCountrySummariesResult.value as ICountrySummary[];
+    const result: IGetCountriesResult = await getCountryDetail(
+      allCountrySummaries,
+      "DEU",
+    );
     expect(result.isOk).toBe(true);
     expect(result.value).not.toBeNull();
     const results = result.value as ICountryDetail;

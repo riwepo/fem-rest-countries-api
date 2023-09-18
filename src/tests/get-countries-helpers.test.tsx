@@ -10,6 +10,7 @@ import {
   getCountryByCodeBaseUrl,
   getCountryByCodeUrl,
   addFieldsToUrl,
+  getCca3CodeName,
 } from "../helpers/get-countries-helpers.ts";
 
 describe("sortCountrySummary test suite", () => {
@@ -89,6 +90,36 @@ describe("get urls test suite", () => {
       new URL(
         "https://restcountries.com/v3.1/alpha/AUS?fields=cca3,name,capital,region,population,flags,subregion,languages,borders,tld,currencies",
       ),
+    );
+  });
+});
+
+describe("get getCca3CodeName test suite", () => {
+  const testCodeNames = [
+    { cca3Code: "code1", name: "name1" },
+    { cca3Code: "code2", name: "name2" },
+    { cca3Code: "code3", name: "name3" },
+  ];
+  test("getCca3CodeName with 1 match returns expected", () => {
+    const codeName = getCca3CodeName(testCodeNames, "code1");
+    expect(codeName).toEqual(testCodeNames[0]);
+  });
+  test("getCca3CodeName with 0 matches throws", () => {
+    expect(() => {
+      getCca3CodeName(testCodeNames, "code1xxx");
+    }).toThrowError(
+      "expected 1 matching entry for cca3Code 'code1xxx' but found 0",
+    );
+  });
+  test("getCca3CodeName with 2 matches throws", () => {
+    const extraCodeName = [
+      ...testCodeNames,
+      { cca3Code: "code1", name: "name1" },
+    ];
+    expect(() => {
+      getCca3CodeName(extraCodeName, "code1");
+    }).toThrowError(
+      "expected 1 matching entry for cca3Code 'code1' but found 2",
     );
   });
 });

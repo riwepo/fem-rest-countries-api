@@ -3,6 +3,7 @@ import {
   ICountrySummary,
   ICountryDetail,
   IParseResult,
+  ICca3CodeName,
 } from "./interfaces";
 
 import {
@@ -12,6 +13,7 @@ import {
   sortStrings,
   getAllCountriesUrl,
   getCountryByCodeUrl,
+  getCountyDetail2,
 } from "./get-countries-helpers";
 
 import {
@@ -73,11 +75,12 @@ export function getUniqueRegions(regionObjects: { region: string }[]) {
 }
 
 export async function getCountryDetail(
-  cca3Code: string,
+  codeNames: ICca3CodeName[],
+  code: string,
 ): Promise<IGetCountriesResult> {
   let result;
   try {
-    const url = getCountryByCodeUrl(cca3Code);
+    const url = getCountryByCodeUrl(code);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
@@ -97,7 +100,9 @@ export async function getCountryDetail(
       parseResult.warnings.map((warn) => console.log(warn));
     }
     const countryDetail: ICountryDetail = parseResult.value as ICountryDetail;
-    const result = wrapInResultObject(countryDetail);
+    const countryDetail2 = getCountyDetail2(codeNames, countryDetail);
+
+    const result = wrapInResultObject(countryDetail2);
     return result;
   } catch (error: unknown) {
     result = processError(error);

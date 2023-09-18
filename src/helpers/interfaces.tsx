@@ -25,6 +25,8 @@ export interface ICca3Code {
   cca3Code: string;
 }
 
+export interface ICca3CodeName extends ICca3Code, IName {}
+
 export interface ICountrySummary extends IRegion, IName, ICca3Code {
   capital: string;
   population: number;
@@ -38,4 +40,8 @@ export interface ICountryDetail extends ICountrySummary {
   currencies: string[];
   languages: string[];
   borderCountries: string[];
+}
+
+export interface ICountryDetail2 extends ICountryDetail {
+  borderCountriesCodeNames: ICca3CodeName[];
 }
