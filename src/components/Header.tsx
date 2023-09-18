@@ -11,14 +11,17 @@ const Header: React.FC<IHeaderProps> = (props) => {
     props.onDarkModeChange();
   };
   return (
-    <header className="text-clrText bg-clrElements shadow-black dark:bg-clrDarkElements dark:text-clrDarkText  flex items-center justify-between p-2 shadow">
+    <header className="shadow-black flex items-center justify-between bg-clrElements p-2 text-clrText shadow dark:bg-clrDarkElements dark:text-clrDarkText">
       <h1 className="text-lg font-bold">Where in the world?</h1>
       <p>{props.progressMessage}</p>
       <button
         className="flex items-center gap-1"
         onClick={darkModeClickHandler}
       >
-        <MoonSvg className="fill-clrText dark:fill-clrDarkText h-4 w-4" />
+        <MoonSvg
+          className="h-4 w-4 fill-clrText dark:fill-clrDarkText"
+          title="moon"
+        />
         <p className="text-normal font-semibold">
           {props.useDarkMode ? "Light mode" : "Dark mode"}
         </p>
