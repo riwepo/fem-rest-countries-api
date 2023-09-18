@@ -30,9 +30,9 @@ describe("FilterCombo component test suite", () => {
       <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
     );
 
-    const chevronDownElement = screen.getByAltText("chevron down");
+    const chevronDownElement = screen.getByTitle("chevron down");
     expect(chevronDownElement).toBeInTheDocument();
-    const chevronUpElement = screen.queryByAltText("chevron up");
+    const chevronUpElement = screen.queryByTitle("chevron up");
     expect(chevronUpElement).not.toBeInTheDocument();
   });
 
@@ -45,11 +45,11 @@ describe("FilterCombo component test suite", () => {
     fireEvent.click(buttonElement);
     const optionElements = screen.getAllByText("option", { exact: false });
     expect(optionElements.length).toBe(options.length);
-    const checkmarkImageElements = screen.getAllByAltText("checkmark");
-    expect(checkmarkImageElements.length).toBe(options.length);
+    const checkmarkSvgElements = screen.getAllByTitle("checkmark");
+    expect(checkmarkSvgElements.length).toBe(options.length);
   });
 
-  test("clicking the button shows the chevron up image", () => {
+  test("clicking the button shows the chevron up svg", () => {
     render(
       <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
     );
@@ -57,10 +57,38 @@ describe("FilterCombo component test suite", () => {
     expect(buttonElement).toBeInTheDocument();
     fireEvent.click(buttonElement);
 
-    const chevronDownElement = screen.queryByAltText("chevron down");
+    const chevronDownElement = screen.queryByTitle("chevron down");
     expect(chevronDownElement).not.toBeInTheDocument();
-    const chevronUpElement = screen.getByAltText("chevron up");
+    const chevronUpElement = screen.getByTitle("chevron up");
     expect(chevronUpElement).toBeInTheDocument();
+  });
+
+  test("clicking the button again hides the options dropdown", () => {
+    render(
+      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+    );
+    const buttonElement = screen.getByRole("button");
+    expect(buttonElement).toBeInTheDocument();
+    fireEvent.click(buttonElement); // show the dropdown
+    fireEvent.click(buttonElement);
+    const optionElements = screen.queryAllByText("option", { exact: false });
+    expect(optionElements.length).toBe(0);
+    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    expect(checkmarkSvgElements.length).toBe(0);
+  });
+
+  test("clicking away from the options dropdown hides it", () => {
+    render(
+      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+    );
+    const buttonElement = screen.getByRole("button");
+    expect(buttonElement).toBeInTheDocument();
+    fireEvent.click(buttonElement); // show the dropdown
+    fireEvent.mouseDown(document); // useOnClickOutside detects mousedown away from the combo
+    const optionElements = screen.queryAllByText("option", { exact: false });
+    expect(optionElements.length).toBe(0);
+    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    expect(checkmarkSvgElements.length).toBe(0);
   });
 
   test("initially no options are selected", () => {
@@ -73,8 +101,8 @@ describe("FilterCombo component test suite", () => {
 
     // note I tried looking for visibility=hidden attribute but this depends on Tailwind
     // so just had to check the classes
-    const checkmarkImageElements = screen.queryAllByAltText("checkmark");
-    checkmarkImageElements.map((element) => {
+    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    checkmarkSvgElements.map((element) => {
       expect(element).toHaveClass("invisible");
     });
   });
@@ -94,11 +122,11 @@ describe("FilterCombo component test suite", () => {
 
     // note I tried looking for visibility=hidden attribute but this depends on Tailwind
     // so just had to check the classes
-    const checkmarkImageElements = screen.queryAllByAltText("checkmark");
-    expect(checkmarkImageElements[0]).not.toHaveClass("invisible");
-    expect(checkmarkImageElements[1]).toHaveClass("invisible");
-    expect(checkmarkImageElements[2]).toHaveClass("invisible");
-    expect(checkmarkImageElements[3]).toHaveClass("invisible");
+    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    expect(checkmarkSvgElements[0]).not.toHaveClass("invisible");
+    expect(checkmarkSvgElements[1]).toHaveClass("invisible");
+    expect(checkmarkSvgElements[2]).toHaveClass("invisible");
+    expect(checkmarkSvgElements[3]).toHaveClass("invisible");
   });
 
   test("clicking on an option again makes checkmark invisible", () => {
@@ -116,11 +144,11 @@ describe("FilterCombo component test suite", () => {
 
     // note I tried looking for visibility=hidden attribute but this depends on Tailwind
     // so just had to check the classes
-    const checkmarkImageElements = screen.queryAllByAltText("checkmark");
-    expect(checkmarkImageElements[0]).not.toHaveClass("invisible");
+    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    expect(checkmarkSvgElements[0]).not.toHaveClass("invisible");
 
     fireEvent.click(optionButtonElement as HTMLButtonElement);
-    expect(checkmarkImageElements[0]).toHaveClass("invisible");
+    expect(checkmarkSvgElements[0]).toHaveClass("invisible");
   });
 
   test("clicking on an option fires the callback", () => {
