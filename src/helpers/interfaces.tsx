@@ -45,3 +45,8 @@ export interface ICountryDetail extends ICountrySummary {
 export interface ICountryDetail2 extends ICountryDetail {
   borderCountriesCodeNames: ICca3CodeName[];
 }
+
+export enum DisplayMode {
+  Light = 1,
+  Dark,
+}

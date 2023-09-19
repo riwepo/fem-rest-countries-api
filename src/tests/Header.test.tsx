@@ -5,13 +5,15 @@ import "@testing-library/jest-dom";
 
 import Header from "../components/Header";
 
+import { DisplayMode } from "../helpers/interfaces";
+
 describe("Header component test suite", () => {
   test("renders title, svg and dark mode text", () => {
     render(
       <Header
         progressMessage="hello"
-        useDarkMode={false}
-        onDarkModeChange={() => {}}
+        selectedDisplayMode={DisplayMode.Light}
+        onDisplayModeToggle={() => {}}
       />,
     );
     const h1Element = screen.getByText("Where in the world?");
@@ -26,38 +28,38 @@ describe("Header component test suite", () => {
     render(
       <Header
         progressMessage={progressMessage}
-        useDarkMode={false}
-        onDarkModeChange={() => {}}
+        selectedDisplayMode={DisplayMode.Light}
+        onDisplayModeToggle={() => {}}
       />,
     );
     const pElement = screen.getByText(progressMessage);
     expect(pElement).toBeInTheDocument();
   });
-  test("renders light mode text", () => {
+  test("renders dark mode text", () => {
     render(
       <Header
         progressMessage=""
-        useDarkMode={true}
-        onDarkModeChange={() => {}}
+        selectedDisplayMode={DisplayMode.Light}
+        onDisplayModeToggle={() => {}}
       />,
     );
-    const p1Element = screen.queryByText("Dark mode");
-    const p2Element = screen.getByText("Light mode");
-    expect(p1Element).not.toBeInTheDocument();
-    expect(p2Element).toBeInTheDocument();
+    const p1Element = screen.getByText("Dark mode");
+    const p2Element = screen.queryByText("Light mode");
+    expect(p1Element).toBeInTheDocument();
+    expect(p2Element).not.toBeInTheDocument();
   });
-  test("dark mode callback called", () => {
-    const onDarkModeChangeHandler = vi.fn();
+  test("display mode toggle callback called", () => {
+    const onDisplayModeToggleHandler = vi.fn();
     render(
       <Header
         progressMessage=""
-        useDarkMode={false}
-        onDarkModeChange={onDarkModeChangeHandler}
+        selectedDisplayMode={DisplayMode.Light}
+        onDisplayModeToggle={onDisplayModeToggleHandler}
       />,
     );
     const buttonElement = screen.getByRole("button");
     expect(buttonElement).toBeInTheDocument();
     fireEvent.click(buttonElement);
-    expect(onDarkModeChangeHandler).toBeCalled();
+    expect(onDisplayModeToggleHandler).toBeCalled();
   });
 });

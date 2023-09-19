@@ -11,6 +11,7 @@ import {
   IRegion,
   IName,
   ICca3CodeName,
+  DisplayMode,
 } from "./helpers/interfaces";
 
 interface IAppProps {
@@ -25,7 +26,9 @@ interface IAppProps {
 }
 
 const App: React.FC<IAppProps> = (props) => {
-  const [useDarkMode, setUseDarkMode] = useState(false);
+  const [selectedDisplayMode, setSelectedDisplayMode] = useState(
+    DisplayMode.Light,
+  );
   const [allCountriesSummary, setAllCountriesSummary] = useState<
     ICountrySummary[]
   >([]);
@@ -111,16 +114,20 @@ const App: React.FC<IAppProps> = (props) => {
     updateFilteredCountries(selectedRegion, searchTerm);
   };
 
-  const onDarkModeChangeHandler = () => {
-    setUseDarkMode((current) => !current);
+  const onDisplayModeChangeHandler = () => {
+    setSelectedDisplayMode((current) =>
+      current === DisplayMode.Light ? DisplayMode.Dark : DisplayMode.Light,
+    );
   };
   return (
-    <div className={useDarkMode ? "dark" : undefined}>
+    <div
+      className={selectedDisplayMode === DisplayMode.Dark ? "dark" : undefined}
+    >
       <div className="bg-clrBg font-nunito text-base font-normal dark:bg-clrDarkBg">
         <Header
           progressMessage={progressMessage}
-          useDarkMode={useDarkMode}
-          onDarkModeChange={onDarkModeChangeHandler}
+          selectedDisplayMode={selectedDisplayMode}
+          onDisplayModeToggle={onDisplayModeChangeHandler}
         />
         {selectedCountryDetail === null && (
           <HomePage
