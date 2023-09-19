@@ -61,7 +61,7 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
           )}
         </button>
         {isOpen && (
-          <Card className="absolute bottom-0 left-0 flex translate-y-[105%] transform flex-col gap-2 overflow-hidden bg-clrElements p-2 text-clrText dark:bg-clrDarkElements dark:text-clrDarkText">
+          <Card className="absolute bottom-0 left-0 z-10 flex translate-y-[105%] transform flex-col gap-2 overflow-hidden bg-clrElements p-2 px-10 text-clrText dark:bg-clrDarkElements dark:text-clrDarkText">
             {props.options.map((option) => {
               return (
                 <button
