@@ -32,17 +32,17 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
           Back
         </div>
       </button>
-      <div className="grid grid-cols-2 gap-20">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-20">
         <img
           src={props.country.flag.toString()}
           alt="flag"
           className=" w-full object-cover"
         />
-        <div className="grid grid-cols-2 grid-rows-[auto_1fr_auto] p-10">
-          <h1 className="font-semi-bold col-span-3 col-start-1 row-start-1 text-2xl">
+        <div className="grid grid-cols-1  grid-rows-[auto_1fr_1fr_auto_auto] p-2 sm:grid-cols-2 sm:grid-rows-[auto_1fr_auto] sm:p-10">
+          <h1 className="font-semi-bold col-span-2 col-start-1 row-start-1 pb-4 text-2xl">
             {props.country.name}
           </h1>
-          <div className="row-start-2 flex flex-col">
+          <div className="col-start-1 row-start-2 flex flex-col pb-4">
             <p>
               <span className="font-semibold">Native Name:</span>{" "}
               {props.country.nativeName}
@@ -64,7 +64,7 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
               {props.country.capital}
             </p>
           </div>
-          <div className="row-start-2 flex flex-col">
+          <div className="row-start-3 flex flex-col sm:col-start-2 sm:row-start-2">
             <p>
               <span className="font-semibold">Top Level Domain:</span>{" "}
               {props.country.topLevelDomain}
@@ -76,8 +76,10 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
               <span className="font-semibold">Languages:</span> {languages}
             </p>
           </div>
-          <div className="col-span-3 col-start-1 row-start-3 flex flex-row items-center gap-2">
-            <p className="align-middle">Border Countries:</p>
+          <div className="col-start-1 row-start-4 flex flex-col items-center gap-2 sm:col-span-2 sm:row-start-3 sm:flex-row">
+            <p className="self-start align-middle sm:col-start-1 sm:row-start-3">
+              Border Countries:
+            </p>
             <div className="row-start-3 flex flex-row flex-wrap">
               {props.country.borderCountriesCodeNames.map((codeName) => {
                 return (
