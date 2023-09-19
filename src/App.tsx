@@ -6,7 +6,7 @@ import DetailPage from "./components/DetailPage";
 
 import {
   ICountrySummary,
-  ICountryDetail,
+  ICountryDetail2,
   IGetCountriesResult,
   IRegion,
   IName,
@@ -39,7 +39,7 @@ const App: React.FC<IAppProps> = (props) => {
   const [selectedCountryCca3Code, setSelectedCountryCca3Code] =
     useState<string>("");
   const [selectedCountryDetail, setSelectedCountryDetail] =
-    useState<ICountryDetail | null>(null);
+    useState<ICountryDetail2 | null>(null);
   const updateFilteredCountries = (region: string, searchTerm: string) => {
     let filtered = allCountriesSummary;
     if (region !== "") {
@@ -87,7 +87,7 @@ const App: React.FC<IAppProps> = (props) => {
         selectedCountryCca3Code,
       );
       if (result.isOk) {
-        const _countryDetail = result.value as ICountryDetail;
+        const _countryDetail = result.value as ICountryDetail2;
         setSelectedCountryDetail(_countryDetail);
         setProgressMessage("");
       } else {
