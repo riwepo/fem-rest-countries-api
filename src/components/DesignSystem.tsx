@@ -5,8 +5,9 @@ import Header from "./Header";
 import SearchInput from "./SearchInput";
 import FilterCombo from "./FilterCombo";
 
-import { ICountrySummary, ICountryDetail } from "../helpers/interfaces";
+import { ICountrySummary, DisplayMode } from "../helpers/interfaces";
 import DetailPage from "./DetailPage";
+import { germanyDetail2 } from "../tests/countryObjects";
 
 const DesignSystem: React.FC = () => {
   const australiaSummary: ICountrySummary = {
@@ -25,20 +26,13 @@ const DesignSystem: React.FC = () => {
     australiaSummary,
   ];
   const filtercomboOptions = ["option1", "option2", "option3", "option4"];
-  const filterComboSelectionChangeHandler = (selection: string) => {};
+  const filterComboSelectionChangeHandler = (selection: string) => {
+    console.log(selection);
+  };
   const searchChangeHandler = (search: string) => {
     () => {
       search;
     }; // noop
-  };
-  const australiaDetail: ICountryDetail = {
-    ...australiaSummary,
-    nativeName: "straya",
-    subRegion: "Australasia",
-    topLevelDomain: "AU",
-    currencies: ["AUD"],
-    languages: ["english"],
-    borderCountries: [],
   };
   const countryChangeHandler = (countryName: string) => {
     () => {
@@ -55,14 +49,19 @@ const DesignSystem: React.FC = () => {
         countries={countrySummaries}
         onCountryClicked={countryChangeHandler}
       />
-      <Header progressMessage="hello there" />
-      <SearchInput onSearchChanged={searchChangeHandler} />
+      <Header
+        progressMessage="hello there"
+        selectedDisplayMode={DisplayMode.Light}
+        onDisplayModeToggle={() => {}}
+      />
+      <SearchInput onSearchChanged={searchChangeHandler} className="" />
       <FilterCombo
         options={filtercomboOptions}
         onSelectionChanged={filterComboSelectionChangeHandler}
+        className=""
       />
       <DetailPage
-        country={australiaDetail}
+        country={germanyDetail2}
         onCountryChange={countryChangeHandler}
       />
     </div>
