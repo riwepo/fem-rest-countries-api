@@ -38,7 +38,7 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
   };
   return (
     <Card
-      className={`relative inline-flex bg-clrDarkElements ${props.className}`}
+      className={`relative inline-flex bg-clrElements dark:bg-clrDarkElements ${props.className}`}
     >
       {/* note the comboRef contains both the popup and the combo part */}
       <div ref={comboRef}>
