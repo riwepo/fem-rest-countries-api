@@ -107,6 +107,8 @@ const App: React.FC<IAppProps> = (props) => {
   };
   const countryChangeHandler = (cca3Code: string) => {
     setSelectedCountryCca3Code(cca3Code);
+    setSearchTerm("");
+    updateFilteredCountries(selectedRegion, searchTerm);
   };
 
   const onDarkModeChangeHandler = () => {
