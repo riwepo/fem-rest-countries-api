@@ -67,5 +67,5 @@ It was also the first time I had switched from Create React App to the Vite buil
 
 ## Acknowledgments
 
-- [Understanding_Typescript_Udemy_Course] (https://www.udemy.com/course/understanding-typescript/) - course by Maximilian Schwarzmüller
-- [The_Ultimate_React_Course_2023] (https://www.udemy.com/course/the-ultimate-react-course/) - course by Jonas Schmedtmann
+- [Understanding_Typescript_Udemy_Course](https://www.udemy.com/course/understanding-typescript/) - course by Maximilian Schwarzmüller
+- [The_Ultimate_React_Course_2023](https://www.udemy.com/course/the-ultimate-react-course/) - course by Jonas Schmedtmann
