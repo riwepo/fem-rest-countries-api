@@ -10,7 +10,7 @@ img {
   border: solid 1px red;
 }
 
-@media (min-width: 560px) {
+@media (min-width: 640px) {
   div,
   header,
   nav,
@@ -19,7 +19,7 @@ img {
   }
 }
 
-@media (min-width: 720px) {
+@media (min-width: 1280px) {
   div,
   header,
   nav,
