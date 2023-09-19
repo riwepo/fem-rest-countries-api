@@ -24,13 +24,13 @@ interface IHomePageProps {
 const HomePage: React.FC<IHomePageProps> = (props) => {
   return (
     <>
-      <div className="flex flex-col justify-between gap-2 p-2 sm:flex-row">
+      <div className="flex flex-col justify-center gap-2 p-2 sm:flex-row sm:justify-between">
         <SearchInput
           onSearchChanged={props.searchChangedHandler}
           className="max-w-[40rem] grow"
         />
         <FilterCombo
-          className="shrink-0"
+          className="shrink-0 self-start"
           options={props.regions}
           onSelectionChanged={props.filterSelectionChangedHandler}
         />
