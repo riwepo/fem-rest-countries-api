@@ -24,7 +24,7 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
       <input
         type="text"
         placeholder="Search for a country..."
-        className="flex-1 bg-clrElements p-1 text-clrInput dark:bg-clrDarkElements dark:text-clrDarkInput"
+        className="flex-1 bg-clrElements p-1 text-clrText dark:bg-clrDarkElements dark:text-clrDarkText"
         onKeyDown={keyDownHandler}
       />
     </Card>
