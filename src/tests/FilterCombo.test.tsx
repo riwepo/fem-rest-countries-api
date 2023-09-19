@@ -10,7 +10,11 @@ describe("FilterCombo component test suite", () => {
   const onSelectionChanged = () => {};
   test("renders text", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
     const pElement = screen.getByText("Filter by Region");
     expect(pElement).toBeInTheDocument();
@@ -18,7 +22,11 @@ describe("FilterCombo component test suite", () => {
 
   test("initially the options dropdown is not shown", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
 
     const optionElements = screen.queryAllByText("option", { exact: false });
@@ -27,7 +35,11 @@ describe("FilterCombo component test suite", () => {
 
   test("initially the chevron down image is shown", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
 
     const chevronDownElement = screen.getByTitle("chevron down");
@@ -38,7 +50,11 @@ describe("FilterCombo component test suite", () => {
 
   test("clicking the button shows the options dropdown", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
     const buttonElement = screen.getByRole("button");
     expect(buttonElement).toBeInTheDocument();
@@ -51,7 +67,11 @@ describe("FilterCombo component test suite", () => {
 
   test("clicking the button shows the chevron up svg", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
     const buttonElement = screen.getByRole("button");
     expect(buttonElement).toBeInTheDocument();
@@ -65,7 +85,11 @@ describe("FilterCombo component test suite", () => {
 
   test("clicking the button again hides the options dropdown", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
     const buttonElement = screen.getByRole("button");
     expect(buttonElement).toBeInTheDocument();
@@ -79,7 +103,11 @@ describe("FilterCombo component test suite", () => {
 
   test("clicking away from the options dropdown hides it", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
     const buttonElement = screen.getByRole("button");
     expect(buttonElement).toBeInTheDocument();
@@ -93,7 +121,11 @@ describe("FilterCombo component test suite", () => {
 
   test("initially no options are selected", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
     const buttonElement = screen.getByRole("button");
     expect(buttonElement).toBeInTheDocument();
@@ -109,7 +141,11 @@ describe("FilterCombo component test suite", () => {
 
   test("clicking on an option makes checkmark visible", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
     const dropdownButtonElement = screen.getByRole("button");
     expect(dropdownButtonElement).toBeInTheDocument();
@@ -131,7 +167,11 @@ describe("FilterCombo component test suite", () => {
 
   test("clicking on an option again makes checkmark invisible", () => {
     render(
-      <FilterCombo options={options} onSelectionChanged={onSelectionChanged} />,
+      <FilterCombo
+        options={options}
+        onSelectionChanged={onSelectionChanged}
+        className=""
+      />,
     );
     const dropdownButtonElement = screen.getByRole("button");
     expect(dropdownButtonElement).toBeInTheDocument();
@@ -157,6 +197,7 @@ describe("FilterCombo component test suite", () => {
       <FilterCombo
         options={options}
         onSelectionChanged={mockOnSelectionChanged}
+        className=""
       />,
     );
     const dropdownButtonElement = screen.getByRole("button");
@@ -177,6 +218,7 @@ describe("FilterCombo component test suite", () => {
       <FilterCombo
         options={options}
         onSelectionChanged={mockOnSelectionChanged}
+        className=""
       />,
     );
     const dropdownButtonElement = screen.getByRole("button");
