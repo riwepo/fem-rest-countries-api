@@ -5,7 +5,6 @@ import "@testing-library/jest-dom";
 
 import App from "../App";
 
-import {} from "../helpers/interfaces";
 import { filterByRegion, filterBySearchTerm } from "../helpers/filters";
 
 import {

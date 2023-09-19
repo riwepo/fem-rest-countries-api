@@ -10,11 +10,15 @@ import {
   IGetCountriesResult,
   IRegion,
   IName,
+  ICca3CodeName,
 } from "./helpers/interfaces";
 
 interface IAppProps {
   getAllCountriesSummary: () => Promise<IGetCountriesResult>;
-  getCountryDetail: (cca3Code: string) => Promise<IGetCountriesResult>;
+  getCountryDetail: (
+    nameCodes: ICca3CodeName[],
+    cca3Code: string,
+  ) => Promise<IGetCountriesResult>;
   getUniqueRegions: (regions: IRegion[]) => string[];
   filterByRegion: (regions: IRegion[], region: string) => IRegion[];
   filterBySearchTerm: (countries: IName[], searchTerm: string) => IName[];
@@ -78,7 +82,10 @@ const App: React.FC<IAppProps> = (props) => {
     }
     const fetchData = async () => {
       setProgressMessage("Fetching data...");
-      const result = await props.getCountryDetail(selectedCountryCca3Code);
+      const result = await props.getCountryDetail(
+        allCountriesSummary,
+        selectedCountryCca3Code,
+      );
       if (result.isOk) {
         const _countryDetail = result.value as ICountryDetail;
         setSelectedCountryDetail(_countryDetail);
@@ -107,7 +114,7 @@ const App: React.FC<IAppProps> = (props) => {
   };
   return (
     <div className={useDarkMode ? "dark" : undefined}>
-      <div className="bg-clrBg dark:bg-clrDarkBg font-nunito text-base font-normal">
+      <div className="bg-clrBg font-nunito text-base font-normal dark:bg-clrDarkBg">
         <Header
           progressMessage={progressMessage}
           useDarkMode={useDarkMode}

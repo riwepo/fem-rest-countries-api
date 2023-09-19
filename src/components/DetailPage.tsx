@@ -1,8 +1,8 @@
-import { ICountryDetail } from "../helpers/interfaces";
+import { ICountryDetail2 } from "../helpers/interfaces";
 import { ReactComponent as ArrorLeft } from "../assets/arrow-left-svgrepo-com.svg";
 
 interface IDetailPageProps {
-  country: ICountryDetail;
+  country: ICountryDetail2;
   onCountryChange: (countryName: string) => void;
 }
 
@@ -19,13 +19,16 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
   const languages = props.country.languages.join(",");
 
   return (
-    <div className="text-clrText dark:text-clrDarkText flex flex-col justify-between gap-20 p-10 align-middle">
+    <div className="flex flex-col justify-between gap-20 p-10 align-middle text-clrText dark:text-clrDarkText">
       <button
-        className="bg-clrElements dark:bg-clrDarkElements shadow-black m-2 self-start rounded px-4 py-2 shadow-md"
+        className="shadow-black m-2 self-start rounded bg-clrElements px-4 py-2 shadow-md dark:bg-clrDarkElements"
         onClick={backClickHandler}
       >
         <div className="flex flex-row items-center gap-2">
-          <ArrorLeft className="stroke-clrText dark:stroke-clrDarkText h-4 w-4" />
+          <ArrorLeft
+            className="h-4 w-4 stroke-clrText dark:stroke-clrDarkText"
+            title="arrow left"
+          />
           Back
         </div>
       </button>
@@ -42,7 +45,7 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
           <div className="row-start-2 flex flex-col">
             <p>
               <span className="font-semibold">Native Name:</span>{" "}
-              {props.country.name}
+              {props.country.nativeName}
             </p>
             <p>
               <span className="font-semibold">Population:</span>{" "}
@@ -76,15 +79,15 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
           <div className="col-span-3 col-start-1 row-start-3 flex flex-row items-center gap-2">
             <p className="align-middle">Border Countries:</p>
             <div className="row-start-3 flex flex-row flex-wrap">
-              {props.country.borderCountries.map((country) => {
+              {props.country.borderCountriesCodeNames.map((codeName) => {
                 return (
                   <button
-                    key={country}
-                    className="bg-clrElements shadow-black dark:bg-clrDarkElements m-2 rounded px-4 py-2 shadow-md"
-                    data-cca3-code={country}
+                    key={codeName.cca3Code}
+                    className="shadow-black m-2 rounded bg-clrElements px-4 py-2 shadow-md dark:bg-clrDarkElements"
+                    data-cca3-code={codeName.cca3Code}
                     onClick={borderClickHandler}
                   >
-                    {country}
+                    {codeName.name}
                   </button>
                 );
               })}

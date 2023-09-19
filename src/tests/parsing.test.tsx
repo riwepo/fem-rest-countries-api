@@ -5,96 +5,32 @@ import {
   parseCountryDetailRestData,
 } from "../helpers/parsing.tsx";
 
-const antarcticaSummary = {
-  flags: {
-    png: "https://flagcdn.com/w320/aq.png",
-  },
-  name: { common: "Antarctica" },
-  cca3: "ATA",
-  capital: [],
-  region: "Antarctic",
-  population: 1000,
-};
-
-const antarcticaDetail = {
-  flags: {
-    png: "https://flagcdn.com/w320/aq.png",
-  },
-  name: { common: "Antarctica", nativeName: {} },
-  tld: [".aq"],
-  cca3: "ATA",
-  currencies: {},
-  capital: [],
-  region: "Antarctic",
-  subregion: "",
-  languages: {},
-  borders: [],
-  population: 1000,
-};
-
-const germanySummary = {
-  flags: {
-    png: "https://flagcdn.com/w320/de.png",
-  },
-  name: {
-    common: "Germany",
-  },
-  cca3: "DEU",
-  capital: ["Berlin"],
-  region: "Europe",
-  population: 83240525,
-};
-
-const germanyDetail = {
-  flags: {
-    png: "https://flagcdn.com/w320/de.png",
-  },
-  name: {
-    common: "Germany",
-    nativeName: {
-      deu: { common: "Deutschland" },
-    },
-  },
-  tld: [".de"],
-  cca3: "DEU",
-  currencies: { EUR: { name: "Euro", symbol: "€" } },
-  capital: ["Berlin"],
-  region: "Europe",
-  subregion: "Western Europe",
-  languages: { deu: "German" },
-  borders: ["AUT", "BEL", "CZE", "DNK", "FRA", "LUX", "NLD", "POL", "CHE"],
-  population: 83240525,
-};
+import {
+  antarcticaSummaryRest,
+  antarcticaDetailRest,
+  antarcticaSummary,
+  antarcticaDetail,
+  germanySummaryRest,
+  germanyDetailRest,
+  germanySummary,
+  germanyDetail,
+} from "./countryObjects.tsx";
 
 describe("parseCountrySummaryRestData test suite", () => {
   test("parseCountrySummaryRestData works with Antarctica", () => {
-    const result = parseCountrySummaryRestData(antarcticaSummary);
+    const result = parseCountrySummaryRestData(antarcticaSummaryRest);
     expect(result.hasError()).toBe(false);
     expect(result.hasWarnings()).toBe(false);
-    expect(result.value).toEqual({
-      capital: "",
-      cca3Code: "ATA",
-      flag: new URL("https://flagcdn.com/w320/aq.png"),
-      name: "Antarctica",
-      population: 1000,
-      region: "Antarctic",
-    });
+    expect(result.value).toEqual(antarcticaSummary);
   });
   test("parseCountrySummaryRestData works with Germany", () => {
-    const result = parseCountrySummaryRestData(germanySummary);
+    const result = parseCountrySummaryRestData(germanySummaryRest);
     expect(result.hasError()).toBe(false);
     expect(result.hasWarnings()).toBe(false);
-    expect(result.value).toEqual({
-      capital: "Berlin",
-      cca3Code: "DEU",
-      flag: new URL("https://flagcdn.com/w320/de.png"),
-      name: "Germany",
-      population: 83240525,
-      region: "Europe",
-    });
+    expect(result.value).toEqual(germanySummary);
   });
   test("parseCountrySummaryRestData with missing cca3 gives error", () => {
-    const noCca3 = JSON.parse(JSON.stringify(germanySummary));
+    const noCca3 = JSON.parse(JSON.stringify(germanySummaryRest));
     noCca3.cca3 = "";
 
     const result = parseCountrySummaryRestData(noCca3);
@@ -105,7 +41,7 @@ describe("parseCountrySummaryRestData test suite", () => {
     );
   });
   test("parseCountrySummaryRestData with bad name gives error", () => {
-    const badName = JSON.parse(JSON.stringify(germanySummary));
+    const badName = JSON.parse(JSON.stringify(germanySummaryRest));
     badName.name = {
       commonxxx: "Germany",
     };
@@ -116,7 +52,7 @@ describe("parseCountrySummaryRestData test suite", () => {
     expect(result.error).toEqual("expected string for property 'common'");
   });
   test("parseCountrySummaryRestData with missing region gives error", () => {
-    const noRegion = JSON.parse(JSON.stringify(germanySummary));
+    const noRegion = JSON.parse(JSON.stringify(germanySummaryRest));
     noRegion.region = "";
 
     const result = parseCountrySummaryRestData(noRegion);
@@ -127,7 +63,7 @@ describe("parseCountrySummaryRestData test suite", () => {
     );
   });
   test("parseCountrySummaryRestData with bad flags gives error", () => {
-    const badFlags = JSON.parse(JSON.stringify(germanySummary));
+    const badFlags = JSON.parse(JSON.stringify(germanySummaryRest));
     badFlags.flags = {
       pngxxx: "https://flagcdn.com/w320/de.png",
     };
@@ -138,7 +74,7 @@ describe("parseCountrySummaryRestData test suite", () => {
     expect(result.error).toEqual("expected string for property 'png'");
   });
   test("parseCountrySummaryRestData with bad capital gives warning", () => {
-    const badCapital = JSON.parse(JSON.stringify(germanySummary));
+    const badCapital = JSON.parse(JSON.stringify(germanySummaryRest));
     badCapital.capital = "";
 
     const result = parseCountrySummaryRestData(badCapital);
@@ -148,7 +84,7 @@ describe("parseCountrySummaryRestData test suite", () => {
     expect(result.warnings[0]).toEqual("expected array for property 'capital'");
   });
   test("parseCountrySummaryRestData with missing population gives warning", () => {
-    const badPopulation = JSON.parse(JSON.stringify(germanySummary));
+    const badPopulation = JSON.parse(JSON.stringify(germanySummaryRest));
     badPopulation.population = undefined;
 
     const result = parseCountrySummaryRestData(badPopulation);
@@ -163,55 +99,19 @@ describe("parseCountrySummaryRestData test suite", () => {
 
 describe("parseCountryDetailRestData test suite", () => {
   test("parseCountryDetailRestData works with Antarctica", () => {
-    const result = parseCountryDetailRestData(antarcticaDetail);
+    const result = parseCountryDetailRestData(antarcticaDetailRest);
     expect(result.hasError()).toBe(false);
     expect(result.hasWarnings()).toBe(false);
-    expect(result.value).toEqual({
-      borderCountries: [],
-      capital: "",
-      cca3Code: "ATA",
-      currencies: [],
-      flag: new URL("https://flagcdn.com/w320/aq.png"),
-      languages: [],
-      name: "Antarctica",
-      nativeName: "",
-      population: 1000,
-      region: "Antarctic",
-      subRegion: "",
-      topLevelDomain: ".aq",
-    });
+    expect(result.value).toEqual(antarcticaDetail);
   });
   test("parseCountryDetailRestData works with Germany", () => {
-    const result = parseCountryDetailRestData(germanyDetail);
+    const result = parseCountryDetailRestData(germanyDetailRest);
     expect(result.hasError()).toBe(false);
     expect(result.hasWarnings()).toBe(false);
-    expect(result.value).toEqual({
-      borderCountries: [
-        "AUT",
-        "BEL",
-        "CZE",
-        "DNK",
-        "FRA",
-        "LUX",
-        "NLD",
-        "POL",
-        "CHE",
-      ],
-      capital: "Berlin",
-      cca3Code: "DEU",
-      currencies: ["Euro"],
-      flag: new URL("https://flagcdn.com/w320/de.png"),
-      languages: ["German"],
-      name: "Germany",
-      nativeName: "Deutschland",
-      population: 83240525,
-      region: "Europe",
-      subRegion: "Western Europe",
-      topLevelDomain: ".de",
-    });
+    expect(result.value).toEqual(germanyDetail);
   });
   test("parseCountryDetailRestData with missing border countries gives warning", () => {
-    const badBorders = JSON.parse(JSON.stringify(germanyDetail));
+    const badBorders = JSON.parse(JSON.stringify(germanyDetailRest));
     badBorders.borders = undefined;
     const result = parseCountryDetailRestData(badBorders);
     expect(result.hasError()).toBe(false);
@@ -220,7 +120,7 @@ describe("parseCountryDetailRestData test suite", () => {
     expect(result.warnings[0]).toBe("expected array for property 'borders'");
   });
   test("parseCountryDetailRestData with missing native name gives warning", () => {
-    const badNativeName = JSON.parse(JSON.stringify(germanyDetail));
+    const badNativeName = JSON.parse(JSON.stringify(germanyDetailRest));
     badNativeName.name.nativeName = undefined;
     const result = parseCountryDetailRestData(badNativeName);
     expect(result.hasError()).toBe(false);
@@ -231,7 +131,7 @@ describe("parseCountryDetailRestData test suite", () => {
     );
   });
   test("parseCountryDetailRestData with missing tld gives warning", () => {
-    const badTopLevelDomain = JSON.parse(JSON.stringify(germanyDetail));
+    const badTopLevelDomain = JSON.parse(JSON.stringify(germanyDetailRest));
     badTopLevelDomain.tld = undefined;
     const result = parseCountryDetailRestData(badTopLevelDomain);
     expect(result.hasError()).toBe(false);
@@ -240,7 +140,7 @@ describe("parseCountryDetailRestData test suite", () => {
     expect(result.warnings[0]).toBe("expected array for property 'tld'");
   });
   test("parseCountryDetailRestData with missing currencies gives warning", () => {
-    const badCurrencies = JSON.parse(JSON.stringify(germanyDetail));
+    const badCurrencies = JSON.parse(JSON.stringify(germanyDetailRest));
     badCurrencies.currencies = undefined;
     const result = parseCountryDetailRestData(badCurrencies);
     expect(result.hasError()).toBe(false);
@@ -251,7 +151,7 @@ describe("parseCountryDetailRestData test suite", () => {
     );
   });
   test("parseCountryDetailRestData with missing languages gives warning", () => {
-    const badLanguages = JSON.parse(JSON.stringify(germanyDetail));
+    const badLanguages = JSON.parse(JSON.stringify(germanyDetailRest));
     badLanguages.languages = undefined;
     const result = parseCountryDetailRestData(badLanguages);
     expect(result.hasError()).toBe(false);
@@ -260,7 +160,7 @@ describe("parseCountryDetailRestData test suite", () => {
     expect(result.warnings[0]).toBe("expected object for property 'languages'");
   });
   test("parseCountryDetailRestData with missing subregion gives warning", () => {
-    const badSubregion = JSON.parse(JSON.stringify(germanyDetail));
+    const badSubregion = JSON.parse(JSON.stringify(germanyDetailRest));
     badSubregion.subregion = undefined;
     const result = parseCountryDetailRestData(badSubregion);
     expect(result.hasError()).toBe(false);
