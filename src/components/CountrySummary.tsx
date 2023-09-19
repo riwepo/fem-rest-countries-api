@@ -12,7 +12,7 @@ const CountrySummary: React.FC<CountrySummaryProps> = (props) => {
     props.onClick(props.country.cca3Code);
   };
   return (
-    <Card className="bg-clrElements dark:bg-clrDarkElements text-clrText dark:text-clrDarkText m-10 grid h-[24rem] w-[20rem] grid-rows-[1fr_1fr]">
+    <Card className="m-0 grid h-[22rem] w-[18rem] grid-rows-[1fr_1fr] bg-clrElements text-clrText dark:bg-clrDarkElements dark:text-clrDarkText">
       <button onClick={clickHandler}>
         <img
           src={props.country.flag.toString()}

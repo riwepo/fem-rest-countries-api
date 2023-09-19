@@ -12,7 +12,7 @@ const CountrySummaryList: React.FC<ICountrySummaryListProps> = (props) => {
     props.onCountryClicked(cca3Code);
   };
   return (
-    <div className="grid grid-cols-4">
+    <div className="grid grid-cols-4 justify-items-center gap-0 gap-y-12 border-2 p-4">
       {props.countries.map((country) => {
         return (
           <CountrySummary
