@@ -77,7 +77,7 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
             </p>
           </div>
           <div className="col-start-1 row-start-4 flex flex-col items-center gap-2 sm:col-span-2 sm:row-start-3 sm:flex-row">
-            <p className="self-start align-middle sm:col-start-1 sm:row-start-3">
+            <p className="self-start sm:col-start-1 sm:row-start-3 sm:self-center">
               Border Countries:
             </p>
             <div className="row-start-3 flex flex-row flex-wrap">
