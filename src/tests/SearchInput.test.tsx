@@ -12,7 +12,7 @@ describe("SearchInput component test suite", () => {
     }; // noop
   };
   test("renders svg and placeholder text", () => {
-    render(<SearchInput onSearchChanged={onSearchChanged} />);
+    render(<SearchInput onSearchChanged={onSearchChanged} className="" />);
     const svgElement = screen.getByTitle("magnifying glass");
     expect(svgElement).toBeInTheDocument();
     const inputElement = screen.getByRole("textbox");
@@ -24,7 +24,7 @@ describe("SearchInput component test suite", () => {
   test("callback called on enter key", () => {
     const enteredValue = "fred";
     const onSearchChanged = vi.fn();
-    render(<SearchInput onSearchChanged={onSearchChanged} />);
+    render(<SearchInput onSearchChanged={onSearchChanged} className="" />);
     const inputElement = screen.getByRole("textbox");
     expect(inputElement).toBeInTheDocument();
     fireEvent.change(inputElement, {
