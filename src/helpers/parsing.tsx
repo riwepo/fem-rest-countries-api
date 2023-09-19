@@ -21,7 +21,7 @@ class ParseResult implements IParseResult {
   }
 }
 
-export function parseCountrySummaryRestData(restData): IParseResult {
+export function parseCountrySummaryRestData(restData: unknown): IParseResult {
   let warnings: string[] = [];
 
   if (typeof restData !== "object")
@@ -259,13 +259,15 @@ export function parseCountryDetailRestData(restData: unknown): IParseResult {
   return new ParseResult(value, "", warnings);
 }
 
-function parseString(data, propertyName: string, canBeEmpty: boolean) {
+// eslint-disable-next-line
+function parseString(data: any, propertyName: string, canBeEmpty: boolean) {
   if (typeof data[propertyName] !== "string") {
     return new ParseResult(
       null,
       `expected string for property '${propertyName}'`,
     );
   }
+
   if (!canBeEmpty && data[propertyName] === "") {
     return new ParseResult(
       null,
@@ -276,7 +278,8 @@ function parseString(data, propertyName: string, canBeEmpty: boolean) {
   return new ParseResult(data[propertyName] as string);
 }
 
-function parseObjectProperty(data, propertyName: string) {
+// eslint-disable-next-line
+function parseObjectProperty(data: any, propertyName: string) {
   if (typeof data[propertyName] !== "object") {
     return new ParseResult(
       null,
@@ -286,7 +289,8 @@ function parseObjectProperty(data, propertyName: string) {
   return new ParseResult(data[propertyName] as object);
 }
 
-function parseArrayProperty(data, propertyName: string) {
+// eslint-disable-next-line
+function parseArrayProperty(data: any, propertyName: string) {
   if (!Array.isArray(data[propertyName])) {
     return new ParseResult(
       null,
@@ -296,7 +300,10 @@ function parseArrayProperty(data, propertyName: string) {
   return new ParseResult(data[propertyName] as []);
 }
 
-function parseFirstEntryOfArray(data, propertyName: string) {
+type NonEmptyArray<T> = [T, ...T[]];
+
+// eslint-disable-next-line
+function parseFirstEntryOfArray(data: any, propertyName: string) {
   const theArray: [] = data[propertyName];
   if (theArray.length === 0) {
     return new ParseResult(
@@ -304,24 +311,28 @@ function parseFirstEntryOfArray(data, propertyName: string) {
       `expected non-empty array for property '${propertyName}'`,
     );
   }
-  const value = theArray[0] as unknown as ParseResult;
+  const value = // eslint-disable-next-line
+  (theArray as unknown as NonEmptyArray<any>)[0] as unknown as ParseResult;
   return new ParseResult(value);
 }
 
-function parseEachPropertyOfObject(data, propertyName: string) {
+// eslint-disable-next-line
+function parseEachPropertyOfObject(data: any, propertyName: string) {
   const keys = Object.keys(data[propertyName]);
   const values = keys.map((key) => data[propertyName][key]);
   return new ParseResult(values);
 }
 
-function parseFirstPropertyOfObject(data, propertyName: string) {
+// eslint-disable-next-line
+function parseFirstPropertyOfObject(data: any, propertyName: string) {
   const keys = Object.keys(data[propertyName]);
   const value = data[propertyName][keys[0]];
   return new ParseResult(value);
 }
 
-function parseStringArray(data, propertyName: string) {
-  const result = data[propertyName].map((entry) => {
+// eslint-disable-next-line
+function parseStringArray(data: any, propertyName: string) {
+  const result = (data[propertyName] as []).map((entry) => {
     if (typeof entry !== "string") {
       return new ParseResult(
         null,
@@ -334,7 +345,8 @@ function parseStringArray(data, propertyName: string) {
 }
 
 function parseObjectsWithChildProperty(
-  data,
+  // eslint-disable-next-line
+  data: any,
   propertyName: string,
   childPropertyName: string,
 ) {
@@ -352,7 +364,8 @@ function parseObjectsWithChildProperty(
   return new ParseResult(result);
 }
 
-function parseNumber(data, propertyName: string) {
+// eslint-disable-next-line
+function parseNumber(data: any, propertyName: string) {
   if (typeof data[propertyName] !== "number") {
     return new ParseResult(
       null,
