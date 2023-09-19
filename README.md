@@ -45,11 +45,11 @@ Users should be able to:
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
-- [Vite] (https://vitejs.dev/) - JS build system
+- [Vite](https://vitejs.dev/) - JS build system
 - [React](https://reactjs.org/) - JS library
 - [Typescript](https://www.typescriptlang.org/) - Types for JS
 - [Tailwind](https://tailwindcss.com/) - For styles
-- [Vitest] (https://vitest.dev/) - For unit testing
+- [Vitest](https://vitest.dev/) - For unit testing
 
 ### What I learned
 
