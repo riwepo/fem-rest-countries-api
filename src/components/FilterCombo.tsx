@@ -11,6 +11,7 @@ import { ReactComponent as Checkmark } from "../assets/checkmark-svgrepo-com.svg
 interface FilterComboProps {
   options: string[];
   onSelectionChanged: (a: string) => void;
+  className: string;
 }
 
 const FilterCombo: React.FC<FilterComboProps> = (props) => {
@@ -36,7 +37,9 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
     props.onSelectionChanged(currentOption);
   };
   return (
-    <Card className="relative inline-flex bg-clrDarkElements">
+    <Card
+      className={`relative inline-flex bg-clrDarkElements ${props.className}`}
+    >
       {/* note the comboRef contains both the popup and the combo part */}
       <div ref={comboRef}>
         <button

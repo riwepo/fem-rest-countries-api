@@ -3,6 +3,7 @@ import Card from "./Card";
 import { ReactComponent as MagnifyingGlass } from "../assets/icons8-magnifying-glass.svg";
 interface SearchInputProps {
   onSearchChanged: (a: string) => void;
+  className: string;
 }
 
 const SearchInput: React.FC<SearchInputProps> = (props) => {
@@ -13,7 +14,9 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
     }
   };
   return (
-    <Card className="flex w-[50rem] items-center justify-around gap-2 bg-clrElements p-2 text-clrText dark:bg-clrDarkElements dark:text-clrDarkText">
+    <Card
+      className={`flex items-center justify-around gap-2 bg-clrElements p-2 text-clrText dark:bg-clrDarkElements dark:text-clrDarkText ${props.className}`}
+    >
       <MagnifyingGlass
         className="fill-clrInput stroke-clrInput dark:fill-clrDarkInput dark:stroke-clrDarkInput"
         title="magnifying glass"
