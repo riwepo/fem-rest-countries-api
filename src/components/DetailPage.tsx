@@ -1,5 +1,5 @@
 import { ICountryDetail2 } from "../helpers/interfaces";
-import { ReactComponent as ArrorLeft } from "../assets/arrow-left-svgrepo-com.svg";
+import { ReactComponent as ArrowLeft } from "../assets/arrow-left-svgrepo-com.svg";
 
 interface IDetailPageProps {
   country: ICountryDetail2;
@@ -25,7 +25,7 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
         onClick={backClickHandler}
       >
         <div className="flex flex-row items-center gap-2">
-          <ArrorLeft
+          <ArrowLeft
             className="h-4 w-4 stroke-clrText dark:stroke-clrDarkText"
             role="img"
             aria-label="arrow left"
