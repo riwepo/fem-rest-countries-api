@@ -24,11 +24,11 @@ const Header: React.FC<IHeaderProps> = (props) => {
           className="h-4 w-4 fill-clrText dark:fill-clrDarkText"
           role="img"
         />
-        <p className="text-normal font-semibold">
+        <span className="text-normal font-semibold">
           {props.selectedDisplayMode === DisplayMode.Dark
             ? "Light mode"
             : "Dark mode"}
-        </p>
+        </span>
       </button>
     </header>
   );
