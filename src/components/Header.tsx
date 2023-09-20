@@ -22,7 +22,7 @@ const Header: React.FC<IHeaderProps> = (props) => {
       >
         <MoonSvg
           className="h-4 w-4 fill-clrText dark:fill-clrDarkText"
-          title="moon"
+          role="img"
         />
         <p className="text-normal font-semibold">
           {props.selectedDisplayMode === DisplayMode.Dark
