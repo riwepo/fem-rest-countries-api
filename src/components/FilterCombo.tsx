@@ -76,7 +76,7 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
                     }`}
                     aria-label="checkmark"
                   />
-                  <p>{option}</p>
+                  <span>{option}</span>
                 </button>
               );
             })}
