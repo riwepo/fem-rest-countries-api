@@ -46,7 +46,7 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
           className="flex items-center justify-around gap-2 rounded-md bg-clrElements p-2 text-clrText dark:bg-clrDarkElements dark:text-clrDarkText"
           onClick={openCloseClickHandler}
         >
-          <p className="p-1">Filter by Region</p>
+          <span className="p-1">Filter by Region</span>
           {!isOpen && (
             <ChevronDown
               className="h-8 w-8 stroke-clrText dark:stroke-clrDarkText"
