@@ -18,7 +18,7 @@ describe("Header component test suite", () => {
     );
     const h1Element = screen.getByText("Where in the world?");
     expect(h1Element).toBeInTheDocument();
-    const moonElement = screen.getByRole("img");
+    const moonElement = screen.getByLabelText("moon");
     expect(moonElement).toBeInTheDocument();
     const pElement = screen.getByText("Dark mode");
     expect(pElement).toBeInTheDocument();

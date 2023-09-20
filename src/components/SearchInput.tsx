@@ -19,7 +19,7 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
     >
       <MagnifyingGlass
         className="h-4 w-4 fill-clrInput stroke-clrInput dark:fill-clrDarkInput dark:stroke-clrDarkInput"
-        role="img"
+        aria-label="magnifying glass"
       />
       <input
         type="text"

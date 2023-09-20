@@ -27,7 +27,6 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
         <div className="flex flex-row items-center gap-2">
           <ArrowLeft
             className="h-4 w-4 stroke-clrText dark:stroke-clrDarkText"
-            role="img"
             aria-label="arrow left"
           />
           Back
