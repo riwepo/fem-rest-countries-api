@@ -36,8 +36,8 @@ describe("CountrySummary component test suite", () => {
   test("click calls callback", () => {
     const clickHandler = vi.fn();
     render(<CountrySummary country={australia} onClick={clickHandler} />);
-    const buttonElement = screen.getByRole("button");
-    fireEvent.click(buttonElement);
+    const imgElement = screen.getByRole("img");
+    fireEvent.click(imgElement);
     expect(clickHandler).toBeCalledWith(australia.cca3Code);
   });
 });

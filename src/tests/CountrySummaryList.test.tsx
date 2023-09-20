@@ -36,8 +36,8 @@ describe("CountrySummaryList component test suite", () => {
         onCountryClicked={clickHandler}
       />,
     );
-    const buttonElements = screen.getAllByRole("button");
-    fireEvent.click(buttonElements[0]);
+    const imgElements = screen.getAllByRole("img");
+    fireEvent.click(imgElements[0]);
     expect(clickHandler).toBeCalledWith(australia.cca3Code);
   });
 });
