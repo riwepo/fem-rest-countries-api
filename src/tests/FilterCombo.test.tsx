@@ -42,9 +42,9 @@ describe("FilterCombo component test suite", () => {
       />,
     );
 
-    const chevronDownElement = screen.getByTitle("chevron down");
+    const chevronDownElement = screen.getByLabelText("chevron down");
     expect(chevronDownElement).toBeInTheDocument();
-    const chevronUpElement = screen.queryByTitle("chevron up");
+    const chevronUpElement = screen.queryByLabelText("chevron up");
     expect(chevronUpElement).not.toBeInTheDocument();
   });
 
@@ -61,7 +61,7 @@ describe("FilterCombo component test suite", () => {
     fireEvent.click(buttonElement);
     const optionElements = screen.getAllByText("option", { exact: false });
     expect(optionElements.length).toBe(options.length);
-    const checkmarkSvgElements = screen.getAllByTitle("checkmark");
+    const checkmarkSvgElements = screen.getAllByLabelText("checkmark");
     expect(checkmarkSvgElements.length).toBe(options.length);
   });
 
@@ -77,9 +77,9 @@ describe("FilterCombo component test suite", () => {
     expect(buttonElement).toBeInTheDocument();
     fireEvent.click(buttonElement);
 
-    const chevronDownElement = screen.queryByTitle("chevron down");
+    const chevronDownElement = screen.queryByLabelText("chevron down");
     expect(chevronDownElement).not.toBeInTheDocument();
-    const chevronUpElement = screen.getByTitle("chevron up");
+    const chevronUpElement = screen.getByLabelText("chevron up");
     expect(chevronUpElement).toBeInTheDocument();
   });
 
@@ -97,7 +97,7 @@ describe("FilterCombo component test suite", () => {
     fireEvent.click(buttonElement);
     const optionElements = screen.queryAllByText("option", { exact: false });
     expect(optionElements.length).toBe(0);
-    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    const checkmarkSvgElements = screen.queryAllByLabelText("checkmark");
     expect(checkmarkSvgElements.length).toBe(0);
   });
 
@@ -115,7 +115,7 @@ describe("FilterCombo component test suite", () => {
     fireEvent.mouseDown(document); // useOnClickOutside detects mousedown away from the combo
     const optionElements = screen.queryAllByText("option", { exact: false });
     expect(optionElements.length).toBe(0);
-    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    const checkmarkSvgElements = screen.queryAllByLabelText("checkmark");
     expect(checkmarkSvgElements.length).toBe(0);
   });
 
@@ -133,7 +133,7 @@ describe("FilterCombo component test suite", () => {
 
     // note I tried looking for visibility=hidden attribute but this depends on Tailwind
     // so just had to check the classes
-    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    const checkmarkSvgElements = screen.queryAllByLabelText("checkmark");
     checkmarkSvgElements.map((element) => {
       expect(element).toHaveClass("invisible");
     });
@@ -158,7 +158,7 @@ describe("FilterCombo component test suite", () => {
 
     // note I tried looking for visibility=hidden attribute but this depends on Tailwind
     // so just had to check the classes
-    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    const checkmarkSvgElements = screen.queryAllByLabelText("checkmark");
     expect(checkmarkSvgElements[0]).not.toHaveClass("invisible");
     expect(checkmarkSvgElements[1]).toHaveClass("invisible");
     expect(checkmarkSvgElements[2]).toHaveClass("invisible");
@@ -184,7 +184,7 @@ describe("FilterCombo component test suite", () => {
 
     // note I tried looking for visibility=hidden attribute but this depends on Tailwind
     // so just had to check the classes
-    const checkmarkSvgElements = screen.queryAllByTitle("checkmark");
+    const checkmarkSvgElements = screen.queryAllByLabelText("checkmark");
     expect(checkmarkSvgElements[0]).not.toHaveClass("invisible");
 
     fireEvent.click(optionButtonElement as HTMLButtonElement);

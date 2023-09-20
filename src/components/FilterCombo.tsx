@@ -50,13 +50,13 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
           {!isOpen && (
             <ChevronDown
               className="h-8 w-8 stroke-clrText dark:stroke-clrDarkText"
-              title="chevron down"
+              aria-label="chevron down"
             />
           )}
           {isOpen && (
             <ChevronUp
               className="h-8 w-8 stroke-clrText dark:stroke-clrDarkText"
-              title="chevron up"
+              aria-label="chevron up"
             />
           )}
         </button>
@@ -74,7 +74,7 @@ const FilterCombo: React.FC<FilterComboProps> = (props) => {
                     className={`aspect-square h-4 w-4 stroke-clrText dark:stroke-clrDarkText ${
                       selectedOption !== option && "invisible"
                     }`}
-                    title="checkmark"
+                    aria-label="checkmark"
                   />
                   <p>{option}</p>
                 </button>
