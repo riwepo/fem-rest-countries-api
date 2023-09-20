@@ -13,7 +13,7 @@ describe("SearchInput component test suite", () => {
   };
   test("renders svg and placeholder text", () => {
     render(<SearchInput onSearchChanged={onSearchChanged} className="" />);
-    const svgElement = screen.getByTitle("magnifying glass");
+    const svgElement = screen.getByRole("img");
     expect(svgElement).toBeInTheDocument();
     const inputElement = screen.getByRole("textbox");
     expect(inputElement).toBeInTheDocument();
