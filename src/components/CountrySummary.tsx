@@ -13,7 +13,7 @@ const CountrySummary: React.FC<CountrySummaryProps> = (props) => {
   };
   return (
     <Card className="grid h-[22rem] grid-rows-[1fr_1fr] bg-clrElements text-clrText dark:bg-clrDarkElements dark:text-clrDarkText">
-      <button onClick={clickHandler}>
+      <div onClick={clickHandler}>
         <img
           src={props.country.flag.toString()}
           alt="flag"
@@ -35,7 +35,7 @@ const CountrySummary: React.FC<CountrySummaryProps> = (props) => {
             </p>
           </div>
         </div>
-      </button>
+      </div>
     </Card>
   );
 };
