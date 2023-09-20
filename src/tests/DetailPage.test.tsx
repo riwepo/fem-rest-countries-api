@@ -38,7 +38,7 @@ describe("DetailPage component test suite", () => {
     expect(languagesElement).toBeInTheDocument();
     const backButtonElement = screen.getByText("Back");
     expect(backButtonElement).toBeInTheDocument();
-    const backButtonArrowSvgElement = screen.getByTitle("arrow left");
+    const backButtonArrowSvgElement = screen.getByLabelText("arrow left");
     expect(backButtonArrowSvgElement).toBeInTheDocument();
     germanyDetail2.borderCountriesCodeNames.map((codeName) => {
       const buttonElement = screen.getByText(codeName.name);
