@@ -23,7 +23,7 @@ interface IHomePageProps {
 
 const HomePage: React.FC<IHomePageProps> = (props) => {
   return (
-    <>
+    <main>
       <div className="flex flex-col justify-center gap-2 p-2 sm:flex-row sm:justify-between">
         <SearchInput
           onSearchChanged={props.searchChangedHandler}
@@ -39,7 +39,7 @@ const HomePage: React.FC<IHomePageProps> = (props) => {
         countries={props.countries}
         onCountryClicked={props.countryClickHandler}
       />
-    </>
+    </main>
   );
 };
 

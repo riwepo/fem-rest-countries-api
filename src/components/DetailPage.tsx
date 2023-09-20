@@ -19,7 +19,7 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
   const languages = props.country.languages.join(",");
 
   return (
-    <div className="flex flex-col justify-between gap-8 p-4 align-middle text-clrText dark:text-clrDarkText">
+    <main className="flex flex-col justify-between gap-8 p-4 align-middle text-clrText dark:text-clrDarkText">
       <button
         className="shadow-black m-2 self-start rounded bg-clrElements px-4 py-2 shadow-md dark:bg-clrDarkElements"
         onClick={backClickHandler}
@@ -98,7 +98,7 @@ const DetailPage: React.FC<IDetailPageProps> = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
